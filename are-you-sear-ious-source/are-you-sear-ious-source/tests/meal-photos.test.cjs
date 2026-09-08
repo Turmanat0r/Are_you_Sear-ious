@@ -107,3 +107,37 @@ test('science cards and print view have no external technique attribution blocks
   assert.ok(controls.includes('A LITTLE GRILL SCIENCE'));
   assert.ok(page.includes('USDA FSIS'));
 });
+
+test('the standing disclaimer and its claims stay on the page', () => {
+  const page = fs.readFileSync(path.join(root, 'app', 'page.tsx'), 'utf8');
+
+  // Legal text is easy to delete by accident during a refactor and nobody
+  // notices until it matters. Guard the substance, not the wording.
+  assert.match(page, /legal-note/, 'the disclaimer section must exist');
+  assert.match(page, /thermometer/i, 'cook-to-temperature notice');
+  assert.match(page, /AI image model/i, 'AI-image disclosure');
+  assert.match(page, /no warranty/i, 'no-warranty notice');
+  assert.match(page, /makes no network requests/i, 'privacy claim');
+
+  // The privacy claim above is only honest while it stays true.
+  for (const file of [
+    'page.tsx',
+    'grill-tools.tsx',
+    'cook-config.ts',
+    'recipes.ts',
+  ]) {
+    const source = fs.readFileSync(path.join(root, 'app', file), 'utf8');
+    for (const api of [
+      'fetch(',
+      'XMLHttpRequest',
+      'navigator.sendBeacon',
+      'new WebSocket',
+      'EventSource',
+    ]) {
+      assert.ok(
+        !source.includes(api),
+        `${file} uses ${api}, which breaks the "no network requests" claim`,
+      );
+    }
+  }
+});

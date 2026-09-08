@@ -1754,3 +1754,65 @@
     }
   }
 }
+
+/* ---- Standing disclaimer above the footer ---- */
+
+.legal-note {
+  border-top: 1px solid var(--border);
+  margin-top: 48px;
+  padding: 40px 0 8px;
+  color: var(--muted-foreground);
+}
+.legal-note h2 {
+  font-size: 20px;
+  color: #d7dbcf;
+  margin: 0 0 22px;
+}
+.legal-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 30px 48px;
+}
+.legal-note h3 {
+  font-size: 14px;
+  letter-spacing: 0.02em;
+  color: #c3cbb6;
+  margin: 0 0 8px;
+}
+.legal-grid > div > h3:not(:first-child) {
+  margin-top: 22px;
+}
+.legal-note p {
+  font-size: 13.5px;
+  line-height: 1.75;
+  margin: 0 0 10px;
+}
+.legal-note a {
+  color: #efb27f;
+  text-decoration: underline;
+  text-underline-offset: 2px;
+}
+.legal-fine {
+  margin-top: 26px;
+  padding: 16px 18px;
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  background: rgba(0, 0, 0, 0.2);
+  font-size: 13px !important;
+  color: #9aa38d;
+}
+@media (max-width: 767.98px) {
+  .legal-grid {
+    grid-template-columns: 1fr;
+    gap: 24px;
+  }
+  .legal-note {
+    margin-top: 36px;
+    padding-top: 32px;
+  }
+}
+@media print {
+  .legal-note {
+    display: none !important;
+  }
+}

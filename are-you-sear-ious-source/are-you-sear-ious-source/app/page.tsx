@@ -1022,6 +1022,61 @@ export default function Home() {
           <ProteinTemperatures recipe={recipe} unit={unit} />
 
           <GrillSetup plan={burners} recipe={recipe} unit={unit} />
+
+          <section className="legal-note" aria-labelledby="legal-heading">
+            <h2 id="legal-heading">Before you fire it up</h2>
+            <div className="legal-grid">
+              <div>
+                <h3>Cook to temperature, not to the clock</h3>
+                <p>
+                  Every time on this site is an estimate, including the ones the
+                  burner planner works out from your settings. Thickness,
+                  weather, wind and your particular grill all move them. The
+                  only thing that tells you meat is safe to eat is a thermometer
+                  in the thickest part.{' '}
+                  <a
+                    href={safetySource}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                  >
+                    The USDA publishes the minimums
+                  </a>{' '}
+                  and they are worth trusting over anything here.
+                </p>
+                <p>
+                  The burner diagram is a planner. It is not connected to your
+                  grill and cannot light or adjust anything. Follow your
+                  manufacturer&rsquo;s lighting sequence, and keep a smoker box
+                  only where their instructions allow.
+                </p>
+              </div>
+              <div>
+                <h3>The photos are AI-generated</h3>
+                <p>
+                  All twelve meal images were made with an AI image model. They
+                  are photorealistic illustrations, not photographs of food
+                  actually cooked from these recipes, so treat them as a mood
+                  board rather than a target. Full provenance, including the
+                  prompts that were kept, is in the repository.
+                </p>
+                <h3>Nothing you do here leaves your device</h3>
+                <p>
+                  This site makes no network requests. There is no analytics, no
+                  tracking, and no account. Your saved recipes, weights, burner
+                  layout and ingredient swaps live in your own browser&rsquo;s
+                  storage and are never sent anywhere. Clearing your browser
+                  data removes them.
+                </p>
+              </div>
+            </div>
+            <p className="legal-fine">
+              This is a personal project shared as-is, with no warranty of any
+              kind. I have tried to get the temperatures right and they follow
+              published USDA guidance, but I cannot promise the site is free of
+              errors and I am not responsible for how a cook turns out. You are
+              the one at the grill. Use your own judgement, and a thermometer.
+            </p>
+          </section>
         </main>
         <footer className="container">
           <span className="brand">
