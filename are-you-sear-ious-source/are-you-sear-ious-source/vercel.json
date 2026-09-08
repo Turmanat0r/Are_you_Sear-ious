@@ -1,6 +1,6 @@
 {
   "$schema": "https://openapi.vercel.sh/vercel.json",
-  "buildCommand": "npm test && npm run build:static",
+  "buildCommand": "npm run lint && npm run typecheck && npm test && npm run build:static",
   "outputDirectory": "dist-static",
   "framework": null,
   "headers": [
