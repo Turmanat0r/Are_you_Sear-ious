@@ -667,6 +667,138 @@
       "actualPrompt": "Use case: photorealistic-natural.\nAsset type: one standalone food recipe illustration, with no text overlay. This is a generated illustration, not documentation of an actual meal.\nCanvas: 1536 x 1024 pixels, landscape, 3:2 aspect ratio. Generate exactly one image.\n\nScene/backdrop: clean gas-grill grates against a dark charcoal grill background.\nSubject: a small open-topped handmade double-layer aluminum foil boat holding exactly two slender cooked walleye fillets. The fish is opaque white with realistic, delicate flaky texture, fine lemon-pepper flecks, and glossy melted butter pooled around it. Place one modest fresh lemon wedge beside the fish inside the boat. A tiny scattering of chopped parsley is optional.\nMaterials: thin handmade aluminum foil with realistic soft metallic reflections and neatly crimped upward edges; show the doubled foil at the folded rim. The foil boat is completely open on top, with no upper foil sheet or lid.\nComposition/framing: elevated three-quarter food-photography view that clearly shows both fillets and the open interior. Center the entire boat in the frame. Keep every edge of the boat, both complete fillets, and the lemon wedge fully visible. Leave generous clear grill-background margins of at least 12% of the canvas on all four sides (about 185 pixels left and right, 123 pixels top and bottom). Do not crop any part of the boat or food. Do not push the boat toward an edge.\nStyle/medium: photorealistic, natural premium rustic editorial food imagery. Appetizing but believable delicate fish texture, subtle real foil wrinkles, natural color.\nLighting/mood: warm natural side light, restrained golden butter highlights, dark charcoal surroundings with warm ember-toned accents, matching the Are You Sear-ious dark charcoal/ember recipe brand through mood only. Keep the food clearly visible.\nConstraints/avoid: no sealed packet, no upper foil lid, no whole fish or fish heads, no salmon or pink flesh, no breading, no heavy black grill marks on the fish because it is protected by foil, no flames touching food, no extra food or props, no text, no logos, no UI, no visible watermarks, no collage, no split panels. One centered food scene.",
       "promptRecordStatus": "Exact prompt preserved from the generating session",
       "recordedVisualNote": "Added 2026-09-08 with the walleye recipe. Supplied hashes were independently re-verified, and the documented Sharp pipeline reproduces the delivered WebP byte for byte."
+    },
+    {
+      "id": "chimichurri-orange-grilled-shrimp",
+      "original": {
+        "pathInOriginalsArchive": "originals/chimichurri-orange-grilled-shrimp.png",
+        "sha256": "273312f2652ca77d86e887ffca46e117aabaf2bfa1d2883371eb7d258cddad87",
+        "bytes": 3134852,
+        "width": 1536,
+        "height": 1024,
+        "format": "png",
+        "exifBytes": 0,
+        "xmpBytes": 0,
+        "iccBytes": 0,
+        "pngChunkTypes": ["IHDR", "caBX", "IDAT", "IEND"],
+        "c2pa": {
+          "container": "caBX",
+          "payloadBytes": 21844,
+          "observedStringMarkers": [
+            "c2pa",
+            "OpenAI",
+            "trainedAlgorithmicMedia"
+          ],
+          "signatureValidation": "not performed"
+        }
+      },
+      "delivered": {
+        "pathInSourceArchive": "public/meals/chimichurri-orange-grilled-shrimp.webp",
+        "pathInOfflineArchive": "images/chimichurri-orange-grilled-shrimp.webp",
+        "sha256": "63d977790a61873ae0a99a153ad8695fcb2733e8fc8328dcfcd521cc89005947",
+        "bytes": 221010,
+        "width": 1200,
+        "height": 800,
+        "format": "webp",
+        "exifBytes": 0,
+        "xmpBytes": 0,
+        "iccBytes": 0,
+        "riffChunkTypes": ["VP8 "],
+        "c2paChunkPresent": false
+      },
+      "exactReencodeMatchesDeliveredBytes": true,
+      "projectAndOfflineWebpBytesMatch": true,
+      "actualPrompt": null,
+      "promptRecordStatus": "Prompt supplied in the contribution package; not copied into this audit",
+      "recordedVisualNote": "Added 2026-09-08. The supplied WebP (1120x747, sha 6440fa935b53…) was REGENERATED: it did not meet the project's 1200x800 requirement, so the delivered file here was re-derived from the verified original with this project's Sharp pipeline."
+    },
+    {
+      "id": "holiday-rosemary-juniper-prime-rib",
+      "original": {
+        "pathInOriginalsArchive": "originals/holiday-rosemary-juniper-prime-rib.png",
+        "sha256": "905f0d97320df236680388a7f6a5168c5bcc021ac7c62bdbe14efc445cbd5a0d",
+        "bytes": 3012279,
+        "width": 1536,
+        "height": 1024,
+        "format": "png",
+        "exifBytes": 0,
+        "xmpBytes": 0,
+        "iccBytes": 0,
+        "pngChunkTypes": ["IHDR", "caBX", "IDAT", "IEND"],
+        "c2pa": {
+          "container": "caBX",
+          "payloadBytes": 23617,
+          "observedStringMarkers": [
+            "c2pa",
+            "OpenAI",
+            "trainedAlgorithmicMedia"
+          ],
+          "signatureValidation": "not performed"
+        }
+      },
+      "delivered": {
+        "pathInSourceArchive": "public/meals/holiday-rosemary-juniper-prime-rib.webp",
+        "pathInOfflineArchive": "images/holiday-rosemary-juniper-prime-rib.webp",
+        "sha256": "6e62c4958f0da7d38145983898fa8477c4cb46edb493a02fcfa2361a4cf57a70",
+        "bytes": 199102,
+        "width": 1200,
+        "height": 800,
+        "format": "webp",
+        "exifBytes": 0,
+        "xmpBytes": 0,
+        "iccBytes": 0,
+        "riffChunkTypes": ["VP8 "],
+        "c2paChunkPresent": false
+      },
+      "exactReencodeMatchesDeliveredBytes": true,
+      "projectAndOfflineWebpBytesMatch": true,
+      "actualPrompt": null,
+      "promptRecordStatus": "Prompt supplied in the contribution package; not copied into this audit",
+      "recordedVisualNote": "Added 2026-09-08. The supplied WebP (1120x747, sha cdcdb403f1c6…) was REGENERATED: it did not meet the project's 1200x800 requirement, so the delivered file here was re-derived from the verified original with this project's Sharp pipeline."
+    },
+    {
+      "id": "jerk-spiced-grilled-turkey-tenderloin",
+      "original": {
+        "pathInOriginalsArchive": "originals/jerk-spiced-grilled-turkey-tenderloin.png",
+        "sha256": "c6d7f146efd77a7ed6f80f1545205f78a26ce7c84943e2c294a8f240c593ac78",
+        "bytes": 2987257,
+        "width": 1536,
+        "height": 1024,
+        "format": "png",
+        "exifBytes": 0,
+        "xmpBytes": 0,
+        "iccBytes": 0,
+        "pngChunkTypes": ["IHDR", "caBX", "IDAT", "IEND"],
+        "c2pa": {
+          "container": "caBX",
+          "payloadBytes": 23617,
+          "observedStringMarkers": [
+            "c2pa",
+            "OpenAI",
+            "trainedAlgorithmicMedia"
+          ],
+          "signatureValidation": "not performed"
+        }
+      },
+      "delivered": {
+        "pathInSourceArchive": "public/meals/jerk-spiced-grilled-turkey-tenderloin.webp",
+        "pathInOfflineArchive": "images/jerk-spiced-grilled-turkey-tenderloin.webp",
+        "sha256": "945cc2892f3671f94a28f89605258a06280043d7f8c58fce6ae7b08c2bbc30bf",
+        "bytes": 187154,
+        "width": 1200,
+        "height": 800,
+        "format": "webp",
+        "exifBytes": 0,
+        "xmpBytes": 0,
+        "iccBytes": 0,
+        "riffChunkTypes": ["VP8 "],
+        "c2paChunkPresent": false
+      },
+      "exactReencodeMatchesDeliveredBytes": true,
+      "projectAndOfflineWebpBytesMatch": true,
+      "actualPrompt": null,
+      "promptRecordStatus": "Prompt supplied in the contribution package; not copied into this audit",
+      "recordedVisualNote": "Added 2026-09-08. The supplied WebP (1200x800, sha 0e0fbf869c4f…) was REGENERATED: it did not meet the project's 1200x800 requirement, so the delivered file here was re-derived from the verified original with this project's Sharp pipeline."
     }
   ]
 }

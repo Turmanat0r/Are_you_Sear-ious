@@ -77,7 +77,7 @@ const proteins = [
   { name: 'Beef', icon: Beef, note: 'Sear it hard' },
   { name: 'Pork', icon: Ham, note: 'Take your time' },
   { name: 'Poultry', icon: Drumstick, note: 'Keep it juicy' },
-  { name: 'Fish', icon: Fish, note: 'Go easy' },
+  { name: 'Seafood', icon: Fish, note: 'Go easy' },
 ];
 const validProteins = proteins.map((p) => p.name);
 function readLocal<T>(key: string, fallback: T): T {
@@ -1041,7 +1041,7 @@ export default function Home() {
                         <h4>{step.title}</h4>
                         <p className="step-cue">{unitText(step.cue, unit)}</p>
                         <p>{unitText(step.body, unit)}</p>
-                        {i === 0 && recipe.protein !== 'Fish' && (
+                        {i === 0 && recipe.protein !== 'Seafood' && (
                           <ScienceNote note={dryBrineScience} unit={unit} />
                         )}{' '}
                         {i === 2 && (

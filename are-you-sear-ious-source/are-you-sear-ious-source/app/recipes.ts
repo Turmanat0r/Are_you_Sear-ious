@@ -1,4 +1,9 @@
-export type Protein = 'Beef' | 'Pork' | 'Poultry' | 'Fish';
+/**
+ * Grouped the way the USDA safe-temperature chart groups them. 'Seafood'
+ * rather than 'Fish' because shrimp is a crustacean, and the chart's own
+ * row reads "Fish & Shellfish" at a shared 145°F.
+ */
+export type Protein = 'Beef' | 'Pork' | 'Poultry' | 'Seafood';
 export type Unit = 'F' | 'C';
 /** A temperature range that always has at least a low bound. */
 export type Temperatures = [number, ...number[]];
@@ -257,7 +262,7 @@ export const recipes: Recipe[] = [
   },
   {
     id: 'lemon-salmon',
-    protein: 'Fish',
+    protein: 'Seafood',
     title: 'Dijon & lemon grilled salmon',
     headline: ['Clean heat.', 'Bright finish.'],
     description:
