@@ -22,6 +22,19 @@ export type Cut = {
   time: string;
   rest: string;
   timing: string;
+  /**
+   * Per-cut headline and blurb. These used to be chosen by protein, so all
+   * three fish and both lean pork cuts read identically. They belong to the
+   * cut, not the family.
+   */
+  headline: [string, string];
+  description: string;
+  /**
+   * The name as it reads inside a sentence. Titles lowercase `name`, which
+   * is right for "ribeye steak" and wrong for "New York strip". Set this
+   * only where the plain lowercase is wrong.
+   */
+  midSentenceName?: string;
   family:
     | 'steak'
     | 'shoulder'
@@ -51,12 +64,16 @@ export const cuts: Cut[] = [
     rest: 'At least 3 minutes',
     timing:
       'For steaks about 1½–2 inches thick. Finish over high direct heat. Thinner steaks cook faster; check early.',
+    headline: ['Hard sear.', 'Soft center.'],
+    description:
+      'A coarse pepper crust and garlic butter on the richest steak here. Warmed through gently first, then seared hard at the very end.',
     family: 'steak',
   },
   {
     id: 'strip-steak',
     protein: 'Beef',
     name: 'New York strip',
+    midSentenceName: 'New York strip',
     baseId: 'pepper-ribeye',
     baseLb: 2,
     minLb: 0.5,
@@ -68,6 +85,9 @@ export const cuts: Cut[] = [
     rest: 'At least 3 minutes',
     timing:
       'For steaks about 1½–2 inches thick. Total batch weight changes seasoning, not minutes per steak.',
+    headline: ['Even edge.', 'Clean bite.'],
+    description:
+      'Leaner and firmer than a ribeye, with its fat running along one edge. Same pepper and garlic butter, same slow warm-up before the sear.',
     family: 'steak',
   },
   {
@@ -85,6 +105,9 @@ export const cuts: Cut[] = [
     rest: '5 minutes',
     timing:
       'For steaks about 1 inch thick. Sirloin is lean; probe early and slice against the grain.',
+    headline: ['Least fat.', 'Least forgiving.'],
+    description:
+      'The leanest of the three steaks, so it goes from right to overdone in about a minute. Probe it earlier than you think you need to.',
     family: 'steak',
   },
   {
@@ -104,6 +127,9 @@ export const cuts: Cut[] = [
     rest: '10–15 minutes',
     timing:
       'For one 2–2½ lb roast: about 20 minutes of prep and 35–60 minutes on the grill, plus a 10–15 minute rest. Seasonings scale with weight, but thickness and the probe decide when it is done.',
+    headline: ['Dark crust.', 'Bright finish.'],
+    description:
+      'Coffee, ancho and a thin mustard coat, with a cold chipotle-lime sauce alongside. Two grain directions in one roast, so read it before the rub hides them.',
     family: 'tri-tip',
     attribution: {
       label: 'Jamie Purviance’s tri-tip roast, published by Weber',
@@ -126,6 +152,9 @@ export const cuts: Cut[] = [
     rest: '1–2 hours',
     timing:
       'One shoulder, 3–12 lb. A 7–9 lb shoulder may take 10–16 hours; smaller or larger cuts vary. Weight alone cannot predict the stall.',
+    headline: ['Low & slow.', 'Big damn flavor.'],
+    description:
+      'Deep bark, a little heat, and fall-apart tender. Your all-day cook, built for a gas grill.',
     family: 'shoulder',
   },
   {
@@ -143,6 +172,9 @@ export const cuts: Cut[] = [
     rest: '5 minutes',
     timing:
       'For chops about 1–1½ inches thick. Probe beside the bone without touching it.',
+    headline: ['Bone in.', 'Juice kept.'],
+    description:
+      'A mustard binder and smoked paprika on a thick bone-in chop. Browned over direct heat, then moved off it so the middle can catch up.',
     family: 'chop',
   },
   {
@@ -160,6 +192,9 @@ export const cuts: Cut[] = [
     rest: '5–10 minutes',
     timing:
       'For individual tenderloins around 1–1½ lb. This is tenderloin, not the much thicker pork loin roast.',
+    headline: ['Quick cook.', 'Easy to miss.'],
+    description:
+      'The leanest thing on the list and the fastest to dry out. Trim the silverskin, tuck the thin tail under, and pull it the moment it hits temperature.',
     family: 'tenderloin',
   },
   {
@@ -177,6 +212,9 @@ export const cuts: Cut[] = [
     rest: '5 minutes',
     timing:
       'For bone-in, skin-on thighs. Check each piece, especially the largest.',
+    headline: ['Crisp edges.', 'All the juice.'],
+    description:
+      'Mustard, paprika and a little brown sugar. Thighs forgive a lot, which makes them the easiest bird on the grill.',
     family: 'thigh',
   },
   {
@@ -194,6 +232,9 @@ export const cuts: Cut[] = [
     rest: '5 minutes',
     timing:
       'For boneless breasts pounded to an even ¾–1 inch. Thick unflattened breasts need longer.',
+    headline: ['No margin.', 'Pull it early.'],
+    description:
+      'Boneless breast has no fat to hide a mistake in. Pound it to an even thickness, watch the probe, and take it off the moment it reaches 165°F.',
     family: 'breast',
   },
   {
@@ -211,6 +252,9 @@ export const cuts: Cut[] = [
     rest: '5 minutes',
     timing:
       'For standard bone-in drumsticks. Rotate the pieces for even browning and check away from bone.',
+    headline: ['Dark meat.', 'Hard to ruin.'],
+    description:
+      'Dark meat, plenty of fat, and a bone doing half the work. Drumsticks only improve once they are past the safe minimum.',
     family: 'drumstick',
   },
   {
@@ -228,6 +272,9 @@ export const cuts: Cut[] = [
     rest: 'About 3 minutes',
     timing:
       'For fillets about 1 inch thick. Cook skin-side down and start checking at 8 minutes.',
+    headline: ['Skin down.', 'Leave it be.'],
+    description:
+      'A light Dijon coat, lemon and a little dill. Start it skin-side down and resist turning it — that skin is what holds the fillet together.',
     family: 'fish',
   },
   {
@@ -245,6 +292,9 @@ export const cuts: Cut[] = [
     rest: 'About 3 minutes',
     timing:
       'For fillets about 1 inch thick. A lightly oiled fish basket supports cod’s delicate flakes.',
+    headline: ['Delicate.', 'Use a basket.'],
+    description:
+      'Cod flakes apart if you look at it wrong. A lightly oiled basket is what gets the fillet from the grate to the plate in one piece.',
     family: 'fish',
   },
   {
@@ -262,6 +312,9 @@ export const cuts: Cut[] = [
     rest: 'About 3 minutes',
     timing:
       'For fillets about 1–1½ inches thick. Halibut is lean; check early and lift with a wide spatula.',
+    headline: ['Meaty fillet.', 'Check it early.'],
+    description:
+      'Firm enough to handle the grates, lean enough to dry out fast. The same Dijon and lemon, lifted off the second it reaches temperature.',
     family: 'fish',
   },
 ];
@@ -535,6 +588,7 @@ export function buildRecipe(
     throw new Error('Weight outside supported range');
   const base = recipes.find((r) => r.id === cut.baseId)!;
   const f = cut.family;
+  const midName = cut.midSentenceName ?? cut.name.toLowerCase();
   const scale = weightLb / cut.baseLb;
   const sizeLabel =
     numberLabel(fromLb(weightLb, weightUnit)) + ' ' + weightUnit;
@@ -562,7 +616,7 @@ export function buildRecipe(
   const ingredients = [
     {
       title: 'Your meat & salt',
-      items: [sizeLabel + ' ' + cut.name.toLowerCase(), saltLine],
+      items: [sizeLabel + ' ' + midName, saltLine],
     },
     ...seasonings[group].map((g) => ({
       title: g.title,
@@ -802,12 +856,12 @@ export function buildRecipe(
       : f === 'shoulder'
         ? base.title
         : f === 'steak'
-          ? 'Pepper & garlic ' + cut.name.toLowerCase()
+          ? 'Pepper & garlic ' + midName
           : f === 'chop' || f === 'tenderloin'
-            ? 'Smoky Dijon ' + cut.name.toLowerCase()
+            ? 'Smoky Dijon ' + midName
             : cut.protein === 'Poultry'
-              ? 'Smoky mustard ' + cut.name.toLowerCase()
-              : 'Dijon & lemon ' + cut.name.toLowerCase();
+              ? 'Smoky mustard ' + midName
+              : 'Dijon & lemon ' + midName;
   const portionLb =
     f === 'tri-tip'
       ? 0.45
@@ -825,24 +879,8 @@ export function buildRecipe(
     id: cut.id,
     protein: cut.protein,
     title,
-    description:
-      f === 'tri-tip'
-        ? 'Coffee, ancho, and a thin mustard coat, with a cold chipotle-lime sauce on the side. Dark crust, bright finish.'
-        : f === 'shoulder'
-          ? base.description
-          : f === 'steak'
-            ? 'Pepper, garlic butter, and a crust worth waiting for. Seasoning scaled to your cut.'
-            : cut.protein === 'Pork'
-              ? 'A mustard binder, smoky seasoning, and a juicy finish for this lean cut.'
-              : base.description,
-    headline:
-      f === 'tri-tip'
-        ? ['Dark crust.', 'Bright finish.']
-        : f === 'shoulder'
-          ? base.headline
-          : cut.protein === 'Pork'
-            ? ['Good crust.', 'Juicy center.']
-            : base.headline,
+    description: cut.description,
+    headline: cut.headline,
     cut,
     weightLb,
     sizeLabel,

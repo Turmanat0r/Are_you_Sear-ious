@@ -570,3 +570,64 @@ test('scaling the tri-tip moves the shopping list but never the clock', () => {
   assert.ok(Number(big.serves) > Number(base.serves));
   assert.ok(!/NaN|undefined|Infinity/.test(JSON.stringify(big)));
 });
+
+test('every cut gets its own headline and blurb, not its protein’s', () => {
+  const headlines = new Set();
+  const descriptions = new Set();
+  const titles = new Set();
+
+  for (const cut of cuts) {
+    const recipe = buildRecipe(cut.id, cut.baseLb);
+
+    // The regression this guards: copy used to be chosen by protein, so all
+    // three fish and both lean pork cuts shipped identical text.
+    headlines.add(recipe.headline.join(' '));
+    descriptions.add(recipe.description);
+    titles.add(recipe.title);
+
+    assert.equal(recipe.headline.length, 2, `${cut.id} headline is two parts`);
+    for (const part of recipe.headline)
+      assert.match(part, /\S/, `${cut.id} headline part must not be blank`);
+    assert.ok(
+      recipe.description.length > 40,
+      `${cut.id} needs a real description`,
+    );
+    assert.ok(
+      /[.!?]$/.test(recipe.description),
+      `${cut.id} description should be a finished sentence`,
+    );
+  }
+
+  assert.equal(headlines.size, cuts.length, 'every cut needs its own headline');
+  assert.equal(descriptions.size, cuts.length, 'every cut needs its own blurb');
+  assert.equal(titles.size, cuts.length, 'every cut needs its own title');
+});
+
+test('titles keep proper nouns capitalised', () => {
+  // Titles lowercase the cut name, which is right for "ribeye steak" and
+  // wrong for "New York strip". midSentenceName is the escape hatch.
+  const strip = buildRecipe('strip-steak', 2);
+  assert.match(strip.title, /New York strip/);
+  assert.ok(!/new york/.test(strip.title), strip.title);
+  assert.match(strip.ingredients[0].items[0], /New York strip/);
+
+  for (const cut of cuts) {
+    const recipe = buildRecipe(cut.id, cut.baseLb);
+    const expected = cut.midSentenceName ?? cut.name.toLowerCase();
+
+    // Every cut interpolates the name into its shopping line, so this half
+    // covers all thirteen.
+    assert.ok(
+      recipe.ingredients[0].items[0].includes(expected),
+      `${cut.id}: shopping line should carry "${expected}"`,
+    );
+
+    // Only the template families build a title from the name. The shoulder
+    // and the tri-tip supply their own, so they are exempt by design.
+    if (cut.family === 'shoulder' || cut.family === 'tri-tip') continue;
+    assert.ok(
+      recipe.title.includes(expected),
+      `${cut.id}: title should carry "${expected}"`,
+    );
+  }
+});
