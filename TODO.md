@@ -1,10 +1,10 @@
 # Needs attention
 
-Live backlog as of 2026-09-07, after the tri-tip addition. Ordered by what
+Live backlog as of 2026-09-08, after the walleye addition. Ordered by what
 actually bites you first, not by how hard it is. `AUDIT.md` has the full
 review record; this is the shorter list of what is still open.
 
-Current state: lint 0 errors · strict typecheck passes · 34 tests pass · build
+Current state: lint 0 errors · strict typecheck passes · 39 tests pass · build
 passes · 0 npm advisories · client CSS 197.6 KB, of which 119.5 KB is the five
 base64-inlined font faces and 78.1 KB is actual stylesheet.
 
@@ -20,7 +20,7 @@ vs `/meals/`), inline favicon, inlined fonts — and no script in the repo
 performs that conversion.
 
 It is also where the bloat lives: it bundles **1,767 lucide icons where the
-source build emits 27**, and embeds Cyrillic and Vietnamese font subsets the
+source build emits 26**, and embeds Cyrillic and Vietnamese font subsets the
 source never asks for. It now predates three sessions of work, so it has none of
 the burner levels, substitutions, breakpoints, salt volumes, or the tri-tip —
 and `images/` has no `coffee-ancho-tri-tip.webp` for it to load.

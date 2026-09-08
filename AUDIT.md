@@ -330,3 +330,66 @@ method reaches the rendered output.
 is not a regression — the live site already served 196 KB — it is that the
 earlier figure counted only the stylesheet and not the 119.5 KB of base64
 font faces inlined into the same file. Both numbers are now stated separately.
+
+## Session addendum — 2026-09-08, the walleye
+
+Second supplied recipe, and the first that arrived as a plain text file with a
+provenance package rather than a duplicate copy of the app. Much easier to work
+with.
+
+### Provenance was verified, not accepted
+
+The package asserted SHA-256 hashes, dimensions, and a conversion recipe. All of
+it was re-checked before anything was committed:
+
+- Both claimed hashes match the delivered files.
+- The WebP is exactly 1200×800 and 116,780 bytes, inside the 250 KB budget.
+- The original PNG carries a C2PA `caBX` manifest (23,617 bytes) with the
+  `c2pa`, `OpenAI` and `trainedAlgorithmicMedia` markers; the shipped WebP is a
+  bare `VP8 ` chunk with the manifest gone, consistent with the other thirteen.
+- Re-running the documented Sharp pipeline reproduces the delivered WebP byte
+  for byte.
+
+The supplied `(2)`-suffixed files are byte-identical iCloud sync duplicates and
+were ignored rather than committed.
+
+### A new family, because it is genuinely a different cook
+
+The walleye shares the Fish protein with salmon, cod and halibut, but nothing
+else: no mustard binder, no flipping, no direct heat, no basket. Reusing the
+`fish` family would have handed it a Dijon-and-dill ingredient list and steps
+telling the cook to turn it. So it gets `family: 'foil-boat'`, the way the
+tri-tip got its own.
+
+A test now asserts none of the fish template leaks in — no Dijon, no dill, no
+fish basket — because that is the failure mode a future refactor would produce.
+
+### The salt line was lying to this recipe
+
+Two wordings were wrong once a foil boat existed:
+
+- It said **"not again in the rub"**. This recipe has no rub. Worse, its actual
+  double-salting risk is the lemon-pepper jar, which is salt-first in most
+  supermarket blends. The line now names that risk instead, and the first step
+  sends the cook to the label before they measure anything.
+- It said **"total for the meat"** on a fillet. Now "fish" for the Fish protein,
+  which also fixes the three fish cuts that had the same wording all along.
+
+The dry-brine salt is still measured and still shown, because that is the app's
+contract and every cut asserts it. What changed is that the walleye now says
+plainly when *not* to use it.
+
+### A test encoded an assumption that stopped being true
+
+The per-cut suite asserted every recipe contains "mustard", which held for
+thirteen cuts because every template used a mustard binder. The walleye's whole
+premise is that it has no binder. The assertion was narrowed rather than
+deleted: the other thirteen still must carry it, and the exemption says why.
+
+### Correction carried into CLAUDE.md
+
+`CLAUDE.md` stated the USDA rule as "whole beef/pork/fish 145°F with a 3-minute
+rest". The rest requirement applies to whole cuts of beef and pork, **not** to
+fish. The supplied recipe was right and the project instruction was wrong; it
+has been fixed, and the walleye's `finish` says fish needs no rest at this
+target.

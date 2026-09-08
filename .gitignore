@@ -55,3 +55,11 @@ yarn-error.log*
 # vite.config.ts imported it at build time. That config and that file were both
 # removed when the Cloudflare/vinext stack was dropped, so there is nothing to
 # keep unignored any more.
+
+# Extracted contribution packages. The archives themselves are already
+# ignored above; their unpacked contents do not belong in history either.
+/are-you-sear-ious-image-originals/
+/are-you-sear-ious-tri-tip-complete/
+
+# iCloud creates byte-identical "name (2).ext" copies while syncing.
+* (2).*

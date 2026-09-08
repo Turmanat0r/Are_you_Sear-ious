@@ -44,7 +44,8 @@ export type Cut = {
     | 'breast'
     | 'drumstick'
     | 'fish'
-    | 'tri-tip';
+    | 'tri-tip'
+    | 'foil-boat';
   /** Set only on cuts adapted from a published recipe. */
   attribution?: Attribution;
 };
@@ -317,6 +318,33 @@ export const cuts: Cut[] = [
       'Firm enough to handle the grates, lean enough to dry out fast. The same Dijon and lemon, lifted off the second it reaches temperature.',
     family: 'fish',
   },
+  {
+    id: 'lemon-pepper-walleye',
+    protein: 'Fish',
+    name: 'Walleye fillets',
+    baseId: 'lemon-salmon',
+    baseLb: 1,
+    minLb: 0.25,
+    maxLb: 8,
+    method: 'Foil boat over indirect heat',
+    grill: [375, 400],
+    internal: [145],
+    time: '8–25 min',
+    // Fish needs no rest at this target; the 3-minute rule is for whole
+    // cuts of beef and pork, not fillets.
+    rest: 'None needed · serve hot',
+    timing:
+      'Thickness decides this one, not weight. About 8–14 minutes for a ¼–½ inch fillet, 12–20 for ½–¾ inch, and 16–25 for ¾–1 inch. Start checking well before the low end.',
+    headline: ['Foil boat.', 'Nothing to flip.'],
+    description:
+      'Butter and lemon pepper in a shallow open foil boat, sat over an unlit burner with the lid down. The boat holds a delicate fillet together and keeps the butter where it belongs.',
+    family: 'foil-boat',
+    attribution: {
+      label: 'Fishing Addiction Gear’s foil-grilled walleye',
+      url: 'https://fishingaddictiongear.com/blogs/fishin-talk/walleye-recipe-grilled-in-foil',
+      note: 'Not affiliated with, endorsed by, or sponsored by any publisher named here. Written independently rather than adapted: the closest published method seals its foil into a packet and seasons it differently, while this keeps the boat open over an unlit zone and uses lemon pepper. Lake of the Woods’ “Walleye Delight” was the nearest flavour reference. The illustration is AI-generated, and the finish follows USDA guidance rather than the lower figure in the older texture research.',
+    },
+  },
 ];
 export const defaultCuts: Record<Protein, string> = {
   Beef: 'pepper-ribeye',
@@ -337,7 +365,8 @@ type SeasoningGroup =
   | 'leanPork'
   | 'chicken'
   | 'fish'
-  | 'triTip';
+  | 'triTip'
+  | 'foilBoat';
 const seasonings: Record<SeasoningGroup, Group[]> = {
   shoulder: [
     {
@@ -472,6 +501,28 @@ const seasonings: Record<SeasoningGroup, Group[]> = {
       ],
     },
   ],
+  // No mustard binder and no dry rub: the boat is the technique, and the
+  // butter is what carries the seasoning onto the fish.
+  foilBoat: [
+    {
+      title: 'Butter & seasoning',
+      items: [
+        m(2, 'tbsp', 'unsalted butter, cut into small pieces'),
+        m(1, 'tsp', 'lemon-pepper seasoning; read the label for salt'),
+        m(
+          1,
+          'tsp',
+          'fresh lemon juice, added on the plate rather than the grill',
+        ),
+      ],
+    },
+    {
+      title: 'The boat itself',
+      items: [
+        'Heavy-duty aluminium foil, doubled, sides folded up 1–2 inches with the corners crimped tight',
+      ],
+    },
+  ],
 };
 export function fromLb(lb: number, unit: WeightUnit) {
   return unit === 'lb' ? lb : lb * 0.45359237;
@@ -600,19 +651,27 @@ export function buildRecipe(
     salt +
     ' (no scale? about ' +
     saltVolumes(saltGrams) +
-    ') total for the meat — use once, not again in the rub';
+    ') total for the ' +
+    (cut.protein === 'Fish' ? 'fish' : 'meat') +
+    // The stock warning points at the rub, which the foil boat does not
+    // have. Its real double-salting risk is the seasoning jar instead.
+    (f === 'foil-boat'
+      ? ' — use once, and only if your lemon pepper is salt-free'
+      : ' — use once, not again in the rub');
   const group: SeasoningGroup =
-    f === 'tri-tip'
-      ? 'triTip'
-      : f === 'shoulder'
-        ? 'shoulder'
-        : f === 'steak'
-          ? 'steak'
-          : f === 'chop' || f === 'tenderloin'
-            ? 'leanPork'
-            : f === 'fish'
-              ? 'fish'
-              : 'chicken';
+    f === 'foil-boat'
+      ? 'foilBoat'
+      : f === 'tri-tip'
+        ? 'triTip'
+        : f === 'shoulder'
+          ? 'shoulder'
+          : f === 'steak'
+            ? 'steak'
+            : f === 'chop' || f === 'tenderloin'
+              ? 'leanPork'
+              : f === 'fish'
+                ? 'fish'
+                : 'chicken';
   const ingredients = [
     {
       title: 'Your meat & salt',
@@ -634,17 +693,19 @@ export function buildRecipe(
           ? 'Whole beef cuts — steaks, roasts and chops alike: at least 145°F before removal, followed by a 3-minute rest.'
           : 'Whole pork: at least 145°F before removal, followed by a 3-minute rest.';
   const finish =
-    f === 'tri-tip'
-      ? 'Reach at least 145°F in the thickest part before it leaves the grill, then rest 10–15 minutes. Three minutes is the safety minimum; the rest of it is for the slicing.'
-      : f === 'shoulder'
-        ? 'Pull-apart target: 195–205°F. Probe several thick spots; finish when it slides in with almost no resistance.'
-        : f === 'thigh' || f === 'drumstick'
-          ? 'For tender dark meat, aim for 175–185°F. The poultry safety minimum is 165°F.'
-          : cut.protein === 'Poultry'
-            ? 'Reach 165°F in the thickest part of every breast.'
-            : cut.protein === 'Fish'
-              ? 'Reach 145°F at the center of the thickest part.'
-              : 'Reach 145°F before removing from heat, then rest at least 3 minutes.';
+    f === 'foil-boat'
+      ? 'Every fillet reaches 145°F in its thickest part before it leaves the boat. Flaking is a clue, not a reading, and fish needs no rest at this target.'
+      : f === 'tri-tip'
+        ? 'Reach at least 145°F in the thickest part before it leaves the grill, then rest 10–15 minutes. Three minutes is the safety minimum; the rest of it is for the slicing.'
+        : f === 'shoulder'
+          ? 'Pull-apart target: 195–205°F. Probe several thick spots; finish when it slides in with almost no resistance.'
+          : f === 'thigh' || f === 'drumstick'
+            ? 'For tender dark meat, aim for 175–185°F. The poultry safety minimum is 165°F.'
+            : cut.protein === 'Poultry'
+              ? 'Reach 165°F in the thickest part of every breast.'
+              : cut.protein === 'Fish'
+                ? 'Reach 145°F at the center of the thickest part.'
+                : 'Reach 145°F before removing from heat, then rest at least 3 minutes.';
   const prepTime =
     f === 'tri-tip'
       ? '4–24 hr ahead, optional'
@@ -652,24 +713,28 @@ export function buildRecipe(
         ? '12–24 hr ahead, optional'
         : cut.protein === 'Poultry'
           ? '2–12 hr ahead, optional'
-          : f === 'fish'
+          : f === 'fish' || f === 'foil-boat'
             ? 'Just before cooking'
             : '2–4 hr ahead, optional';
   const steps: [Step, ...Step[]] = [
     {
       title:
-        f === 'fish'
-          ? 'Season lightly'
-          : f === 'tri-tip'
-            ? 'Map the grain. Salt once.'
-            : 'Salt ahead. Mustard later.',
+        f === 'foil-boat'
+          ? 'Read the label, then salt'
+          : f === 'fish'
+            ? 'Season lightly'
+            : f === 'tri-tip'
+              ? 'Map the grain. Salt once.'
+              : 'Salt ahead. Mustard later.',
       cue: prepTime,
       body:
-        f === 'fish'
-          ? `Pat the fish dry and remove pin bones. Use the listed ${salt} across the batch, then brush the flesh with Dijon and add the pepper, garlic, and zest. Keep it refrigerated until the grill is ready.`
-          : f === 'tri-tip'
-            ? `Before anything goes on the meat, find where the grain changes direction and note it — the rub will hide it, and you need it again at the end. Trim silverskin and hard fat without cutting away good meat. Spread the listed ${salt} over the whole roast and refrigerate it uncovered on a rack for 4–24 hours if you have the time. That is the entire salt allowance for the meat, not an extra brine on top of the rub. Cooking now instead? Apply the same salt just before the mustard. For enhanced, injected, koshered, or already-salted beef, skip this added salt.`
-            : `Use the listed ${salt} once across the meat. Refrigerate on a rack ${f === 'shoulder' ? '12–24 hours' : cut.protein === 'Poultry' ? '2–12 hours' : '2–4 hours'} if time allows. Just before grilling, pat any wet patches dry, add a thin mustard coat, and apply the salt-free rub. If cooking immediately, apply the same measured salt just before the mustard and rub. For injected, enhanced, koshered, or already salted meat, skip the added dry-brine salt.`,
+        f === 'foil-boat'
+          ? `Thaw the fillets in the refrigerator and follow whatever the packet says — vacuum-packed fish usually wants opening before it thaws. Pat them dry and run a finger over each one for pin bones. Now read your lemon-pepper label, because it decides what happens next: most supermarket blends list salt first, and using one of those on top of the listed ${salt} will over-salt a thin fillet badly. Use the full measured salt only if your blend is salt-free. Otherwise cut it right back, or leave it out and let the seasoning do the job. Skin can stay on; it goes down against the foil. Keep everything cold until the grill is ready.`
+          : f === 'fish'
+            ? `Pat the fish dry and remove pin bones. Use the listed ${salt} across the batch, then brush the flesh with Dijon and add the pepper, garlic, and zest. Keep it refrigerated until the grill is ready.`
+            : f === 'tri-tip'
+              ? `Before anything goes on the meat, find where the grain changes direction and note it — the rub will hide it, and you need it again at the end. Trim silverskin and hard fat without cutting away good meat. Spread the listed ${salt} over the whole roast and refrigerate it uncovered on a rack for 4–24 hours if you have the time. That is the entire salt allowance for the meat, not an extra brine on top of the rub. Cooking now instead? Apply the same salt just before the mustard. For enhanced, injected, koshered, or already-salted beef, skip this added salt.`
+              : `Use the listed ${salt} once across the meat. Refrigerate on a rack ${f === 'shoulder' ? '12–24 hours' : cut.protein === 'Poultry' ? '2–12 hours' : '2–4 hours'} if time allows. Just before grilling, pat any wet patches dry, add a thin mustard coat, and apply the salt-free rub. If cooking immediately, apply the same measured salt just before the mustard and rub. For injected, enhanced, koshered, or already salted meat, skip the added dry-brine salt.`,
     },
   ];
   if (f === 'shoulder')
@@ -731,6 +796,34 @@ export function buildRecipe(
         title: 'Rest, rotate, and slice both grains',
         cue: 'Rest 10–15 min · 3 minutes is the safety minimum',
         body: 'Rest the roast on a clean board for 10–15 minutes, tented loosely if you like. Now use the note you made at the start: a tri-tip’s fibres run two different ways, so cut the roast apart where the grain turns, rotate each piece, and slice each one thinly across its own fibres. Slicing the whole triangle one way leaves half of it chewy. Serve the cold sauce beside the beef, not over it. Refrigerate leftovers within 2 hours, or within 1 hour if it is above 90°F outside.',
+      },
+    );
+  else if (f === 'foil-boat')
+    steps.push(
+      {
+        title: 'Build the boat',
+        cue: 'About 5 min · leave the top open',
+        body: 'Double a sheet of heavy-duty foil, fold the sides up an inch or two and crimp the corners tight so melted butter cannot run out. Keep the bottom flat and the top open. A sealed packet steams the fish, which is a different cook and not this one. Grease the base with a little of the measured butter and lay the fillets in a single layer, skin down if they have it. Fold any very thin tail back under itself so it does not overcook before the rest.',
+      },
+      {
+        title: 'Butter and season',
+        cue: 'Lemon juice waits for the plate',
+        body: 'Scatter the lemon pepper evenly over the fish, then dot the rest of the butter across the fillets. That is the whole seasoning — no binder, no rub, nothing to press on. Hold the fresh lemon juice back until the fish is cooked and plated; adding it now just dilutes the butter and does nothing for the flavour.',
+      },
+      {
+        title: 'Set an unlit zone for the boat',
+        cue: 'Grill ambient: 375–400°F · lid closed',
+        body: 'Follow your grill’s lighting sequence, preheat and clean the grates. You choose which burners are lit, but keep at least one going and leave an unlit area big enough for the whole boat. Read the air beside the fish at grate level and settle it at 375–400°F — the lid gauge measures somewhere else entirely. Never lay foil across the whole grate or block the vents.',
+      },
+      {
+        title: 'Lid down, boat open',
+        cue: 'First check at 6–12 min by thickness',
+        body: 'Sit the boat over the unlit area and close the lid. Nothing gets flipped. Check at 6 minutes for a thin fillet, 8 for a medium one, 12 for anything near an inch. Rotate the boat if one end is running ahead. Spoon a little of the melted butter back over the top if you like. If the butter is browning hard or drying out, move the boat further from the lit burners and check the ambient temperature before you touch the fish.',
+      },
+      {
+        title: 'Probe every fillet, then serve',
+        cue: 'Internal: 145°F in each one',
+        body: 'Slide the probe in sideways through the thickest part of each fillet, keeping it clear of the foil, which will read hot. Every fillet needs 145°F before it comes off — easy flaking is a hint, not a measurement. Support the boat underneath with a wide spatula and slide the whole thing onto a rimmed tray; use gloves and mind the hot butter. Lift the fish onto plates, spoon the butter over, and add the lemon juice now. Fish needs no resting time at this target. Refrigerate leftovers within 2 hours, or within 1 hour if it is above 90°F out.',
       },
     );
   else if (f === 'steak') {
@@ -851,27 +944,31 @@ export function buildRecipe(
       },
     );
   const title =
-    f === 'tri-tip'
-      ? 'Coffee–ancho tri-tip with chipotle-lime sauce'
-      : f === 'shoulder'
-        ? base.title
-        : f === 'steak'
-          ? 'Pepper & garlic ' + midName
-          : f === 'chop' || f === 'tenderloin'
-            ? 'Smoky Dijon ' + midName
-            : cut.protein === 'Poultry'
-              ? 'Smoky mustard ' + midName
-              : 'Dijon & lemon ' + midName;
+    f === 'foil-boat'
+      ? 'Butter & lemon-pepper ' + midName
+      : f === 'tri-tip'
+        ? 'Coffee–ancho tri-tip with chipotle-lime sauce'
+        : f === 'shoulder'
+          ? base.title
+          : f === 'steak'
+            ? 'Pepper & garlic ' + midName
+            : f === 'chop' || f === 'tenderloin'
+              ? 'Smoky Dijon ' + midName
+              : cut.protein === 'Poultry'
+                ? 'Smoky mustard ' + midName
+                : 'Dijon & lemon ' + midName;
   const portionLb =
-    f === 'tri-tip'
-      ? 0.45
-      : f === 'shoulder'
-        ? 0.6
-        : cut.protein === 'Poultry' && f !== 'breast'
-          ? 0.75
-          : cut.protein === 'Fish'
-            ? 0.375
-            : 0.5;
+    f === 'foil-boat'
+      ? 0.5
+      : f === 'tri-tip'
+        ? 0.45
+        : f === 'shoulder'
+          ? 0.6
+          : cut.protein === 'Poultry' && f !== 'breast'
+            ? 0.75
+            : cut.protein === 'Fish'
+              ? 0.375
+              : 0.5;
   const photo = '/meals/' + cut.id + '.webp';
   const photoCaption = cut.name;
   return {
@@ -908,11 +1005,13 @@ export function buildRecipe(
             ? 'Apple, optional'
             : 'No smoke needed',
     tip:
-      f === 'tri-tip'
-        ? 'Find the grain before the rub hides it, keep the thin end away from the hottest burner, and serve the sauce cold and beside the meat.'
-        : f === 'shoulder'
-          ? base.tip
-          : 'Ingredient amounts scale with total raw weight. Cooking time depends on individual thickness, airflow, and the actual heat near the food.',
+      f === 'foil-boat'
+        ? 'Check the lemon-pepper label before you salt, keep the boat open rather than sealed, and probe every fillet. Thickness sets the time here, not weight.'
+        : f === 'tri-tip'
+          ? 'Find the grain before the rub hides it, keep the thin end away from the hottest burner, and serve the sauce cold and beside the meat.'
+          : f === 'shoulder'
+            ? base.tip
+            : 'Ingredient amounts scale with total raw weight. Cooking time depends on individual thickness, airflow, and the actual heat near the food.',
     attribution: cut.attribution,
   };
 }
@@ -931,6 +1030,13 @@ export const zoneScience: Science = {
     'Choose the burners that fit your grill. Measure beside the food instead of treating knob position as a temperature.',
 };
 export function cookingScience(cut: Cut): Science {
+  if (cut.family === 'foil-boat')
+    return {
+      title: 'An open boat is not a sealed packet',
+      body: 'The foil is doing the job of a small pan. It holds a fragile fillet together and keeps the butter and the cooking juices against the fish rather than letting them drip into the burners. Leaving the top open lets steam escape as it forms. Crimp it shut and the fish cooks in its own trapped moisture instead, which is much closer to steaming than to grilling and gives a softer, wetter surface.',
+      takeaway:
+        'Fold the sides up, leave the top open, and let the closed grill lid be the thing that surrounds it with heat.',
+    };
   if (cut.family === 'tri-tip')
     return {
       title: 'This crust will lie to you about doneness',
@@ -1544,6 +1650,34 @@ export const swapSets: SwapSet[] = [
         note: 'Richer and much less tangy, so add extra lime to bring the sharpness back.',
       },
       { use: 'Buttermilk and mayonnaise, half each', amount: 'Same amount' },
+    ],
+  },
+  {
+    match: 'lemon-pepper',
+    label: 'Lemon-pepper seasoning',
+    options: [
+      {
+        use: 'Lemon zest with coarse black pepper',
+        amount: 'About ½ tsp zest per tsp, plus pepper to taste',
+        note: 'Brighter than the jar and reliably salt-free, so the measured salt stays as listed.',
+      },
+      {
+        use: 'Salt-free lemon-pepper blend',
+        amount: 'Same amount',
+        note: 'The straight swap. This is the version the measured salt above assumes.',
+      },
+      {
+        use: 'Salted lemon-pepper blend',
+        amount: 'Same amount',
+        addsSalt: true,
+        note: 'Most supermarket jars are this. Salt is usually the first ingredient on the label.',
+      },
+      {
+        use: 'Old Bay or a seafood blend',
+        amount: 'Same amount',
+        addsSalt: true,
+        note: 'A different direction entirely — celery salt and paprika rather than citrus — but it suits walleye.',
+      },
     ],
   },
   {

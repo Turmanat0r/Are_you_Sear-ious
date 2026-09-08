@@ -1,6 +1,6 @@
 # Are You Sear-ious
 
-A grilling app: 13 cuts across beef, pork, poultry and fish. Pick a cut and a
+A grilling app: 14 cuts across beef, pork, poultry and fish. Pick a cut and a
 weight, it scales the seasoning, plans your burner zones, estimates cook time
 and walks you through it. Static site, no backend, no network calls at all.
 
@@ -16,7 +16,7 @@ are-you-sear-ious-source/are-you-sear-ious-source/     <- run npm here
 
 | File | What lives in it |
 | --- | --- |
-| `app/cook-config.ts` | The 13 cuts, ingredient scaling, recipe assembly, burner heat model, substitutions. The big one. |
+| `app/cook-config.ts` | The 14 cuts, ingredient scaling, recipe assembly, burner heat model, substitutions. The big one. |
 | `app/recipes.ts` | Four base recipes, type definitions, °F→°C conversion |
 | `app/page.tsx` | Page, cook mode, print sheet, saved recipes |
 | `app/grill-tools.tsx` | Weight/cut controls, temperature table, burner planner |
@@ -24,7 +24,7 @@ are-you-sear-ious-source/are-you-sear-ious-source/     <- run npm here
 | `public/meals/<cut-id>.webp` | One photo per cut, exactly 1200×800, under 250 KB |
 
 `index.html` and `images/` at the repo root are a **stale offline build**. They
-predate several sessions and are missing a whole recipe. Don't treat them as
+predate several sessions and are missing recipes. Don't treat them as
 current; see TODO.md item 1.
 
 ## Commands
@@ -33,7 +33,7 @@ Run from the source folder above.
 
 ```
 npm run dev         # plain Vite dev server
-npm test            # 36 tests, node:test
+npm test            # 39 tests, node:test
 npm run typecheck   # tsc --noEmit, strict + noUncheckedIndexedAccess
 npm run lint        # oxlint
 npm run format      # oxfmt
@@ -77,9 +77,10 @@ This is the usual request. In `app/cook-config.ts` unless stated:
 
 ## Non-negotiables
 
-- **USDA temperatures win.** Poultry 165°F, whole beef/pork/fish 145°F with a
-  3-minute rest. If a source recipe says lower, raise it and pin it with a
-  test. The tri-tip already does this.
+- **USDA temperatures win.** Poultry 165°F; whole beef and pork 145°F with a
+  3-minute rest; fish 145°F with **no** required rest — the 3-minute rule is
+  for whole cuts of meat, not fillets. If a source recipe finishes lower,
+  raise it and pin it with a test. The tri-tip and the walleye both do.
 - **The disclosures stay.** AI-photo badge, safety banner, print-sheet notices,
   bottom legal note. Tests assert each by substance, not wording.
 - **No network calls, ever.** The app claims it makes none, and a test greps

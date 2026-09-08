@@ -7,8 +7,8 @@ This project combines four categories of material with different terms. The
 | --- | --- |
 | Application source and build output | MIT — see [`LICENSE`](LICENSE) |
 | Bundled third-party libraries and fonts | Their own licenses — see [`THIRD-PARTY-LICENSES.txt`](THIRD-PARTY-LICENSES.txt) |
-| The meal images (12 in `images/`, 13 in `public/meals/`) | AI-generated — see below |
-| One recipe adapted from a published source | Credited — see below |
+| The meal images (13 in `images/`, 14 in `public/meals/`) | AI-generated — see below |
+| Recipes drawn from published sources | Credited — see below |
 
 ## Third-party software and fonts
 
@@ -37,11 +37,11 @@ compliance purposes, generate it from `package-lock.json` rather than from
 
 ## The meal images
 
-Every WebP meal image — 13 in `public/meals/` in the source project, and the 12
+Every WebP meal image — 14 in `public/meals/` in the source project, and the 13
 in `images/` that the older offline build loads — was **generated with an AI
 image model**, not photographed and not obtained from a stock library. No stock
 license was purchased and no photographer attribution is owed. Full details,
-including the preserved prompts for 9 of the 13, are in `IMAGE-PROVENANCE.md`
+including the preserved prompts for 10 of the 14, are in `IMAGE-PROVENANCE.md`
 and `image-provenance.json` in the source archive.
 
 The counts differ because `images/` belongs to the stale offline `index.html`,
@@ -69,9 +69,13 @@ with metadata retention enabled or keep this notice alongside any redistribution
 The original PNGs with their manifests intact are preserved in the companion
 `are-you-sear-ious-image-originals` archive.
 
-## Recipes adapted from a published source
+## Recipes drawn from published sources
 
-Twelve of the thirteen recipes are this project's own work. One is not.
+Twelve of the fourteen recipes are this project's own work, owing nothing to
+anyone. Two have a relationship with published material, and the two are not
+the same kind of relationship.
+
+### Adapted: the tri-tip
 
 **Coffee–ancho tri-tip with chipotle-lime sauce** is adapted from Jamie
 Purviance's tri-tip roast published by Weber, at
@@ -99,6 +103,27 @@ What was taken and what was not:
 No affiliation with, or endorsement by, Weber-Stephen Products LLC is claimed or
 implied. Removing the adaptation is a one-line change: delete the
 `coffee-ancho-tri-tip` entry from `cuts` in `app/cook-config.ts`.
+
+### Independently written, with research credits: the walleye
+
+**Butter & lemon-pepper walleye** was written for this app rather than adapted
+from anyone. Two published recipes were consulted while writing it and are
+credited in the app for that reason, not because anything was taken from them:
+
+- *Fishing Addiction Gear*, "Walleye Recipe – Grilled in Foil" — the nearest
+  published method. It **seals** its foil into a packet and seasons it
+  differently; this version keeps the boat open over an unlit zone.
+- *Lake of the Woods*, "Walleye Delight" — the nearest butter-and-lemon-pepper
+  flavour reference.
+
+Nothing was copied from either: not their wording, not their images, and not
+their proportions. The credit is a research citation. No affiliation with or
+endorsement by either publisher is claimed or implied, and neither link is a
+licence to reuse those publishers' photographs or text.
+
+As with the tri-tip, the finish temperature follows current USDA/FDA guidance
+(145°F in every fillet) rather than the lower figure in the older texture
+research that informed the "why it works" note.
 
 ## Food safety information
 
