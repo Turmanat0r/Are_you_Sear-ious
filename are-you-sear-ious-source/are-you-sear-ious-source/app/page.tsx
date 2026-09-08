@@ -144,6 +144,11 @@ function RecipePrint({
       <p>
         {unitText(recipe.finish, unit)} {unitText(recipe.safety, unit)}
       </p>
+      <p className="print-safety">
+        <strong>Temperature decides doneness, not time.</strong> Every duration
+        on this sheet is an estimate. Probe the thickest part and cook to{' '}
+        {temp(recipe.internal, unit)} before the food leaves the grill.
+      </p>
       <h2>Ingredients</h2>
       {recipe.ingredients.map((group) => (
         <section key={group.title}>
@@ -176,6 +181,11 @@ function RecipePrint({
         Safety reference: USDA FSIS Safe Minimum Internal Temperature Chart
         <br />
         {safetySource}
+      </p>
+      <p>
+        Shared as-is with no warranty. The meal photographs on the website are
+        AI-generated illustrations, not photographs of food cooked from these
+        recipes. This sheet makes no record of anything you do.
       </p>
     </article>
   );
@@ -814,7 +824,10 @@ export default function Home() {
                   height="800"
                   decoding="async"
                 />
-                <span className="photo-caption">{recipe.photoCaption}</span>
+                <span className="photo-caption">
+                  {recipe.photoCaption}
+                  <span className="photo-ai">AI illustration</span>
+                </span>
               </article>
               <aside className="temp-card">
                 <p className="eyebrow">{recipe.cut.name.toUpperCase()}</p>
@@ -928,6 +941,14 @@ export default function Home() {
                 <Wind size={17} /> {recipe.wood}
               </span>
             </div>
+            <p className="safety-banner">
+              <TriangleAlert size={17} />
+              <span>
+                <strong>Temperature decides doneness, not time.</strong> Every
+                duration here is an estimate. Probe the thickest part and cook
+                to {temp(recipe.internal, unit)} before it leaves the grill.
+              </span>
+            </p>
             <p className="timing-note">{recipe.timingNote}</p>
             <div className="recipe-columns">
               <aside className="ingredients">

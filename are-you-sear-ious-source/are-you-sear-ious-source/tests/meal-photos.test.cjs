@@ -119,6 +119,25 @@ test('the standing disclaimer and its claims stay on the page', () => {
   assert.match(page, /no warranty/i, 'no-warranty notice');
   assert.match(page, /makes no network requests/i, 'privacy claim');
 
+  // These three carry the disclosure at the point of use, not just at the
+  // foot of the page, and are the ones most likely to be lost in a redesign.
+  assert.match(page, /photo-ai/, 'AI badge on the meal photo');
+  assert.match(page, /AI illustration/, 'AI badge copy');
+  assert.match(page, /safety-banner/, 'safety banner in the recipe section');
+  assert.match(
+    page,
+    /Temperature decides doneness, not time/,
+    'the safety banner must lead with temperature over time',
+  );
+  assert.match(page, /print-safety/, 'safety line on the printed sheet');
+  // The printed sheet leaves the site, so it repeats both disclosures.
+  const print = page.slice(
+    page.indexOf('function RecipePrint'),
+    page.indexOf('function CookMode'),
+  );
+  assert.match(print, /AI-generated illustrations/, 'print AI disclosure');
+  assert.match(print, /no warranty/i, 'print warranty disclaimer');
+
   // The privacy claim above is only honest while it stays true.
   for (const file of [
     'page.tsx',
