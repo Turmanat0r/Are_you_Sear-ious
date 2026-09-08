@@ -1,10 +1,9 @@
 /**
- * Entry point for the standalone static build.
+ * Entry point.
  *
- * The hosted app renders through vinext, whose root layout depends on
- * `next/font/google`. This build skips that layout and mounts the page
- * directly, so the bundle carries no framework-server code. Fonts come from
- * app/fonts.css instead, which embeds them and needs no network.
+ * The app is a client-rendered single page: this mounts it into the shell in
+ * standalone/index.html. Fonts are embedded in app/fonts.css, so nothing here
+ * needs a network at runtime.
  */
 import { StrictMode } from 'react';
 import { createRoot } from 'react-dom/client';
