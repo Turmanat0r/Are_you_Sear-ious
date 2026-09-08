@@ -245,3 +245,88 @@ sandbox. Lint results above come from the same config with `typeAware` disabled;
 work on a normal workstation and in CI. Running the project from an
 iCloud-synced folder is a plausible contributor and is worth avoiding for a
 repository anyway.
+
+## Session addendum — 2026-09-07, after a first look on a real phone
+
+The first visual check of this project finally happened, on a phone. One layout
+defect was reported and fixed; two features were added and given the same
+treatment as the rest.
+
+### The burner diagram reflowed when it should not have
+
+A 3-burner grill rendered as 2-above-1 below 768px, because the diagram used
+`repeat(auto-fit, minmax(112px, 1fr))` on narrow screens. That rule exists for a
+real reason — six zones cannot each hold a tappable four-way control across a
+phone — but it was applied to every burner count.
+
+The diagram is a top view. Reflowing it stops it matching the grill in front of
+you, which is the only job it has. Fixed by tagging the container with
+`data-count` and keeping counts of 2 and 3 in one row at every width. The
+attribute selector outranks the reflow rules, so a single declaration holds
+across all six breakpoints instead of being repeated in each. Counts of 4 and up
+still reflow.
+
+Zone internals were retuned for the ~80px column that results at 320px: the
+level control stacks 2×2 rather than 4-across, and labels are allowed to wrap.
+
+### Kosher salt now carries a volume equivalent
+
+The salt line was grams only, which is useless at a grill with no scale.
+`saltVolumes()` adds a spoon equivalent, and `spoonLabel()` walks tsp → tbsp →
+cup and rounds to quarter-spoons, because "about 0.94 tsp" helps nobody.
+
+**Both brands are quoted, deliberately.** Diamond Crystal is 2.84 g/tsp and
+Morton is 4.80 g/tsp — a factor of 1.7. A single spoon figure would be wrong by
+about 70% for whoever owns the other box, which is exactly the error the app's
+weigh-don't-spoon design exists to avoid. Grams remain the authoritative figure
+and the line says "no scale?" so the fallback reads as a fallback.
+
+The equivalents live only on the shopping line. The step prose interpolates the
+same `salt` variable and would have become unreadable with them inlined; a test
+now pins that both quote the same weight.
+
+### `measured()` converts upward as well as down (was TODO #14)
+
+Same helper, same session, so it was fixed here: a scaled-up batch rendered
+"12 tbsp butter". It now climbs to "¾ cup" — **but only when the larger unit
+lands on a printable fraction.** A naive conversion turns a perfectly good
+"4 tsp" into "1.33 tbsp", which is worse than what it replaced. `printsAsFraction()`
+shares its rule with `amountLabel()` so the two cannot drift apart.
+
+### The tri-tip
+
+Supplied as a second, restructured copy of the whole app (`src/App.tsx`, its own
+`scripts/build.mjs`). It was not merged. The recipe content was extracted and
+ported onto this project's own types; the duplicate app was discarded.
+
+It is the first cut that is not generated from a template, and the first adapted
+from someone else's published work. Both facts needed handling:
+
+- **Attribution is rendered, not just recorded.** It appears beside the recipe
+  and on the printed sheet, since the sheet is what leaves the site.
+- **The finish temperature was raised and pinned.** The source recipe finishes
+  below USDA guidance for whole beef. This app takes it off at 145°F minimum,
+  and a test asserts no lower figure can reappear in `finish` or `safety`.
+- **The copyright split is documented in `NOTICE.md`** — proportions taken as
+  fact, prose rewritten, with the citation for why that line falls where it does.
+- **The beef safety string was wrong for it.** It read "Whole beef steaks"; a
+  tri-tip is a roast. Now "steaks, roasts and chops alike", which is what the
+  USDA figure actually covers.
+- **Six substitution sets were added** so every rub and sauce ingredient can be
+  swapped. A test asserts *every* tri-tip ingredient resolves one, and that the
+  roast itself never does.
+- **Provenance was verified, not asserted.** The original PNG carries a C2PA
+  `caBX` manifest with OpenAI markers; the shipped WebP is a bare `VP8 ` chunk.
+  The documented Sharp pipeline was re-run and reproduces the delivered file
+  byte for byte. `image-provenance.json` records the hashes.
+
+The cut borrows `pepper-ribeye` as its base-recipe lookup and then replaces every
+field. That is commented at the definition, and a test asserts no ribeye copy or
+method reaches the rendered output.
+
+### Correction to an earlier figure
+
+`TODO.md` recorded "client CSS 71.5 KB". The built stylesheet is 197.6 KB. That
+is not a regression — the live site already served 196 KB — it is that the
+earlier figure counted only the stylesheet and not the 119.5 KB of base64
+font faces inlined into the same file. Both numbers are now stated separately.

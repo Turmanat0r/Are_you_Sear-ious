@@ -1567,6 +1567,22 @@
 .burner-diagram.vertical {
   grid-template-columns: 1fr;
 }
+/* A 2- or 3-burner grill is the common case, and it stays a true
+   left-to-right top view at every width, phones included. Reflowing three
+   zones to 2-above-1 stops the diagram matching the grill in front of you,
+   which is the only job it has. The attribute selector outranks the reflow
+   rules in the media queries below, so this holds through every breakpoint
+   without being repeated in each one. Counts of 4 and up still reflow:
+   six zones cannot hold a tappable four-way control across a phone. */
+.burner-diagram.horizontal[data-count='2'],
+.burner-diagram.horizontal[data-count='3'] {
+  grid-template-columns: repeat(var(--burner-count), minmax(0, 1fr));
+}
+/* Grid children default to min-width:auto, which lets a long label push a
+   track past its share and overflow the diagram once zones get narrow. */
+.burner-zone {
+  min-width: 0;
+}
 
 /* ---- lg and below: laptops ---- */
 @media (max-width: 1023.98px) {
@@ -1584,6 +1600,13 @@
   }
   .burner-zone {
     min-height: 178px;
+  }
+  /* Zones that stay side by side are narrower, so their content stacks
+     taller. Declared here, at the widest phone breakpoint, so it also wins
+     over the shorter heights set at sm, xs and 380px below. */
+  .burner-diagram.horizontal[data-count='2'] .burner-zone,
+  .burner-diagram.horizontal[data-count='3'] .burner-zone {
+    min-height: 182px;
   }
   .ingredient-row {
     grid-template-columns: 1fr;
@@ -1629,6 +1652,12 @@
   .burner-levels {
     grid-template-columns: 1fr 1fr;
   }
+  /* Same reason, but these must also beat the 4-across rule at 380px,
+     where zones of 2 and 3 no longer get the full width to themselves. */
+  .burner-diagram.horizontal[data-count='2'] .burner-levels,
+  .burner-diagram.horizontal[data-count='3'] .burner-levels {
+    grid-template-columns: 1fr 1fr;
+  }
   .burner-zone {
     min-height: 150px;
   }
@@ -1657,6 +1686,19 @@
   }
   .burner-zone {
     min-height: 132px;
+  }
+  /* Three zones across a 320px phone leaves roughly 80px each. Let the
+     wordier labels wrap instead of forcing the track wider. */
+  .burner-diagram.horizontal[data-count='3'] .burner-position,
+  .burner-diagram.horizontal[data-count='3'] .burner-zone small {
+    font-size: 11px;
+    text-align: center;
+  }
+  .burner-diagram.horizontal[data-count='3'] .burner-zone small {
+    white-space: normal;
+  }
+  .burner-diagram.horizontal[data-count='3'] .burner-level {
+    font-size: 10px;
   }
   .timer-digits {
     font-size: 30px;
@@ -1883,4 +1925,30 @@
     margin: 10pt 0;
     font-size: 11pt;
   }
+}
+
+/* ---- Credit for a recipe adapted from someone else's published work ---- */
+.attribution-note {
+  display: flex;
+  gap: 8px;
+  margin: 10px 0 0;
+  padding: 10px 12px;
+  border-left: 2px solid #4b5045;
+  background: rgba(255, 255, 255, 0.02);
+  color: #8d9682;
+  font-size: 13px;
+  line-height: 1.5;
+}
+.attribution-note a {
+  color: #b4c19f;
+  text-decoration: underline;
+  text-underline-offset: 2px;
+}
+.attribution-note a svg {
+  display: inline;
+  vertical-align: -1px;
+  margin-left: 2px;
+}
+.attribution-note a:hover {
+  color: #f47b45;
 }

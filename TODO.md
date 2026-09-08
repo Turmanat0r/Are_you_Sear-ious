@@ -1,11 +1,12 @@
 # Needs attention
 
-Live backlog as of 2026-09-07, after the responsive pass. Ordered by what
+Live backlog as of 2026-09-07, after the tri-tip addition. Ordered by what
 actually bites you first, not by how hard it is. `AUDIT.md` has the full
 review record; this is the shorter list of what is still open.
 
-Current state: lint 0 errors · strict typecheck passes · 29 tests pass · build
-passes · client CSS 71.5 KB.
+Current state: lint 0 errors · strict typecheck passes · 34 tests pass · build
+passes · 0 npm advisories · client CSS 197.6 KB, of which 119.5 KB is the five
+base64-inlined font faces and 78.1 KB is actual stylesheet.
 
 ---
 
@@ -13,28 +14,21 @@ passes · client CSS 71.5 KB.
 
 ### 1. The offline `index.html` cannot be rebuilt
 
-Still the most consequential item. `index.html` differs from what this source
-produces — title, description, image paths (`./images/` vs `/meals/`), inline
-favicon, inlined fonts — and no script in the repo performs that conversion.
+Still the most consequential item, and it got worse again. `index.html` differs
+from what this source produces — title, description, image paths (`./images/`
+vs `/meals/`), inline favicon, inlined fonts — and no script in the repo
+performs that conversion.
 
 It is also where the bloat lives: it bundles **1,767 lucide icons where the
-source build emits 24**, and embeds Cyrillic and Vietnamese font subsets the
-source never asks for. Worse now — it predates every change of the last two
-sessions, so it has none of the burner levels, substitutions, or breakpoints.
+source build emits 27**, and embeds Cyrillic and Vietnamese font subsets the
+source never asks for. It now predates three sessions of work, so it has none of
+the burner levels, substitutions, breakpoints, salt volumes, or the tri-tip —
+and `images/` has no `coffee-ancho-tri-tip.webp` for it to load.
 
-**Anyone opening `index.html` today gets a stale app.** Either commit the
-packaging step, regenerate the file, or delete it from the repo and publish it
-as a release asset.
-
-### 2. Dependency advisories
-
-`npm audit` reports high-severity issues against `vite@8.0.13` (a
-`server.fs.deny` bypass and an NTLM disclosure, both dev-server only), a
-transitive `sharp@0.34.5` under `@cloudflare/vite-plugin` → `miniflare`, plus
-`undici`, `ws`, `esbuild` and `image-size`. All are development dependencies and
-none reaches the shipped bundle, but they need a deliberate upgrade — clearing
-the transitive `sharp` requires `@cloudflare/vite-plugin@1.54.5`, outside the
-stated range, so it should not be forced blind.
+**Anyone opening `index.html` today gets a stale app that is missing a whole
+recipe.** Either commit the packaging step, regenerate the file, or delete it
+from the repo and publish it as a release asset. Deleting is looking like the
+honest option.
 
 ---
 
@@ -150,15 +144,20 @@ link.
 handling, while `colorScheme` advertises dark. Either honour the system
 preference or keep the single theme deliberately — it is currently neither.
 
-### 14. Ingredient amounts only convert downward
-
-`measured()` converts cup → tbsp → tsp for small amounts but never upward, so a
-large batch renders "12 tbsp butter" rather than "¾ cup".
-
-### 15. Substitutions are display-only
+### 14. Substitutions are display-only
 
 Choosing "Garlic salt" tells you to cut the measured salt by about a third, but
 the app does not do it for you — the gram figure on the salt line stays put.
 Recalculating it would mean modelling the salt content of each substitute, which
 is a real feature rather than a tweak. The current behaviour is honest, but a
 cook following the checklist literally could still over-salt.
+
+The tri-tip widened this: its sauce carries a second, separate salt line, and
+three of its new swaps (`Taco or fajita seasoning` among them) are pre-salted.
+The lines say so, but nothing recalculates.
+
+### 15. The tri-tip is the only recipe with two grain directions
+
+`buildRecipe` has no concept of carving geometry, so the guidance lives in the
+step prose alone. That is fine for one cut. If a second such cut is ever added,
+it should become structured data rather than a third copy of the same paragraph.
