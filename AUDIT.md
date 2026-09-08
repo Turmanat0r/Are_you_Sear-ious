@@ -393,3 +393,81 @@ rest". The rest requirement applies to whole cuts of beef and pork, **not** to
 fish. The supplied recipe was right and the project instruction was wrong; it
 has been fixed, and the walleye's `finish` says fish needs no rest at this
 target.
+
+## Session addendum — 2026-09-08, three at once
+
+Prime rib, jerk turkey tenderloin and chimichurri-orange shrimp. Three recipes,
+one of which forced a schema change.
+
+### Shrimp is not a fish
+
+The app had four proteins: Beef, Pork, Poultry, **Fish**. Shrimp is a
+crustacean, so filing it under "Fish" would have put a wrong word on the tab a
+cook actually reads. The USDA chart settles the grouping — its row is
+**"Fish & Shellfish", 145°F** — so the category is right and only the name was
+wrong. `Protein` is now `'Seafood'`.
+
+The rename touched 17 quoted literals plus one unquoted `defaultCuts` key. It
+was safe to do because **protein is never persisted**: `localStorage` holds
+saved cut ids and per-cut weights, nothing keyed by protein. A test now asserts
+no cut can reintroduce `'Fish'`.
+
+Two related wordings followed it. The salt line said "total for the meat" over a
+bowl of shrimp, and the ingredient group header said "Your meat & salt". Both
+now take the same per-cut noun: meat, fish, or shrimp.
+
+### Temperatures checked, and one that did not need fixing
+
+- **Prime rib — 145°F, already correct.** The supplied recipe explicitly states
+  the USDA endpoint and says a pinker preference "is not the safety endpoint".
+  Nothing to override. What it did need was care in the method: reverse sear
+  takes the roast off indirect heat at 135–140°F on purpose, and that is a
+  *technique*, not a lower endpoint. The steps say to confirm at least 145°F
+  after the sear and go back to indirect heat if it has not got there. A test
+  pins both halves of that.
+- **Turkey — 165°F, correct**, and the recipe itself flags the risk of reaching
+  for the 145°F figure used by the beef and pork recipes beside it. A test
+  asserts no stray 145°F target appears anywhere in the turkey method.
+- **Shrimp — 145°F, correct**, matching the same USDA row as the fish.
+
+### Math checked
+
+- **Prime rib salt: the source is 1.25–2.1× the app's.** It lists 4 tsp for a
+  4 lb roast. At Diamond Crystal that is 11.4 g (0.63% of raw weight); at
+  Morton, 19.2 g (1.06%). The app's own formula gives 9.07 g (0.5%), which is
+  brand-independent and the more conservative figure, so the app's number wins.
+  A test pins it to the formula rather than to the source.
+- **Prime rib horseradish is a strong ratio.** ½ cup prepared horseradish to
+  1 cup sour cream is roughly double what most versions of this sauce use. It
+  is a preference rather than an error, and the recipe's own instruction is to
+  pass more at the table, so the amount stands with a note telling the cook to
+  start lower.
+- Shrimp: 2 min + 2–4 min matches the stated 4–6 min total. Turkey: 12–15 min a
+  side plus the sear matches 24–32 min. Both consistent.
+
+### Two of the three images were the wrong size
+
+The supplied WebPs for the shrimp and the prime rib were **1120×747**, not the
+1200×800 every other image uses and the photo test requires. Their own
+provenance sidecars said so, which is how it was caught before the test failed.
+
+All three originals verified — supplied SHA-256 hashes matched, each PNG carries
+a C2PA `caBX` manifest with the OpenAI markers. So the delivered files were
+re-derived from those verified originals with this project's Sharp pipeline.
+The turkey was regenerated too, for consistency, and came out **smaller**:
+240,856 → 187,154 bytes, because the package used quality 86 where this project
+uses 80. `image-provenance.json` records what each superseded file hashed to.
+
+### One refactor, because the ladder was getting silly
+
+Step 0 was two parallel ternary ladders — one for the title, one for the body —
+that had to be kept in the same order by hand, and three new families would have
+made each of them six arms deep. They are now a single
+`Partial<Record<Cut['family'], Step>>` lookup with the templated cuts falling
+through to a default. Adding a bespoke family is now one entry instead of two
+edits in two places that must agree.
+
+The remaining ladders (`title`, `finish`, `wood`, `tip`, `portionLb`) are now
+five to eight arms each and want the same treatment. Left alone deliberately:
+that is a mechanical refactor best done on its own, not underneath three new
+recipes.

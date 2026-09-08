@@ -27,15 +27,19 @@ const {
   spoonLabel,
 } = config;
 
-test('four proteins, fourteen unique cuts, and matching defaults', () => {
-  assert.equal(cuts.length, 14);
-  assert.equal(new Set(cuts.map((c) => c.id)).size, 14);
-  for (const protein of ['Beef', 'Pork', 'Poultry', 'Fish']) {
-    // Beef gained the tri-tip and Fish the walleye; pork and poultry are
-    // still three apiece.
+const CUTS_PER_PROTEIN = { Beef: 5, Pork: 3, Poultry: 4, Seafood: 5 };
+
+test('four proteins, seventeen unique cuts, and matching defaults', () => {
+  assert.equal(cuts.length, 17);
+  assert.equal(new Set(cuts.map((c) => c.id)).size, 17);
+  assert.equal(
+    Object.values(CUTS_PER_PROTEIN).reduce((a, b) => a + b, 0),
+    cuts.length,
+  );
+  for (const protein of ['Beef', 'Pork', 'Poultry', 'Seafood']) {
     assert.equal(
       cuts.filter((c) => c.protein === protein).length,
-      protein === 'Beef' || protein === 'Fish' ? 4 : 3,
+      CUTS_PER_PROTEIN[protein],
     );
     assert.equal(
       cuts.find((c) => c.id === defaultCuts[protein]).protein,
@@ -54,9 +58,10 @@ for (const cut of cuts) {
     assert.deepEqual(base.internal, cut.internal);
     const allItems = base.ingredients.flatMap((g) => g.items);
     assert.ok(allItems.length >= 3, `${cut.id} needs a real ingredient list`);
-    // Every templated recipe binds its seasoning with mustard. The foil-boat
-    // walleye deliberately has no binder at all — that is the recipe.
-    if (cut.family !== 'foil-boat')
+    // The templated recipes all bind their seasoning with mustard. These
+    // three deliberately have no binder: the walleye is butter in foil, the
+    // jerk turkey is a lime-and-oil paste, and the shrimp is chimichurri.
+    if (!['foil-boat', 'jerk-turkey', 'shrimp'].includes(cut.family))
       assert.ok(
         allItems.some((item) => item.includes('mustard')),
         `${cut.id} should carry its mustard binder`,
@@ -220,7 +225,7 @@ test('safety and tenderness targets stay separate for lean and slow-cooked cuts'
     assert.deepEqual(recipe.internal, [175, 185]);
     assert.match(recipe.safety, /165°F/);
   }
-  for (const cut of cuts.filter((c) => c.protein === 'Fish')) {
+  for (const cut of cuts.filter((c) => c.protein === 'Seafood')) {
     assert.deepEqual(buildRecipe(cut.id, 1.5).internal, [145]);
   }
   assert.throws(() => buildRecipe('not-a-cut', 2), /Unknown cut/);
@@ -627,9 +632,9 @@ test('titles keep proper nouns capitalised', () => {
       `${cut.id}: shopping line should carry "${expected}"`,
     );
 
-    // Only the template families build a title from the name. The shoulder
-    // and the tri-tip supply their own, so they are exempt by design.
-    if (cut.family === 'shoulder' || cut.family === 'tri-tip') continue;
+    // Only the template families build a title from the cut name. These
+    // three supply their own, so they are exempt by design.
+    if (['shoulder', 'tri-tip', 'prime-rib'].includes(cut.family)) continue;
     assert.ok(
       recipe.title.includes(expected),
       `${cut.id}: title should carry "${expected}"`,
@@ -690,4 +695,79 @@ test('the walleye warns about pre-salted lemon pepper', () => {
     set.options.some((o) => !o.addsSalt),
     'a salt-free route must exist',
   );
+});
+
+test('shrimp is seafood, not fish, and the category says so', () => {
+  const shrimp = cuts.find((c) => c.id === 'chimichurri-orange-grilled-shrimp');
+  assert.equal(shrimp.protein, 'Seafood');
+
+  // The USDA chart groups these as "Fish & Shellfish" at a shared 145F, so
+  // one category is right — but calling a crustacean a fish is not.
+  assert.ok(
+    !cuts.some((c) => c.protein === 'Fish'),
+    "the 'Fish' protein was renamed to 'Seafood'; nothing may still use it",
+  );
+  for (const cut of cuts.filter((c) => c.protein === 'Seafood'))
+    assert.deepEqual(buildRecipe(cut.id, 1).internal, [145]);
+
+  // The shopping list should not call a shrimp "meat" or "fish" either.
+  const recipe = buildRecipe(shrimp.id, 1);
+  assert.match(recipe.ingredients[0].title, /shrimp/i);
+  assert.match(recipe.ingredients[0].items[1], /total for the shrimp/);
+});
+
+test('the shrimp keeps the served chimichurri away from the raw shrimp', () => {
+  const recipe = buildRecipe('chimichurri-orange-grilled-shrimp', 1);
+  const steps = recipe.steps.map((s) => s.body).join(' ');
+
+  // Half the marinade is served as a sauce. If that half ever touches raw
+  // shrimp it stops being a sauce and becomes a hazard, so the split has to
+  // be stated at the start and re-stated when it is used.
+  assert.match(recipe.steps[0].body, /half/i);
+  assert.match(steps, /never touched raw shrimp|never reuse the marinade/i);
+  assert.match(steps, /15 minutes|fifteen minutes/i, 'acid contact limit');
+
+  assert.deepEqual(recipe.internal, [145]);
+  assert.match(recipe.finish, /145/);
+  assert.ok(!/rest at least 3|3-minute rest/.test(recipe.finish));
+});
+
+test('the turkey uses the poultry endpoint, never the 145F one', () => {
+  const recipe = buildRecipe('jerk-spiced-grilled-turkey-tenderloin', 1.25);
+  assert.equal(recipe.protein, 'Poultry');
+  assert.deepEqual(recipe.internal, [165]);
+  assert.match(recipe.finish, /165/);
+
+  // Turkey next to pork and beef recipes is exactly where a 145F endpoint
+  // could be copied in by mistake, so say so in the recipe and pin it here.
+  assert.match(recipe.finish, /not the 145/i);
+  const steps = recipe.steps.map((s) => s.body).join(' ');
+  assert.match(steps, /165/);
+  assert.ok(
+    !/\b145\s*\u00b0?F\b/.test(steps.replace(/not the 145[^.]*\./g, '')),
+    'no stray 145F target may appear in the turkey method',
+  );
+});
+
+test('the prime rib reaches 145F before serving, sear notwithstanding', () => {
+  const recipe = buildRecipe('holiday-rosemary-juniper-prime-rib', 4);
+  assert.equal(recipe.protein, 'Beef');
+  assert.deepEqual(recipe.internal, [145]);
+
+  // Reverse sear pulls the roast early on purpose. That is a technique, not
+  // a lower endpoint, and the difference is the whole safety story here.
+  const steps = recipe.steps.map((s) => s.body).join(' ');
+  assert.match(steps, /135|140/, 'it comes off indirect heat below target');
+  assert.match(
+    steps,
+    /at least 145/,
+    'and must still reach 145 before serving',
+  );
+  assert.match(recipe.finish, /does not count toward the endpoint/i);
+  assert.match(recipe.rest, /20/);
+
+  // Salt is the app's 0.5% of raw weight, not the source recipe's 4 tsp,
+  // which lands anywhere from 0.63% to 1.06% depending on the brand.
+  const grams = Number(recipe.ingredients[0].items[1].match(/^([\d.]+) g/)[1]);
+  assert.ok(Math.abs(grams - 4 * 453.59237 * 0.005) < 0.01, String(grams));
 });

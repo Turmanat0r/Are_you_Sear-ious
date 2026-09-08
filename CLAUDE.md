@@ -1,6 +1,6 @@
 # Are You Sear-ious
 
-A grilling app: 14 cuts across beef, pork, poultry and fish. Pick a cut and a
+A grilling app: 17 cuts across beef, pork, poultry and seafood. Pick a cut and a
 weight, it scales the seasoning, plans your burner zones, estimates cook time
 and walks you through it. Static site, no backend, no network calls at all.
 
@@ -16,7 +16,7 @@ are-you-sear-ious-source/are-you-sear-ious-source/     <- run npm here
 
 | File | What lives in it |
 | --- | --- |
-| `app/cook-config.ts` | The 14 cuts, ingredient scaling, recipe assembly, burner heat model, substitutions. The big one. |
+| `app/cook-config.ts` | The 17 cuts, ingredient scaling, recipe assembly, burner heat model, substitutions. The big one. |
 | `app/recipes.ts` | Four base recipes, type definitions, °F→°C conversion |
 | `app/page.tsx` | Page, cook mode, print sheet, saved recipes |
 | `app/grill-tools.tsx` | Weight/cut controls, temperature table, burner planner |
@@ -33,7 +33,7 @@ Run from the source folder above.
 
 ```
 npm run dev         # plain Vite dev server
-npm test            # 39 tests, node:test
+npm test            # 46 tests, node:test
 npm run typecheck   # tsc --noEmit, strict + noUncheckedIndexedAccess
 npm run lint        # oxlint
 npm run format      # oxfmt
@@ -60,6 +60,8 @@ This is the usual request. In `app/cook-config.ts` unless stated:
    `midSentenceName`. `headline` and `description` must be **unique to that
    cut** — a test enforces it, because copy used to be shared per protein and
    all three fish read identically.
+   The four proteins are `Beef`, `Pork`, `Poultry` and **`Seafood`** — the
+   last covers fish and shellfish together, the way the USDA chart does.
 2. `baseId` points at one of the four recipes in `recipes.ts` purely for the
    base lookup. Every field gets overridden, so pick any sensible one.
 3. Needs its own ingredients? Add a `SeasoningGroup` key and an entry in

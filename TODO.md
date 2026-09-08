@@ -1,10 +1,10 @@
 # Needs attention
 
-Live backlog as of 2026-09-08, after the walleye addition. Ordered by what
+Live backlog as of 2026-09-08, after the prime rib, jerk turkey and shrimp. Ordered by what
 actually bites you first, not by how hard it is. `AUDIT.md` has the full
 review record; this is the shorter list of what is still open.
 
-Current state: lint 0 errors · strict typecheck passes · 39 tests pass · build
+Current state: lint 0 errors · strict typecheck passes · 46 tests pass · build
 passes · 0 npm advisories · client CSS 197.6 KB, of which 119.5 KB is the five
 base64-inlined font faces and 78.1 KB is actual stylesheet.
 

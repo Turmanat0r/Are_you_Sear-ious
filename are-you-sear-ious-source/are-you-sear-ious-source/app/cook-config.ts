@@ -45,7 +45,10 @@ export type Cut = {
     | 'drumstick'
     | 'fish'
     | 'tri-tip'
-    | 'foil-boat';
+    | 'foil-boat'
+    | 'prime-rib'
+    | 'jerk-turkey'
+    | 'shrimp';
   /** Set only on cuts adapted from a published recipe. */
   attribution?: Attribution;
 };
@@ -137,6 +140,26 @@ export const cuts: Cut[] = [
       url: 'https://www.weber.com/US/en/recipes/red-meat/tri-tip-roast/weber-2071757.html',
       note: 'Not affiliated with, endorsed by, or sponsored by Weber-Stephen Products LLC. Adapted rather than reproduced: the rub and sauce proportions are kept, and the method here is rewritten for a gas grill with a mustard binder, an optional dry-brine, and a USDA-guided 145°F finish in place of the original’s lower target. The illustration is AI-generated and is not Weber’s photograph.',
     },
+  },
+  {
+    id: 'holiday-rosemary-juniper-prime-rib',
+    protein: 'Beef',
+    name: 'Bone-in rib roast',
+    baseId: 'pepper-ribeye',
+    baseLb: 4,
+    minLb: 3,
+    maxLb: 12,
+    method: 'Reverse sear, indirect first',
+    grill: [250, 275],
+    internal: [145],
+    time: '2–5 hr + rest',
+    rest: '20–30 minutes',
+    timing:
+      'Roughly 40 minutes a pound at this ambient, so a 4 lb roast is about two and a half hours and a 12 lb one is an all-afternoon cook. Shape and thickness move that more than weight does. First check at 60 minutes, then let the probe decide.',
+    headline: ['Slow first.', 'Sear last.'],
+    description:
+      'A rosemary, juniper and orange crust over a long gentle cook, then a hard sear at the end to rebuild it. Cold horseradish cream alongside, and a rest longer than most people are willing to give it.',
+    family: 'prime-rib',
   },
   {
     id: 'pork-shoulder',
@@ -259,8 +282,28 @@ export const cuts: Cut[] = [
     family: 'drumstick',
   },
   {
+    id: 'jerk-spiced-grilled-turkey-tenderloin',
+    protein: 'Poultry',
+    name: 'Turkey tenderloin',
+    baseId: 'smoky-chicken',
+    baseLb: 1.25,
+    minLb: 0.5,
+    maxLb: 12,
+    method: 'Indirect, then a short sear',
+    grill: [400, 425],
+    internal: [165],
+    time: '24–32 min + rest',
+    rest: '5 minutes',
+    timing:
+      'For tenderloins of about 1–1½ lb each, turned once around the 12–15 minute mark. First check at 20 minutes. Once the centre reads 155–160°F it moves over direct heat to brown, and finishes there.',
+    headline: ['Island heat.', 'Lean meat.'],
+    description:
+      'Allspice, thyme and cinnamon worked into a thin paste on lean turkey, cooked indirect so the spices never scorch, then half a minute a side to brown. Charred pineapple folded through at the end.',
+    family: 'jerk-turkey',
+  },
+  {
     id: 'lemon-salmon',
-    protein: 'Fish',
+    protein: 'Seafood',
     name: 'Skin-on salmon fillets',
     baseId: 'lemon-salmon',
     baseLb: 1.5,
@@ -280,7 +323,7 @@ export const cuts: Cut[] = [
   },
   {
     id: 'cod-fillet',
-    protein: 'Fish',
+    protein: 'Seafood',
     name: 'Cod fillets',
     baseId: 'lemon-salmon',
     baseLb: 1.5,
@@ -300,7 +343,7 @@ export const cuts: Cut[] = [
   },
   {
     id: 'halibut-fillet',
-    protein: 'Fish',
+    protein: 'Seafood',
     name: 'Halibut fillets',
     baseId: 'lemon-salmon',
     baseLb: 1.5,
@@ -320,7 +363,7 @@ export const cuts: Cut[] = [
   },
   {
     id: 'lemon-pepper-walleye',
-    protein: 'Fish',
+    protein: 'Seafood',
     name: 'Walleye fillets',
     baseId: 'lemon-salmon',
     baseLb: 1,
@@ -345,12 +388,32 @@ export const cuts: Cut[] = [
       note: 'Not affiliated with, endorsed by, or sponsored by any publisher named here. Written independently rather than adapted: the closest published method seals its foil into a packet and seasons it differently, while this keeps the boat open over an unlit zone and uses lemon pepper. Lake of the Woods’ “Walleye Delight” was the nearest flavour reference. The illustration is AI-generated, and the finish follows USDA guidance rather than the lower figure in the older texture research.',
     },
   },
+  {
+    id: 'chimichurri-orange-grilled-shrimp',
+    protein: 'Seafood',
+    name: 'Jumbo shrimp',
+    baseId: 'lemon-salmon',
+    baseLb: 1,
+    minLb: 0.25,
+    maxLb: 8,
+    method: 'Direct high heat',
+    grill: [450, 475],
+    internal: [145],
+    time: '4–6 min',
+    rest: 'None needed · serve hot',
+    timing:
+      'About 2 minutes, turn once, then 2–4 minutes more. Jumbo shrimp at this heat go from translucent to rubbery inside a minute, so this is not one to walk away from. Smaller shrimp are faster still.',
+    headline: ['Four minutes.', 'Do not wander.'],
+    description:
+      'A garlicky herb chimichurri split in two — half to dress the raw shrimp, half held back for the plate — with orange halves charred alongside and squeezed over at the end.',
+    family: 'shrimp',
+  },
 ];
 export const defaultCuts: Record<Protein, string> = {
   Beef: 'pepper-ribeye',
   Pork: 'pork-shoulder',
   Poultry: 'smoky-chicken',
-  Fish: 'lemon-salmon',
+  Seafood: 'lemon-salmon',
 };
 type Measure = { amount: number; unit: string; name: string };
 type Group = { title: string; items: (Measure | string)[] };
@@ -366,7 +429,10 @@ type SeasoningGroup =
   | 'chicken'
   | 'fish'
   | 'triTip'
-  | 'foilBoat';
+  | 'foilBoat'
+  | 'primeRib'
+  | 'jerkTurkey'
+  | 'shrimp';
 const seasonings: Record<SeasoningGroup, Group[]> = {
   shoulder: [
     {
@@ -523,6 +589,78 @@ const seasonings: Record<SeasoningGroup, Group[]> = {
       ],
     },
   ],
+  primeRib: [
+    {
+      title: 'Rosemary–juniper crust',
+      items: [
+        m(2, 'tbsp', 'coarse black pepper'),
+        m(2, 'tbsp', 'fresh rosemary, minced'),
+        m(1, 'tbsp', 'fresh thyme, minced'),
+        m(6, 'clove(s)', 'fresh garlic, grated'),
+        m(1, 'tbsp', 'juniper berries, crushed'),
+        m(1, 'tbsp', 'orange zest'),
+        m(2, 'tbsp', 'olive oil'),
+      ],
+    },
+    {
+      title: 'Horseradish cream · served cold',
+      items: [
+        m(1, 'cup', 'sour cream'),
+        m(
+          0.5,
+          'cup',
+          'prepared horseradish; a strong ratio, so start lower and pass more at the table',
+        ),
+        m(2, 'tbsp', 'Dijon mustard'),
+        m(1, 'tbsp', 'fresh lemon juice'),
+        m(2, 'tbsp', 'chives, sliced'),
+      ],
+    },
+  ],
+  jerkTurkey: [
+    {
+      title: 'Jerk paste · salt already counted above',
+      items: [
+        m(1, 'tbsp', 'fresh lime juice'),
+        m(1, 'tbsp', 'neutral oil'),
+        m(2, 'tsp', 'ground allspice'),
+        m(1, 'tsp', 'dried thyme'),
+        m(1, 'tsp', 'smoked paprika'),
+        m(0.5, 'tsp', 'ground cinnamon'),
+        m(0.5, 'tsp', 'black pepper'),
+      ],
+    },
+    {
+      title: 'Charred pineapple salsa',
+      items: [
+        m(1, 'cup', 'pineapple, diced'),
+        m(0.25, 'cup', 'red onion and scallion, finely chopped'),
+      ],
+    },
+  ],
+  shrimp: [
+    {
+      title: 'Chimichurri · half dresses the shrimp, half is served',
+      items: [
+        m(1, 'cup', 'parsley and cilantro, finely chopped'),
+        m(2, 'clove(s)', 'fresh garlic, grated'),
+        m(3, 'tbsp', 'olive oil'),
+        m(1, 'tbsp', 'red-wine vinegar'),
+        m(1, 'tsp', 'smoked paprika'),
+        m(0.25, 'tsp', 'red pepper flakes'),
+      ],
+    },
+    {
+      title: 'Citrus',
+      items: [
+        m(
+          1,
+          'orange(s)',
+          'zested into the chimichurri, then halved and charred cut-side down',
+        ),
+      ],
+    },
+  ],
 };
 export function fromLb(lb: number, unit: WeightUnit) {
   return unit === 'lb' ? lb : lb * 0.45359237;
@@ -647,34 +785,52 @@ export function buildRecipe(
   const salt = numberLabel(saltGrams) + ' g kosher salt';
   // Only the shopping line carries the spoon equivalents; the step bodies
   // interpolate `salt` and would turn unreadable with them inlined.
+  // Both halves of this sentence are family-specific: a shrimp is not "meat",
+  // and telling a foil-boat cook "not again in the rub" names a step that
+  // recipe does not have.
+  const saltNoun =
+    f === 'shrimp' ? 'shrimp' : cut.protein === 'Seafood' ? 'fish' : 'meat';
+  const saltUse =
+    f === 'foil-boat'
+      ? 'use once, and only if your lemon pepper is salt-free'
+      : f === 'shrimp'
+        ? 'stirred into the chimichurri, not sprinkled on separately'
+        : f === 'prime-rib'
+          ? 'use once, on the roast the night before, not again in the crust'
+          : f === 'jerk-turkey'
+            ? 'use once, mixed into the paste'
+            : 'use once, not again in the rub';
   const saltLine =
     salt +
     ' (no scale? about ' +
     saltVolumes(saltGrams) +
     ') total for the ' +
-    (cut.protein === 'Fish' ? 'fish' : 'meat') +
-    // The stock warning points at the rub, which the foil boat does not
-    // have. Its real double-salting risk is the seasoning jar instead.
-    (f === 'foil-boat'
-      ? ' — use once, and only if your lemon pepper is salt-free'
-      : ' — use once, not again in the rub');
+    saltNoun +
+    ' — ' +
+    saltUse;
   const group: SeasoningGroup =
-    f === 'foil-boat'
-      ? 'foilBoat'
-      : f === 'tri-tip'
-        ? 'triTip'
-        : f === 'shoulder'
-          ? 'shoulder'
-          : f === 'steak'
-            ? 'steak'
-            : f === 'chop' || f === 'tenderloin'
-              ? 'leanPork'
-              : f === 'fish'
-                ? 'fish'
-                : 'chicken';
+    f === 'prime-rib'
+      ? 'primeRib'
+      : f === 'jerk-turkey'
+        ? 'jerkTurkey'
+        : f === 'shrimp'
+          ? 'shrimp'
+          : f === 'foil-boat'
+            ? 'foilBoat'
+            : f === 'tri-tip'
+              ? 'triTip'
+              : f === 'shoulder'
+                ? 'shoulder'
+                : f === 'steak'
+                  ? 'steak'
+                  : f === 'chop' || f === 'tenderloin'
+                    ? 'leanPork'
+                    : f === 'fish'
+                      ? 'fish'
+                      : 'chicken';
   const ingredients = [
     {
-      title: 'Your meat & salt',
+      title: 'Your ' + saltNoun + ' & salt',
       items: [sizeLabel + ' ' + midName, saltLine],
     },
     ...seasonings[group].map((g) => ({
@@ -687,54 +843,87 @@ export function buildRecipe(
   const safety =
     cut.protein === 'Poultry'
       ? 'Chicken must reach 165°F in every piece. Thighs and drumsticks can go higher for tenderness.'
-      : cut.protein === 'Fish'
+      : cut.protein === 'Seafood'
         ? 'Fish must reach 145°F in its thickest part before it leaves the grill.'
         : cut.protein === 'Beef'
           ? 'Whole beef cuts — steaks, roasts and chops alike: at least 145°F before removal, followed by a 3-minute rest.'
           : 'Whole pork: at least 145°F before removal, followed by a 3-minute rest.';
   const finish =
-    f === 'foil-boat'
-      ? 'Every fillet reaches 145°F in its thickest part before it leaves the boat. Flaking is a clue, not a reading, and fish needs no rest at this target.'
-      : f === 'tri-tip'
-        ? 'Reach at least 145°F in the thickest part before it leaves the grill, then rest 10–15 minutes. Three minutes is the safety minimum; the rest of it is for the slicing.'
-        : f === 'shoulder'
-          ? 'Pull-apart target: 195–205°F. Probe several thick spots; finish when it slides in with almost no resistance.'
-          : f === 'thigh' || f === 'drumstick'
-            ? 'For tender dark meat, aim for 175–185°F. The poultry safety minimum is 165°F.'
-            : cut.protein === 'Poultry'
-              ? 'Reach 165°F in the thickest part of every breast.'
-              : cut.protein === 'Fish'
-                ? 'Reach 145°F at the center of the thickest part.'
-                : 'Reach 145°F before removing from heat, then rest at least 3 minutes.';
+    f === 'prime-rib'
+      ? 'At least 145°F in the centre before it is carved and served, then rest. Three minutes is the safety minimum; 20–30 is what a roast this size actually wants. The sear does not count toward the endpoint.'
+      : f === 'jerk-turkey'
+        ? 'Every part of the tenderloin reaches 165°F before it comes off. That is the poultry endpoint, not the 145°F used for whole cuts of beef and pork.'
+        : f === 'shrimp'
+          ? 'Take them off at 145°F in the thickest shrimp. Opaque flesh is a clue, not a reading, and no rest is needed.'
+          : f === 'foil-boat'
+            ? 'Every fillet reaches 145°F in its thickest part before it leaves the boat. Flaking is a clue, not a reading, and fish needs no rest at this target.'
+            : f === 'tri-tip'
+              ? 'Reach at least 145°F in the thickest part before it leaves the grill, then rest 10–15 minutes. Three minutes is the safety minimum; the rest of it is for the slicing.'
+              : f === 'shoulder'
+                ? 'Pull-apart target: 195–205°F. Probe several thick spots; finish when it slides in with almost no resistance.'
+                : f === 'thigh' || f === 'drumstick'
+                  ? 'For tender dark meat, aim for 175–185°F. The poultry safety minimum is 165°F.'
+                  : cut.protein === 'Poultry'
+                    ? 'Reach 165°F in the thickest part of every breast.'
+                    : cut.protein === 'Seafood'
+                      ? 'Reach 145°F at the center of the thickest part.'
+                      : 'Reach 145°F before removing from heat, then rest at least 3 minutes.';
   const prepTime =
-    f === 'tri-tip'
-      ? '4–24 hr ahead, optional'
-      : f === 'shoulder'
-        ? '12–24 hr ahead, optional'
-        : cut.protein === 'Poultry'
-          ? '2–12 hr ahead, optional'
-          : f === 'fish' || f === 'foil-boat'
-            ? 'Just before cooking'
-            : '2–4 hr ahead, optional';
-  const steps: [Step, ...Step[]] = [
-    {
-      title:
-        f === 'foil-boat'
-          ? 'Read the label, then salt'
-          : f === 'fish'
-            ? 'Season lightly'
-            : f === 'tri-tip'
-              ? 'Map the grain. Salt once.'
-              : 'Salt ahead. Mustard later.',
+    f === 'shrimp'
+      ? '15 min in the marinade, no longer'
+      : f === 'prime-rib'
+        ? '12–24 hr ahead'
+        : f === 'jerk-turkey'
+          ? 'Just before cooking'
+          : f === 'tri-tip'
+            ? '4–24 hr ahead, optional'
+            : f === 'shoulder'
+              ? '12–24 hr ahead, optional'
+              : cut.protein === 'Poultry'
+                ? '2–12 hr ahead, optional'
+                : f === 'fish' || f === 'foil-boat'
+                  ? 'Just before cooking'
+                  : '2–4 hr ahead, optional';
+  // Each family opens differently, so the opener is picked as a whole Step.
+  // Title and body used to be two parallel ladders that had to be kept in
+  // step with each other by hand.
+  const openers: Partial<Record<Cut['family'], Step>> = {
+    'foil-boat': {
+      title: 'Read the label, then salt',
       cue: prepTime,
-      body:
-        f === 'foil-boat'
-          ? `Thaw the fillets in the refrigerator and follow whatever the packet says — vacuum-packed fish usually wants opening before it thaws. Pat them dry and run a finger over each one for pin bones. Now read your lemon-pepper label, because it decides what happens next: most supermarket blends list salt first, and using one of those on top of the listed ${salt} will over-salt a thin fillet badly. Use the full measured salt only if your blend is salt-free. Otherwise cut it right back, or leave it out and let the seasoning do the job. Skin can stay on; it goes down against the foil. Keep everything cold until the grill is ready.`
-          : f === 'fish'
-            ? `Pat the fish dry and remove pin bones. Use the listed ${salt} across the batch, then brush the flesh with Dijon and add the pepper, garlic, and zest. Keep it refrigerated until the grill is ready.`
-            : f === 'tri-tip'
-              ? `Before anything goes on the meat, find where the grain changes direction and note it — the rub will hide it, and you need it again at the end. Trim silverskin and hard fat without cutting away good meat. Spread the listed ${salt} over the whole roast and refrigerate it uncovered on a rack for 4–24 hours if you have the time. That is the entire salt allowance for the meat, not an extra brine on top of the rub. Cooking now instead? Apply the same salt just before the mustard. For enhanced, injected, koshered, or already-salted beef, skip this added salt.`
-              : `Use the listed ${salt} once across the meat. Refrigerate on a rack ${f === 'shoulder' ? '12–24 hours' : cut.protein === 'Poultry' ? '2–12 hours' : '2–4 hours'} if time allows. Just before grilling, pat any wet patches dry, add a thin mustard coat, and apply the salt-free rub. If cooking immediately, apply the same measured salt just before the mustard and rub. For injected, enhanced, koshered, or already salted meat, skip the added dry-brine salt.`,
+      body: `Thaw the fillets in the refrigerator and follow whatever the packet says — vacuum-packed fish usually wants opening before it thaws. Pat them dry and run a finger over each one for pin bones. Now read your lemon-pepper label, because it decides what happens next: most supermarket blends list salt first, and using one of those on top of the listed ${salt} will over-salt a thin fillet badly. Use the full measured salt only if your blend is salt-free. Otherwise cut it right back, or leave it out and let the seasoning do the job. Skin can stay on; it goes down against the foil. Keep everything cold until the grill is ready.`,
+    },
+    fish: {
+      title: 'Season lightly',
+      cue: prepTime,
+      body: `Pat the fish dry and remove pin bones. Use the listed ${salt} across the batch, then brush the flesh with Dijon and add the pepper, garlic, and zest. Keep it refrigerated until the grill is ready.`,
+    },
+    'tri-tip': {
+      title: 'Map the grain. Salt once.',
+      cue: prepTime,
+      body: `Before anything goes on the meat, find where the grain changes direction and note it — the rub will hide it, and you need it again at the end. Trim silverskin and hard fat without cutting away good meat. Spread the listed ${salt} over the whole roast and refrigerate it uncovered on a rack for 4–24 hours if you have the time. That is the entire salt allowance for the meat, not an extra brine on top of the rub. Cooking now instead? Apply the same salt just before the mustard. For enhanced, injected, koshered, or already-salted beef, skip this added salt.`,
+    },
+    'prime-rib': {
+      title: 'Salt early. Crust later.',
+      cue: prepTime,
+      body: `Pat the roast dry and season it all over with the listed ${salt}, then leave it uncovered on a rack in the refrigerator for 12–24 hours. Salt needs that time to work inward; a roast this thick is the one cut where skipping it is genuinely noticeable. The herb paste goes on much later — mix the pepper, rosemary, thyme, juniper, garlic, orange zest and oil into a rough paste shortly before it goes on the grill, and press it over the roast with only a light coat on the bone side. Rosemary and juniper left out overnight go dull and papery, which is why they are not part of the overnight step.`,
+    },
+    'jerk-turkey': {
+      title: 'Mix the paste, keep it thin',
+      cue: prepTime,
+      body: `Stir the lime juice, oil, allspice, thyme, paprika, cinnamon and pepper together with the listed ${salt} into a loose paste, and rub it over the tenderloin. Keep it thin: a wet coating steams rather than browns, and this cut gets only about half a minute a side of direct heat at the end to fix that. Toss the pineapple, red onion and scallion together separately with a pinch of salt — keep that bowl well away from the raw turkey and its paste. Chill the turkey while the grill comes up.`,
+    },
+    shrimp: {
+      title: 'Chimichurri, then a short marinade',
+      cue: prepTime,
+      body: `Stir the herbs, garlic, oil, vinegar, orange zest, paprika, pepper flakes and the listed ${salt} together. Now split it: half goes on the raw shrimp, half is set aside for serving and must not touch them. Toss the shrimp in their half for no more than 15 minutes while the grill heats, and no longer — the vinegar and orange start firming the surface before any heat does, and shrimp left sitting in acid turn chalky. Peel and devein first if that has not been done.`,
+    },
+  };
+  const steps: [Step, ...Step[]] = [
+    openers[f] ?? {
+      title: 'Salt ahead. Mustard later.',
+      cue: prepTime,
+      body: `Use the listed ${salt} once across the meat. Refrigerate on a rack ${f === 'shoulder' ? '12–24 hours' : cut.protein === 'Poultry' ? '2–12 hours' : '2–4 hours'} if time allows. Just before grilling, pat any wet patches dry, add a thin mustard coat, and apply the salt-free rub. If cooking immediately, apply the same measured salt just before the mustard and rub. For injected, enhanced, koshered, or already salted meat, skip the added dry-brine salt.`,
     },
   ];
   if (f === 'shoulder')
@@ -824,6 +1013,70 @@ export function buildRecipe(
         title: 'Probe every fillet, then serve',
         cue: 'Internal: 145°F in each one',
         body: 'Slide the probe in sideways through the thickest part of each fillet, keeping it clear of the foil, which will read hot. Every fillet needs 145°F before it comes off — easy flaking is a hint, not a measurement. Support the boat underneath with a wide spatula and slide the whole thing onto a rimmed tray; use gloves and mind the hot butter. Lift the fish onto plates, spoon the butter over, and add the lemon juice now. Fish needs no resting time at this target. Refrigerate leftovers within 2 hours, or within 1 hour if it is above 90°F out.',
+      },
+    );
+  else if (f === 'prime-rib')
+    steps.push(
+      {
+        title: 'Set the grill for a gentle roast',
+        cue: 'Grill ambient: 250–275°F',
+        body: 'Follow your grill’s lighting sequence and settle the air at grate level to 250–275°F, with the roast over the unlit burners. Sit it bone-side down on a rack over a rimmed pan. Put a leave-in probe into the centre of the thickest muscle, keeping clear of bone and any large fat seam — both read hotter or cooler than the meat and will lie to you all afternoon. Ambient heat is the supply; the centre probe is the decision.',
+      },
+      {
+        title: 'Cook indirect and ignore the clock',
+        cue: 'First check at 60 min',
+        body: 'Close the lid and leave it alone. Reckon on roughly 40 minutes a pound at this ambient, but treat that as a planning number only: shape and thickness matter far more than weight, and a long flat roast beats a short fat one to temperature every time. Take it off the indirect heat at about 135–140°F, which leaves room for the sear and for carryover.',
+      },
+      {
+        title: 'Sear it hard at the end',
+        cue: '45–75 seconds per broad side',
+        body: 'Move the roast to a tray and turn your lit burners up until the grates are properly hot. Sear each broad face for 45–75 seconds, rotating to brown rather than blacken — rosemary and juniper burn fast and turn acrid. Then check the centre again. It must read at least 145°F before the roast is carved and served; if the sear and carryover have not carried it there, put it back over indirect heat until they do. Searing is for the crust, not for the safety endpoint.',
+      },
+      {
+        title: 'Rest, whisk, and carve',
+        cue: 'Rest 20–30 min',
+        body: 'Tent it loosely on a board and give it the full 20–30 minutes; a roast this size genuinely needs it, and the crust firms up while it waits. Meanwhile stir the sour cream, horseradish, Dijon, lemon juice, chives and a pinch of salt together, taste it, and hold back extra horseradish to pass at the table. Carve between the bones, or take the bones off in one piece first and then slice across the grain. Keep the raw-beef board and knife away from the finished sauce.',
+      },
+    );
+  else if (f === 'jerk-turkey')
+    steps.push(
+      {
+        title: 'Set up two zones',
+        cue: 'Grill ambient: 400–425°F',
+        body: 'Follow your grill’s lighting sequence and hold 400–425°F at grate level, lighting enough burners to get there while leaving an unlit area for the turkey. Clean the grates now, because the paste will stick to anything left on them. Keep the lid closed between checks.',
+      },
+      {
+        title: 'Indirect first, and turn once',
+        cue: 'About 12–15 min a side',
+        body: 'Put the tenderloin over the unlit zone and close the lid. Turn it once after 12–15 minutes. Turkey tenderloin is about as lean as poultry gets, so the indirect heat is doing the real work here — it brings the centre up without driving the surface past the point where the spices scorch. Start checking the centre at 20 minutes.',
+      },
+      {
+        title: 'Char the pineapple',
+        cue: '4–6 min over direct heat',
+        body: 'While the turkey is over the unlit side, put the pineapple, onion and scallion in a basket or on a sheet of foil over the lit burners for 4–6 minutes, stirring once. Pineapple carries a lot of sugar and will flare given the chance, so keep it moving and keep an eye on it. Set it aside somewhere clean.',
+      },
+      {
+        title: 'Sear, probe, rest, slice',
+        cue: 'Internal: 165°F · rest 5 min',
+        body: 'Once the centre reads 155–160°F, move the tenderloin over direct heat for 30–45 seconds a side to brown the paste. Then probe the thickest part from the side and take it off only at 165°F — that is the poultry endpoint, not the 145°F used for whole cuts of beef and pork, and it is not negotiable for turkey. Rest 5 minutes, slice across the grain, and fold the charred pineapple through with a squeeze of lime.',
+      },
+    );
+  else if (f === 'shrimp')
+    steps.push(
+      {
+        title: 'Get the grill properly hot',
+        cue: 'Grill ambient: 450–475°F',
+        body: 'Follow your grill’s lighting sequence and get a direct zone to 450–475°F at grate level, keeping a cooler edge or unlit patch free to move things to. Clean the grates and oil them. Shrimp want real heat and a short cook: too low and they poach in their own liquid and go soft before anything browns. Thread them onto skewers or load a grill basket — loose shrimp find the gaps in the grate every time.',
+      },
+      {
+        title: 'Two minutes, turn, two to four more',
+        cue: 'Char the orange halves alongside',
+        body: 'Lay the shrimp out in a single layer over the direct zone and put the orange halves cut-side down beside them. Give the shrimp about 2 minutes, turn them once, then 2–4 minutes more depending on size. This is the whole cook. Shrimp proteins tighten fast, so the window between properly done and rubbery is measured in seconds rather than minutes — stay at the grill.',
+      },
+      {
+        title: 'Probe, dress, and serve',
+        cue: 'Internal: 145°F',
+        body: 'Slide the probe sideways into the thickest shrimp and take them off at 145°F. Opaque flesh is a clue; the thermometer is the decision. Toss them with the half of the chimichurri you set aside at the start — the half that never touched raw shrimp — and squeeze the charred orange over the top. Never reuse the marinade half as a sauce. Refrigerate leftovers within 2 hours, or within 1 hour if it is above 90°F out.',
       },
     );
   else if (f === 'steak') {
@@ -944,31 +1197,41 @@ export function buildRecipe(
       },
     );
   const title =
-    f === 'foil-boat'
-      ? 'Butter & lemon-pepper ' + midName
-      : f === 'tri-tip'
-        ? 'Coffee–ancho tri-tip with chipotle-lime sauce'
-        : f === 'shoulder'
-          ? base.title
-          : f === 'steak'
-            ? 'Pepper & garlic ' + midName
-            : f === 'chop' || f === 'tenderloin'
-              ? 'Smoky Dijon ' + midName
-              : cut.protein === 'Poultry'
-                ? 'Smoky mustard ' + midName
-                : 'Dijon & lemon ' + midName;
+    f === 'prime-rib'
+      ? 'Rosemary & juniper prime rib'
+      : f === 'jerk-turkey'
+        ? 'Jerk-spiced ' + midName
+        : f === 'shrimp'
+          ? 'Chimichurri-orange ' + midName
+          : f === 'foil-boat'
+            ? 'Butter & lemon-pepper ' + midName
+            : f === 'tri-tip'
+              ? 'Coffee–ancho tri-tip with chipotle-lime sauce'
+              : f === 'shoulder'
+                ? base.title
+                : f === 'steak'
+                  ? 'Pepper & garlic ' + midName
+                  : f === 'chop' || f === 'tenderloin'
+                    ? 'Smoky Dijon ' + midName
+                    : cut.protein === 'Poultry'
+                      ? 'Smoky mustard ' + midName
+                      : 'Dijon & lemon ' + midName;
   const portionLb =
-    f === 'foil-boat'
-      ? 0.5
-      : f === 'tri-tip'
-        ? 0.45
-        : f === 'shoulder'
-          ? 0.6
-          : cut.protein === 'Poultry' && f !== 'breast'
-            ? 0.75
-            : cut.protein === 'Fish'
-              ? 0.375
-              : 0.5;
+    f === 'prime-rib'
+      ? 1
+      : f === 'jerk-turkey'
+        ? 0.4
+        : f === 'shrimp' || f === 'foil-boat'
+          ? 0.5
+          : f === 'tri-tip'
+            ? 0.45
+            : f === 'shoulder'
+              ? 0.6
+              : cut.protein === 'Poultry' && f !== 'breast'
+                ? 0.75
+                : cut.protein === 'Seafood'
+                  ? 0.375
+                  : 0.5;
   const photo = '/meals/' + cut.id + '.webp';
   const photoCaption = cut.name;
   return {
@@ -997,21 +1260,31 @@ export function buildRecipe(
     safety,
     serves: String(Math.max(1, Math.round(weightLb / portionLb))),
     wood:
-      f === 'tri-tip'
-        ? 'Coffee & ancho carry it · no wood needed'
-        : f === 'shoulder'
-          ? 'Apple + hickory'
-          : cut.protein === 'Poultry'
-            ? 'Apple, optional'
-            : 'No smoke needed',
+      f === 'jerk-turkey'
+        ? 'Pimento wood if you can get it · otherwise none'
+        : f === 'prime-rib'
+          ? 'Rosemary & juniper carry it · no wood needed'
+          : f === 'tri-tip'
+            ? 'Coffee & ancho carry it · no wood needed'
+            : f === 'shoulder'
+              ? 'Apple + hickory'
+              : cut.protein === 'Poultry'
+                ? 'Apple, optional'
+                : 'No smoke needed',
     tip:
-      f === 'foil-boat'
-        ? 'Check the lemon-pepper label before you salt, keep the boat open rather than sealed, and probe every fillet. Thickness sets the time here, not weight.'
-        : f === 'tri-tip'
-          ? 'Find the grain before the rub hides it, keep the thin end away from the hottest burner, and serve the sauce cold and beside the meat.'
-          : f === 'shoulder'
-            ? base.tip
-            : 'Ingredient amounts scale with total raw weight. Cooking time depends on individual thickness, airflow, and the actual heat near the food.',
+      f === 'prime-rib'
+        ? 'Salt it the night before, keep the probe out of bone and fat seams, and give it the full rest. The sear builds the crust; the probe decides doneness.'
+        : f === 'jerk-turkey'
+          ? 'Keep the paste thin so it browns rather than steams, cook it indirect, and use the 165°F poultry endpoint. Pineapple carries sugar and will flare.'
+          : f === 'shrimp'
+            ? 'Split the chimichurri before any of it touches raw shrimp. Fifteen minutes is the marinade limit, and four to six minutes is the entire cook.'
+            : f === 'foil-boat'
+              ? 'Check the lemon-pepper label before you salt, keep the boat open rather than sealed, and probe every fillet. Thickness sets the time here, not weight.'
+              : f === 'tri-tip'
+                ? 'Find the grain before the rub hides it, keep the thin end away from the hottest burner, and serve the sauce cold and beside the meat.'
+                : f === 'shoulder'
+                  ? base.tip
+                  : 'Ingredient amounts scale with total raw weight. Cooking time depends on individual thickness, airflow, and the actual heat near the food.',
     attribution: cut.attribution,
   };
 }
@@ -1030,6 +1303,27 @@ export const zoneScience: Science = {
     'Choose the burners that fit your grill. Measure beside the food instead of treating knob position as a temperature.',
 };
 export function cookingScience(cut: Cut): Science {
+  if (cut.family === 'prime-rib')
+    return {
+      title: 'Why reverse-sear a roast this size',
+      body: 'Heat travels into meat from the outside in, so a hot grill drives a steep gradient: the outer inch is well past done by the time the centre arrives. Cooking low keeps that gradient shallow, which is the whole reason a reverse-seared roast shows a thin grey band instead of a thick one. The trade is that almost no crust forms at 250°F, because browning needs a far hotter surface than that.',
+      takeaway:
+        'Do the gentle cook first for an evenly coloured interior, then build the crust in the last two minutes over high heat.',
+    };
+  if (cut.family === 'jerk-turkey')
+    return {
+      title: 'Lean meat has no buffer',
+      body: 'Fat and connective tissue buy you time: they melt, they hold water, and they forgive a few extra minutes. Turkey tenderloin has very little of either, so the gap between 165°F and dry is narrow and it closes fast over direct heat. The paste has a second problem of its own — its sugars, and the sugar in the pineapple beside it, brown and then burn long before the centre is ready.',
+      takeaway:
+        'Cook it over the unlit side so the surface cannot run ahead of the centre, and save direct heat for the last thirty seconds a side.',
+    };
+  if (cut.family === 'shrimp')
+    return {
+      title: 'Two clocks are running at once',
+      body: 'Shrimp proteins tighten at a low temperature and do it quickly, which is why the difference between springy and rubbery is under a minute at this heat. The marinade is a slower version of the same process: vinegar and citrus firm the surface with no heat involved at all, which is exactly how ceviche works. Fifteen minutes is seasoning. An hour gives you shrimp that were already half cooked before they reached the grate.',
+      takeaway:
+        'Keep the marinade short and the cook shorter. Probe the thickest shrimp rather than reading the colour.',
+    };
   if (cut.family === 'foil-boat')
     return {
       title: 'An open boat is not a sealed packet',
@@ -1058,7 +1352,7 @@ export function cookingScience(cut: Cut): Science {
       takeaway:
         'Use a probe in the thickest part; finish this recipe at 145°F.',
     };
-  if (cut.protein === 'Fish')
+  if (cut.protein === 'Seafood')
     return {
       title: 'Brown the outside, check the center',
       body: 'Maillard reactions create browned flavor at the hot surface. The center can still be behind, especially in a thick fillet. A browned exterior is not evidence that the fish has reached its internal target.',
@@ -1698,6 +1992,278 @@ export const swapSets: SwapSet[] = [
         use: 'White wine vinegar',
         amount: 'About ⅔ as much',
         note: 'More acidic than citrus. Hold some back and taste as you go.',
+      },
+    ],
+  },
+  {
+    match: 'rosemary',
+    label: 'Fresh rosemary',
+    options: [
+      {
+        use: 'Dried rosemary, crumbled',
+        amount: 'About a third as much',
+        note: 'Dried herbs are more concentrated by volume. Crumble it or it stays woody.',
+      },
+      {
+        use: 'Fresh sage or oregano',
+        amount: 'Same amount',
+        note: 'A different resinous herb doing the same job against rich beef.',
+      },
+    ],
+  },
+  {
+    match: 'fresh thyme',
+    label: 'Fresh thyme',
+    options: [
+      { use: 'Dried thyme', amount: 'About a third as much' },
+      {
+        use: 'Extra rosemary',
+        amount: 'Half again as much rosemary',
+        note: 'Coarser and more assertive, so do not match the thyme volume exactly.',
+      },
+    ],
+  },
+  {
+    match: 'juniper',
+    label: 'Juniper berries',
+    options: [
+      {
+        use: 'Gin, in the paste',
+        amount: 'About 1 tsp per tsp of berries',
+        note: 'Gin is flavoured with juniper, so this is the closest thing in most kitchens.',
+      },
+      {
+        use: 'Caraway seed, crushed',
+        amount: 'Half as much',
+        note: 'Not the same flavour, but the same piney, slightly bitter role.',
+      },
+      {
+        use: 'Leave it out',
+        amount: '—',
+        note: 'The crust still works. It reads more herbal and less like winter.',
+      },
+    ],
+  },
+  {
+    match: 'orange',
+    label: 'Orange',
+    options: [
+      {
+        use: 'Lemon',
+        amount: 'Same amount',
+        note: 'Sharper and less sweet. Use a little less zest, since lemon carries further.',
+      },
+      {
+        use: 'Clementine or mandarin',
+        amount: 'About two per orange',
+        note: 'Sweeter and thinner-skinned, so there is less zest on each one.',
+      },
+      {
+        use: 'Grapefruit',
+        amount: 'Half as much zest',
+        note: 'More bitter than orange. Good against rich beef, heavy-handed on shrimp.',
+      },
+    ],
+  },
+  {
+    match: 'olive oil',
+    label: 'Olive oil',
+    options: [
+      { use: 'Any neutral oil', amount: 'Same amount' },
+      {
+        use: 'Avocado oil',
+        amount: 'Same amount',
+        note: 'Higher smoke point, which suits the hotter cooks here.',
+      },
+      {
+        use: 'Melted butter',
+        amount: 'Same amount',
+        note: 'Richer, but the milk solids brown and can burn over direct heat.',
+      },
+    ],
+  },
+  {
+    match: 'neutral oil',
+    label: 'Neutral oil',
+    options: [
+      { use: 'Canola, sunflower or grapeseed', amount: 'Same amount' },
+      {
+        use: 'Olive oil',
+        amount: 'Same amount',
+        note: 'Adds its own flavour, which is fine here and works against the spice.',
+      },
+      {
+        use: 'Coconut oil, melted',
+        amount: 'Same amount',
+        note: 'Closer to the Caribbean original, and it sets firm if the paste gets cold.',
+      },
+    ],
+  },
+  {
+    match: 'sour cream',
+    label: 'Sour cream',
+    options: [
+      { use: 'Crème fraîche', amount: 'Same amount' },
+      {
+        use: 'Plain Greek yogurt',
+        amount: 'Same amount',
+        note: 'Tangier and thicker. Loosen it with a spoon of water if it will not spread.',
+      },
+      {
+        use: 'Mayonnaise',
+        amount: 'About two thirds as much',
+        note: 'Much richer and not sour, so add extra lemon to make up for it.',
+      },
+    ],
+  },
+  {
+    match: 'horseradish',
+    label: 'Prepared horseradish',
+    options: [
+      {
+        use: 'Fresh horseradish, grated',
+        amount: 'About half as much',
+        note: 'Far stronger than the jarred sort, and it fades within the hour once grated.',
+      },
+      {
+        use: 'Wasabi paste',
+        amount: 'About a quarter as much',
+        note: 'Hotter and sharper. Start very small; it is easy to overshoot.',
+      },
+      {
+        use: 'Dijon mustard',
+        amount: 'Same amount',
+        note: 'A different heat entirely, but it keeps the sauce sharp against the beef.',
+      },
+    ],
+  },
+  {
+    match: 'chives',
+    label: 'Chives',
+    options: [
+      { use: 'Scallion greens, sliced thin', amount: 'Same amount' },
+      {
+        use: 'Chopped parsley',
+        amount: 'Same amount',
+        note: 'No onion note, but it keeps the sauce looking like it should.',
+      },
+    ],
+  },
+  {
+    match: 'allspice',
+    label: 'Ground allspice',
+    options: [
+      {
+        use: 'Equal parts cinnamon, nutmeg and clove',
+        amount: 'Same total amount',
+        note: 'Allspice tastes like all three, which is where the name comes from.',
+      },
+      {
+        use: 'Jerk seasoning blend',
+        amount: 'Same amount',
+        addsSalt: true,
+        note: 'Most blends are salted and already contain the allspice and thyme below.',
+      },
+    ],
+  },
+  {
+    match: 'cinnamon',
+    label: 'Ground cinnamon',
+    options: [
+      { use: 'Ground nutmeg or mace', amount: 'Half as much' },
+      {
+        use: 'Extra allspice',
+        amount: 'Same amount',
+        note: 'Allspice already carries a cinnamon note, so this stays in character.',
+      },
+      { use: 'Leave it out', amount: '—' },
+    ],
+  },
+  {
+    match: 'pineapple',
+    label: 'Pineapple',
+    options: [
+      {
+        use: 'Mango',
+        amount: 'Same amount',
+        note: 'Softer, so it chars faster and falls apart sooner. Watch it closely.',
+      },
+      {
+        use: 'Peach or nectarine',
+        amount: 'Same amount',
+        note: 'Less acidic than pineapple, so add an extra squeeze of lime.',
+      },
+      {
+        use: 'Tinned pineapple, drained and patted dry',
+        amount: 'Same amount',
+        note: 'Wetter and sweeter. Dry it properly or it steams instead of charring.',
+      },
+    ],
+  },
+  {
+    match: 'red onion and scallion',
+    label: 'Red onion & scallion',
+    options: [
+      { use: 'Either one on its own', amount: 'Same total amount' },
+      {
+        use: 'Shallot',
+        amount: 'Same amount',
+        note: 'Milder and sweeter, and it softens faster over the heat.',
+      },
+      {
+        use: 'White onion, soaked in cold water',
+        amount: 'Same amount',
+        note: 'Soaking takes the harsh edge off, which red onion does not need.',
+      },
+    ],
+  },
+  {
+    match: 'parsley and cilantro',
+    label: 'Parsley & cilantro',
+    options: [
+      {
+        use: 'All parsley',
+        amount: 'Same total amount',
+        note: 'The usual move if cilantro tastes like soap to anyone at the table.',
+      },
+      {
+        use: 'Parsley with mint or oregano',
+        amount: 'Same total amount',
+        note: 'Mint takes it somewhere brighter; oregano is closer to a classic chimichurri.',
+      },
+    ],
+  },
+  {
+    match: 'red-wine vinegar',
+    label: 'Red-wine vinegar',
+    options: [
+      { use: 'Sherry or white-wine vinegar', amount: 'Same amount' },
+      {
+        use: 'Apple cider vinegar',
+        amount: 'Same amount',
+        note: 'A touch sweeter and fruitier, which suits the orange here.',
+      },
+      {
+        use: 'Fresh lemon juice',
+        amount: 'Half again as much',
+        note: 'Less acidic than vinegar, so it takes a little more to balance the oil.',
+      },
+    ],
+  },
+  {
+    match: 'red pepper flakes',
+    label: 'Red pepper flakes',
+    options: [
+      { use: 'Cayenne', amount: 'About a third as much' },
+      {
+        use: 'Aleppo or gochugaru',
+        amount: 'About twice as much',
+        note: 'Both are milder and fruitier, so you need more for the same heat.',
+      },
+      {
+        use: 'Leave it out',
+        amount: '—',
+        note: 'The chimichurri is garlic-led anyway; the flakes are the back note.',
       },
     ],
   },
