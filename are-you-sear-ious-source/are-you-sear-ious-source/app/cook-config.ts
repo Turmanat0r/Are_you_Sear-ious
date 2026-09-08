@@ -108,7 +108,7 @@ export const cuts: Cut[] = [
     attribution: {
       label: 'Jamie Purviance’s tri-tip roast, published by Weber',
       url: 'https://www.weber.com/US/en/recipes/red-meat/tri-tip-roast/weber-2071757.html',
-      note: 'Adapted, not reproduced: the rub and sauce proportions are kept, and the method here is rewritten for a gas grill with a mustard binder, an optional dry-brine, and a USDA-guided 145°F finish in place of the original’s lower target. The illustration is AI-generated and is not Weber’s photograph.',
+      note: 'Not affiliated with, endorsed by, or sponsored by Weber-Stephen Products LLC. Adapted rather than reproduced: the rub and sauce proportions are kept, and the method here is rewritten for a gas grill with a mustard binder, an optional dry-brine, and a USDA-guided 145°F finish in place of the original’s lower target. The illustration is AI-generated and is not Weber’s photograph.',
     },
   },
   {

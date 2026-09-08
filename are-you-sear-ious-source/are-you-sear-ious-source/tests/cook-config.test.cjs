@@ -480,6 +480,14 @@ test('the tri-tip keeps its attribution and the USDA finish, not the original on
   assert.match(credit.label, /Weber/);
   assert.match(credit.note, /Adapted/);
   assert.match(credit.note, /AI-generated/, 'the photo is not the source’s');
+  // Nominative fair use turns on not implying sponsorship, so the disclaimer
+  // has to be in the credit a visitor reads, not only in NOTICE.md.
+  assert.match(
+    credit.note,
+    /Not affiliated with, endorsed by, or sponsored by/,
+    'the visible credit must disclaim affiliation',
+  );
+  assert.match(credit.note, /Weber-Stephen Products LLC/);
 
   // The source recipe finishes lower than USDA guidance. Raising it was a
   // deliberate decision and must not be quietly reverted.
