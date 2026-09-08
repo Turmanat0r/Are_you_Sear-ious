@@ -1,0 +1,584 @@
+{
+  "schemaVersion": 1,
+  "auditDate": "2026-09-07",
+  "recordType": "Unsigned retrospective audit; not a signed Content Credential or license grant",
+  "sourceCommit": "f73e04a5293419e71a5cb84fbfd799f79d5a6651",
+  "imageOrigin": "All 12 images generated in this task using OpenAI built-in image_gen; not stock or camera photography",
+  "exactUnderlyingImageModel": null,
+  "exactUnderlyingImageModelNote": "Not exposed in the available tool record",
+  "cryptographicC2paSignatureValidation": "Not performed; container presence and raw string markers only",
+  "conversion": {
+    "pipeline": "sharp(source).rotate().resize({width:1200,withoutEnlargement:true}).webp({quality:80,effort:6})",
+    "metadataPreserved": false,
+    "reproductionCheckLibraryVersions": {
+      "aom": "3.13.1",
+      "archive": "3.8.2",
+      "cairo": "1.18.4",
+      "cgif": "0.5.0",
+      "exif": "0.6.25",
+      "expat": "2.7.3",
+      "ffi": "3.5.2",
+      "fontconfig": "2.17.1",
+      "freetype": "2.14.1",
+      "fribidi": "1.0.16",
+      "glib": "2.86.1",
+      "harfbuzz": "12.1.0",
+      "heif": "1.20.2",
+      "highway": "1.3.0",
+      "imagequant": "2.4.1",
+      "lcms": "2.17",
+      "mozjpeg": "0826579",
+      "pango": "1.57.0",
+      "pixman": "0.46.4",
+      "png": "1.6.50",
+      "proxy-libintl": "0.5",
+      "rsvg": "2.61.2",
+      "spng": "0.7.4",
+      "tiff": "4.7.1",
+      "vips": "8.17.3",
+      "webp": "1.6.0",
+      "xml2": "2.15.1",
+      "zlib-ng": "2.2.5",
+      "sharp": "0.34.5"
+    }
+  },
+  "promptCoverage": {
+    "exactPromptsRecorded": 8,
+    "earlierImagesWithoutExactPromptInSavedManifest": [
+      "pepper-ribeye",
+      "pork-shoulder",
+      "smoky-chicken",
+      "lemon-salmon"
+    ]
+  },
+  "assets": [
+    {
+      "id": "pepper-ribeye",
+      "original": {
+        "pathInOriginalsArchive": "originals/pepper-ribeye.png",
+        "sha256": "c0bf4dbf6e57f00d0c74641dea18298e7976e8d26f11567da5092574ea5b8669",
+        "bytes": 2736514,
+        "width": 1536,
+        "height": 1024,
+        "format": "png",
+        "exifBytes": 0,
+        "xmpBytes": 0,
+        "iccBytes": 0,
+        "pngChunkTypes": ["IHDR", "caBX", "IDAT", "IEND"],
+        "c2pa": {
+          "container": "caBX",
+          "payloadBytes": 23617,
+          "observedStringMarkers": [
+            "c2pa",
+            "OpenAI",
+            "trainedAlgorithmicMedia"
+          ],
+          "signatureValidation": "not performed"
+        }
+      },
+      "delivered": {
+        "pathInSourceArchive": "public/meals/pepper-ribeye.webp",
+        "pathInOfflineArchive": "images/pepper-ribeye.webp",
+        "sha256": "210e7914e32611243d75c03dc12ec897c6215beb078347ed07c1cfe806bdb152",
+        "bytes": 150838,
+        "width": 1200,
+        "height": 800,
+        "format": "webp",
+        "exifBytes": 0,
+        "xmpBytes": 0,
+        "iccBytes": 0,
+        "riffChunkTypes": ["VP8 "],
+        "c2paChunkPresent": false
+      },
+      "exactReencodeMatchesDeliveredBytes": true,
+      "projectAndOfflineWebpBytesMatch": true,
+      "actualPrompt": null,
+      "promptRecordStatus": "Exact earlier prompt not present in preserved manifest; not reconstructed",
+      "recordedVisualNote": null
+    },
+    {
+      "id": "strip-steak",
+      "original": {
+        "pathInOriginalsArchive": "originals/strip-steak.png",
+        "sha256": "bfff5e4a1fc438045de5ddc4d9cfa2f2e2aeff4c5aef07908d20510fe746a94c",
+        "bytes": 2578748,
+        "width": 1536,
+        "height": 1024,
+        "format": "png",
+        "exifBytes": 0,
+        "xmpBytes": 0,
+        "iccBytes": 0,
+        "pngChunkTypes": ["IHDR", "caBX", "IDAT", "IEND"],
+        "c2pa": {
+          "container": "caBX",
+          "payloadBytes": 23617,
+          "observedStringMarkers": [
+            "c2pa",
+            "OpenAI",
+            "trainedAlgorithmicMedia"
+          ],
+          "signatureValidation": "not performed"
+        }
+      },
+      "delivered": {
+        "pathInSourceArchive": "public/meals/strip-steak.webp",
+        "pathInOfflineArchive": "images/strip-steak.webp",
+        "sha256": "4ccde3c25819659447656f8eef93d69095033704b032db5bd2e8c71948035ace",
+        "bytes": 106924,
+        "width": 1200,
+        "height": 800,
+        "format": "webp",
+        "exifBytes": 0,
+        "xmpBytes": 0,
+        "iccBytes": 0,
+        "riffChunkTypes": ["VP8 "],
+        "c2paChunkPresent": false
+      },
+      "exactReencodeMatchesDeliveredBytes": true,
+      "projectAndOfflineWebpBytesMatch": true,
+      "actualPrompt": "Use case: photorealistic-natural.\nAsset: one standalone illustrative cooked-food recipe photograph for the Are You Sear-ious gas-grill app; not documentation of a specific real item.\nFormat: landscape 3:2, preferably 1536x1024 pixels.\nScene and style: dark charcoal serving board and background, warm side lighting, rustic editorial photorealism, natural food textures and appetizing browned grilled surfaces.\nSubject: Two New York strip steaks with identifiable long oval shapes and a straight fat edge, coarse pepper crust, and small garlic parsley butter. No ribeye eye or curved cap.\nComposition: place all food in the right two-thirds, leaving the left third as dark clean negative space for a future app overlay. Keep every piece of food fully contained with comfortable space from every image edge; enough depth of field for clear food identification.\nConstraints: food photograph only. No text, logo, watermark, UI, collage, utensils hiding food, or excessive garnish.",
+      "promptRecordStatus": "Exact text from preserved generation manifest",
+      "recordedVisualNote": null
+    },
+    {
+      "id": "sirloin-steak",
+      "original": {
+        "pathInOriginalsArchive": "originals/sirloin-steak.png",
+        "sha256": "26c11b80c9ecb055a2b5ca8b68ed8328a0aab54ec2ba79e1b5db50a4dc5fe713",
+        "bytes": 2507346,
+        "width": 1536,
+        "height": 1024,
+        "format": "png",
+        "exifBytes": 0,
+        "xmpBytes": 0,
+        "iccBytes": 0,
+        "pngChunkTypes": ["IHDR", "caBX", "IDAT", "IEND"],
+        "c2pa": {
+          "container": "caBX",
+          "payloadBytes": 23617,
+          "observedStringMarkers": [
+            "c2pa",
+            "OpenAI",
+            "trainedAlgorithmicMedia"
+          ],
+          "signatureValidation": "not performed"
+        }
+      },
+      "delivered": {
+        "pathInSourceArchive": "public/meals/sirloin-steak.webp",
+        "pathInOfflineArchive": "images/sirloin-steak.webp",
+        "sha256": "7de0d52696d6b61b7306f6ee95131f9bb68d1eaba51e85f1930f557bee7dbff8",
+        "bytes": 102412,
+        "width": 1200,
+        "height": 800,
+        "format": "webp",
+        "exifBytes": 0,
+        "xmpBytes": 0,
+        "iccBytes": 0,
+        "riffChunkTypes": ["VP8 "],
+        "c2paChunkPresent": false
+      },
+      "exactReencodeMatchesDeliveredBytes": true,
+      "projectAndOfflineWebpBytesMatch": true,
+      "actualPrompt": "Use case: photorealistic-natural.\nAsset: one standalone illustrative cooked-food recipe photograph for the Are You Sear-ious gas-grill app; not documentation of a specific real item.\nFormat: landscape 3:2, preferably 1536x1024 pixels.\nScene and style: dark charcoal serving board and background, warm side lighting, rustic editorial photorealism, natural food textures and appetizing browned grilled surfaces.\nSubject: Lean top sirloin steak with a broad compact shape, pepper crust, a few cooked slices, and small garlic herb butter.\nComposition: place all food in the right two-thirds, leaving the left third as dark clean negative space for a future app overlay. Keep every piece of food fully contained with comfortable space from every image edge; enough depth of field for clear food identification.\nConstraints: food photograph only. No text, logo, watermark, UI, collage, utensils hiding food, or excessive garnish.",
+      "promptRecordStatus": "Exact text from preserved generation manifest",
+      "recordedVisualNote": null
+    },
+    {
+      "id": "pork-shoulder",
+      "original": {
+        "pathInOriginalsArchive": "originals/pork-shoulder.png",
+        "sha256": "da8511b82f1d9216de4d689455321b4a5d238a40faa1aef692fae5957a3a9b01",
+        "bytes": 2660472,
+        "width": 1536,
+        "height": 1024,
+        "format": "png",
+        "exifBytes": 0,
+        "xmpBytes": 0,
+        "iccBytes": 0,
+        "pngChunkTypes": ["IHDR", "caBX", "IDAT", "IEND"],
+        "c2pa": {
+          "container": "caBX",
+          "payloadBytes": 23617,
+          "observedStringMarkers": [
+            "c2pa",
+            "OpenAI",
+            "trainedAlgorithmicMedia"
+          ],
+          "signatureValidation": "not performed"
+        }
+      },
+      "delivered": {
+        "pathInSourceArchive": "public/meals/pork-shoulder.webp",
+        "pathInOfflineArchive": "images/pork-shoulder.webp",
+        "sha256": "32911c785dc337a2846ece9dcee5c9ed09d3321f04a94a34cef2a353be565945",
+        "bytes": 138022,
+        "width": 1200,
+        "height": 800,
+        "format": "webp",
+        "exifBytes": 0,
+        "xmpBytes": 0,
+        "iccBytes": 0,
+        "riffChunkTypes": ["VP8 "],
+        "c2paChunkPresent": false
+      },
+      "exactReencodeMatchesDeliveredBytes": true,
+      "projectAndOfflineWebpBytesMatch": true,
+      "actualPrompt": null,
+      "promptRecordStatus": "Exact earlier prompt not present in preserved manifest; not reconstructed",
+      "recordedVisualNote": null
+    },
+    {
+      "id": "pork-chop",
+      "original": {
+        "pathInOriginalsArchive": "originals/pork-chop.png",
+        "sha256": "a2fcc2e0b0e9d2aeddbdaf7ca0d391b5c5bb2c1502d4ddac85ff99df6f02e2eb",
+        "bytes": 2389169,
+        "width": 1536,
+        "height": 1024,
+        "format": "png",
+        "exifBytes": 0,
+        "xmpBytes": 0,
+        "iccBytes": 0,
+        "pngChunkTypes": ["IHDR", "caBX", "IDAT", "IEND"],
+        "c2pa": {
+          "container": "caBX",
+          "payloadBytes": 21844,
+          "observedStringMarkers": [
+            "c2pa",
+            "OpenAI",
+            "trainedAlgorithmicMedia"
+          ],
+          "signatureValidation": "not performed"
+        }
+      },
+      "delivered": {
+        "pathInSourceArchive": "public/meals/pork-chop.webp",
+        "pathInOfflineArchive": "images/pork-chop.webp",
+        "sha256": "638364d62f9cc2fba7c8c7b87c4b2508f5b97a6b9bcf1deb6029c792628fb264",
+        "bytes": 101794,
+        "width": 1200,
+        "height": 800,
+        "format": "webp",
+        "exifBytes": 0,
+        "xmpBytes": 0,
+        "iccBytes": 0,
+        "riffChunkTypes": ["VP8 "],
+        "c2paChunkPresent": false
+      },
+      "exactReencodeMatchesDeliveredBytes": true,
+      "projectAndOfflineWebpBytesMatch": true,
+      "actualPrompt": "Use case: photorealistic-natural.\nAsset: one standalone illustrative cooked-food recipe photograph for the Are You Sear-ious gas-grill app; not documentation of a specific real item.\nFormat: landscape 3:2, preferably 1536x1024 pixels.\nScene and style: dark charcoal serving board and background, warm side lighting, rustic editorial photorealism, natural food textures and appetizing browned grilled surfaces.\nSubject: Two bone-in pork rib chops, each with a round loin and curved exposed rib bone, and a smoked paprika and Dijon crust.\nComposition: place all food in the right two-thirds, leaving the left third as dark clean negative space for a future app overlay. Keep every piece of food fully contained with comfortable space from every image edge; enough depth of field for clear food identification.\nConstraints: food photograph only. No text, logo, watermark, UI, collage, utensils hiding food, or excessive garnish.",
+      "promptRecordStatus": "Exact text from preserved generation manifest",
+      "recordedVisualNote": null
+    },
+    {
+      "id": "pork-tenderloin",
+      "original": {
+        "pathInOriginalsArchive": "originals/pork-tenderloin.png",
+        "sha256": "698e921492366bb7630ff44c78e8eec0ce66d97e2d8a49708f58f7a93f0c1a51",
+        "bytes": 2374522,
+        "width": 1536,
+        "height": 1024,
+        "format": "png",
+        "exifBytes": 0,
+        "xmpBytes": 0,
+        "iccBytes": 0,
+        "pngChunkTypes": ["IHDR", "caBX", "IDAT", "IEND"],
+        "c2pa": {
+          "container": "caBX",
+          "payloadBytes": 21844,
+          "observedStringMarkers": [
+            "c2pa",
+            "OpenAI",
+            "trainedAlgorithmicMedia"
+          ],
+          "signatureValidation": "not performed"
+        }
+      },
+      "delivered": {
+        "pathInSourceArchive": "public/meals/pork-tenderloin.webp",
+        "pathInOfflineArchive": "images/pork-tenderloin.webp",
+        "sha256": "2c291b2134340c8e7b705dea613753f2c417c89f83132b98f01fe6d27c6f33a7",
+        "bytes": 87088,
+        "width": 1200,
+        "height": 800,
+        "format": "webp",
+        "exifBytes": 0,
+        "xmpBytes": 0,
+        "iccBytes": 0,
+        "riffChunkTypes": ["VP8 "],
+        "c2paChunkPresent": false
+      },
+      "exactReencodeMatchesDeliveredBytes": true,
+      "projectAndOfflineWebpBytesMatch": true,
+      "actualPrompt": "Use case: photorealistic-natural.\nAsset: one standalone illustrative cooked-food recipe photograph for the Are You Sear-ious gas-grill app; not documentation of a specific real item.\nFormat: landscape 3:2, preferably 1536x1024 pixels.\nScene and style: dark charcoal serving board and background, warm side lighting, rustic editorial photorealism, natural food textures and appetizing browned grilled surfaces.\nSubject: Browned long slender pork tenderloin with several round small medallions cut from one end, no bones, smoky Dijon seasoning.\nComposition: place all food in the right two-thirds, leaving the left third as dark clean negative space for a future app overlay. Keep every piece of food fully contained with comfortable space from every image edge; enough depth of field for clear food identification.\nConstraints: food photograph only. No text, logo, watermark, UI, collage, utensils hiding food, or excessive garnish.",
+      "promptRecordStatus": "Exact text from preserved generation manifest",
+      "recordedVisualNote": null
+    },
+    {
+      "id": "smoky-chicken",
+      "original": {
+        "pathInOriginalsArchive": "originals/smoky-chicken.png",
+        "sha256": "d96a551b2fa07d3347c8da99acaf76392d6012dc8e1fa5a3f32f06274b1b9d4f",
+        "bytes": 2623384,
+        "width": 1536,
+        "height": 1024,
+        "format": "png",
+        "exifBytes": 0,
+        "xmpBytes": 0,
+        "iccBytes": 0,
+        "pngChunkTypes": ["IHDR", "caBX", "IDAT", "IEND"],
+        "c2pa": {
+          "container": "caBX",
+          "payloadBytes": 21844,
+          "observedStringMarkers": [
+            "c2pa",
+            "OpenAI",
+            "trainedAlgorithmicMedia"
+          ],
+          "signatureValidation": "not performed"
+        }
+      },
+      "delivered": {
+        "pathInSourceArchive": "public/meals/smoky-chicken.webp",
+        "pathInOfflineArchive": "images/smoky-chicken.webp",
+        "sha256": "e9515903d8c776ad89fc23e55d2613ad499f330efe619da61c3417df98a5e4f5",
+        "bytes": 127964,
+        "width": 1200,
+        "height": 800,
+        "format": "webp",
+        "exifBytes": 0,
+        "xmpBytes": 0,
+        "iccBytes": 0,
+        "riffChunkTypes": ["VP8 "],
+        "c2paChunkPresent": false
+      },
+      "exactReencodeMatchesDeliveredBytes": true,
+      "projectAndOfflineWebpBytesMatch": true,
+      "actualPrompt": null,
+      "promptRecordStatus": "Exact earlier prompt not present in preserved manifest; not reconstructed",
+      "recordedVisualNote": null
+    },
+    {
+      "id": "chicken-breast",
+      "original": {
+        "pathInOriginalsArchive": "originals/chicken-breast.png",
+        "sha256": "4b60607fb3ca8022d950b4d165c8212ecc643447850a286344dfb061974d9697",
+        "bytes": 2660254,
+        "width": 1536,
+        "height": 1024,
+        "format": "png",
+        "exifBytes": 0,
+        "xmpBytes": 0,
+        "iccBytes": 0,
+        "pngChunkTypes": ["IHDR", "caBX", "IDAT", "IEND"],
+        "c2pa": {
+          "container": "caBX",
+          "payloadBytes": 23617,
+          "observedStringMarkers": [
+            "c2pa",
+            "OpenAI",
+            "trainedAlgorithmicMedia"
+          ],
+          "signatureValidation": "not performed"
+        }
+      },
+      "delivered": {
+        "pathInSourceArchive": "public/meals/chicken-breast.webp",
+        "pathInOfflineArchive": "images/chicken-breast.webp",
+        "sha256": "7bee4c1c943ced4f8f17d3489abd4c6cc1d3ede6820df09e287dc5f56bfc3175",
+        "bytes": 116158,
+        "width": 1200,
+        "height": 800,
+        "format": "webp",
+        "exifBytes": 0,
+        "xmpBytes": 0,
+        "iccBytes": 0,
+        "riffChunkTypes": ["VP8 "],
+        "c2paChunkPresent": false
+      },
+      "exactReencodeMatchesDeliveredBytes": true,
+      "projectAndOfflineWebpBytesMatch": true,
+      "actualPrompt": "Use case: photorealistic-natural.\nAsset: one standalone illustrative cooked-food recipe photograph for the Are You Sear-ious gas-grill app; not documentation of a specific real item.\nFormat: landscape 3:2, preferably 1536x1024 pixels.\nScene and style: dark charcoal serving board and background, warm side lighting, rustic editorial photorealism, natural food textures and appetizing browned grilled surfaces.\nSubject: Boneless skinless chicken breasts with smoky mustard and paprika seasoning and grill browning; one breast sliced to reveal opaque cooked white meat. No thighs or bones.\nComposition: place all food in the right two-thirds, leaving the left third as dark clean negative space for a future app overlay. Keep every piece of food fully contained with comfortable space from every image edge; enough depth of field for clear food identification.\nConstraints: food photograph only. No text, logo, watermark, UI, collage, utensils hiding food, or excessive garnish.",
+      "promptRecordStatus": "Exact text from preserved generation manifest",
+      "recordedVisualNote": null
+    },
+    {
+      "id": "chicken-drumsticks",
+      "original": {
+        "pathInOriginalsArchive": "originals/chicken-drumsticks.png",
+        "sha256": "e103ef52499b5ee60483271eeb22a375150a04cf0088f885aa94bdb4dc809f5a",
+        "bytes": 2384311,
+        "width": 1536,
+        "height": 1024,
+        "format": "png",
+        "exifBytes": 0,
+        "xmpBytes": 0,
+        "iccBytes": 0,
+        "pngChunkTypes": ["IHDR", "caBX", "IDAT", "IEND"],
+        "c2pa": {
+          "container": "caBX",
+          "payloadBytes": 21844,
+          "observedStringMarkers": [
+            "c2pa",
+            "OpenAI",
+            "trainedAlgorithmicMedia"
+          ],
+          "signatureValidation": "not performed"
+        }
+      },
+      "delivered": {
+        "pathInSourceArchive": "public/meals/chicken-drumsticks.webp",
+        "pathInOfflineArchive": "images/chicken-drumsticks.webp",
+        "sha256": "40161f8de9ec0facd1edf083c3c6874c347fc80ae0c236f6940259e82b82777e",
+        "bytes": 91152,
+        "width": 1200,
+        "height": 800,
+        "format": "webp",
+        "exifBytes": 0,
+        "xmpBytes": 0,
+        "iccBytes": 0,
+        "riffChunkTypes": ["VP8 "],
+        "c2paChunkPresent": false
+      },
+      "exactReencodeMatchesDeliveredBytes": true,
+      "projectAndOfflineWebpBytesMatch": true,
+      "actualPrompt": "Use case: photorealistic-natural.\nAsset: one standalone illustrative cooked-food recipe photograph for the Are You Sear-ious gas-grill app; not documentation of a specific real item.\nFormat: landscape 3:2, preferably 1536x1024 pixels.\nScene and style: dark charcoal serving board and background, warm side lighting, rustic editorial photorealism, natural food textures and appetizing browned grilled surfaces.\nSubject: Exactly four distinct chicken drumsticks with tapered single leg bones, crisp browned skin and a thin barbecue glaze. No thighs or wings.\nComposition: place all food in the right two-thirds, leaving the left third as dark clean negative space for a future app overlay. Keep every piece of food fully contained with comfortable space from every image edge; enough depth of field for clear food identification.\nConstraints: food photograph only. No text, logo, watermark, UI, collage, utensils hiding food, or excessive garnish.",
+      "promptRecordStatus": "Exact text from preserved generation manifest",
+      "recordedVisualNote": null
+    },
+    {
+      "id": "lemon-salmon",
+      "original": {
+        "pathInOriginalsArchive": "originals/lemon-salmon.png",
+        "sha256": "e4de8165ac99569ab3c73ec43adafdf0b833a9dffd50cefa0af02d6b13437371",
+        "bytes": 2500131,
+        "width": 1536,
+        "height": 1024,
+        "format": "png",
+        "exifBytes": 0,
+        "xmpBytes": 0,
+        "iccBytes": 0,
+        "pngChunkTypes": ["IHDR", "caBX", "IDAT", "IEND"],
+        "c2pa": {
+          "container": "caBX",
+          "payloadBytes": 23617,
+          "observedStringMarkers": [
+            "c2pa",
+            "OpenAI",
+            "trainedAlgorithmicMedia"
+          ],
+          "signatureValidation": "not performed"
+        }
+      },
+      "delivered": {
+        "pathInSourceArchive": "public/meals/lemon-salmon.webp",
+        "pathInOfflineArchive": "images/lemon-salmon.webp",
+        "sha256": "872bf75ff674473929df8a1e64fcde91b9a2e9c444bc38c83b1d001127001e2a",
+        "bytes": 123948,
+        "width": 1200,
+        "height": 800,
+        "format": "webp",
+        "exifBytes": 0,
+        "xmpBytes": 0,
+        "iccBytes": 0,
+        "riffChunkTypes": ["VP8 "],
+        "c2paChunkPresent": false
+      },
+      "exactReencodeMatchesDeliveredBytes": true,
+      "projectAndOfflineWebpBytesMatch": true,
+      "actualPrompt": null,
+      "promptRecordStatus": "Exact earlier prompt not present in preserved manifest; not reconstructed",
+      "recordedVisualNote": null
+    },
+    {
+      "id": "cod-fillet",
+      "original": {
+        "pathInOriginalsArchive": "originals/cod-fillet.png",
+        "sha256": "a6e31599f120c7f0b3639761c004e13e3aaacc9f5648cf110cd2a84d27d82902",
+        "bytes": 2307571,
+        "width": 1536,
+        "height": 1024,
+        "format": "png",
+        "exifBytes": 0,
+        "xmpBytes": 0,
+        "iccBytes": 0,
+        "pngChunkTypes": ["IHDR", "caBX", "IDAT", "IEND"],
+        "c2pa": {
+          "container": "caBX",
+          "payloadBytes": 23617,
+          "observedStringMarkers": [
+            "c2pa",
+            "OpenAI",
+            "trainedAlgorithmicMedia"
+          ],
+          "signatureValidation": "not performed"
+        }
+      },
+      "delivered": {
+        "pathInSourceArchive": "public/meals/cod-fillet.webp",
+        "pathInOfflineArchive": "images/cod-fillet.webp",
+        "sha256": "0150b710cedea7a61d578a6adbf751c43b7ebd43fc319377e51cfb76c5899abf",
+        "bytes": 79798,
+        "width": 1200,
+        "height": 800,
+        "format": "webp",
+        "exifBytes": 0,
+        "xmpBytes": 0,
+        "iccBytes": 0,
+        "riffChunkTypes": ["VP8 "],
+        "c2paChunkPresent": false
+      },
+      "exactReencodeMatchesDeliveredBytes": true,
+      "projectAndOfflineWebpBytesMatch": true,
+      "actualPrompt": "Use case: photorealistic-natural.\nAsset: one standalone illustrative cooked-food recipe photograph for the Are You Sear-ious gas-grill app; not documentation of a specific real item.\nFormat: landscape 3:2, preferably 1536x1024 pixels.\nScene and style: dark charcoal serving board and background, warm side lighting, rustic editorial photorealism, natural food textures and appetizing browned grilled surfaces.\nSubject: Cooked cod fillets with flaky opaque white meat, gently golden tops, lemon and dill. No salmon orange flesh or fish steak shape.\nComposition: place all food in the right two-thirds, leaving the left third as dark clean negative space for a future app overlay. Keep every piece of food fully contained with comfortable space from every image edge; enough depth of field for clear food identification.\nConstraints: food photograph only. No text, logo, watermark, UI, collage, utensils hiding food, or excessive garnish.",
+      "promptRecordStatus": "Exact text from preserved generation manifest",
+      "recordedVisualNote": null
+    },
+    {
+      "id": "halibut-fillet",
+      "original": {
+        "pathInOriginalsArchive": "originals/halibut-fillet.png",
+        "sha256": "fdb0b53138692498ef8b456597d6884d7d33353964632861d94c4605c8b0c068",
+        "bytes": 2323937,
+        "width": 1536,
+        "height": 1024,
+        "format": "png",
+        "exifBytes": 0,
+        "xmpBytes": 0,
+        "iccBytes": 0,
+        "pngChunkTypes": ["IHDR", "caBX", "IDAT", "IEND"],
+        "c2pa": {
+          "container": "caBX",
+          "payloadBytes": 21844,
+          "observedStringMarkers": [
+            "c2pa",
+            "OpenAI",
+            "trainedAlgorithmicMedia"
+          ],
+          "signatureValidation": "not performed"
+        }
+      },
+      "delivered": {
+        "pathInSourceArchive": "public/meals/halibut-fillet.webp",
+        "pathInOfflineArchive": "images/halibut-fillet.webp",
+        "sha256": "e10ef98bee402bf90f584c895d32d695937d2beff5a487824247afc95c49ae8d",
+        "bytes": 87610,
+        "width": 1200,
+        "height": 800,
+        "format": "webp",
+        "exifBytes": 0,
+        "xmpBytes": 0,
+        "iccBytes": 0,
+        "riffChunkTypes": ["VP8 "],
+        "c2paChunkPresent": false
+      },
+      "exactReencodeMatchesDeliveredBytes": true,
+      "projectAndOfflineWebpBytesMatch": true,
+      "actualPrompt": "Use case: photorealistic-natural.\nAsset: one standalone illustrative cooked-food recipe photograph for the Are You Sear-ious gas-grill app; not documentation of a specific real item.\nFormat: landscape 3:2, preferably 1536x1024 pixels.\nScene and style: dark charcoal serving board and background, warm side lighting, rustic editorial photorealism, natural food textures and appetizing browned grilled surfaces.\nSubject: Thick firm rectangular halibut fillets with opaque pearly white flakes, browned seared tops, Dijon, lemon and dill. No salmon orange flesh.\nComposition: place all food in the right two-thirds, leaving the left third as dark clean negative space for a future app overlay. Keep every piece of food fully contained with comfortable space from every image edge; enough depth of field for clear food identification.\nConstraints: food photograph only. No text, logo, watermark, UI, collage, utensils hiding food, or excessive garnish.",
+      "promptRecordStatus": "Exact text from preserved generation manifest",
+      "recordedVisualNote": "The fish fillets are fully contained; a lemon garnish slice reaches the right image edge. Original retained without edits or retries."
+    }
+  ]
+}

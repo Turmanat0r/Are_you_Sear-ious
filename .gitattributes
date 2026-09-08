@@ -1,0 +1,27 @@
+# Normalize line endings so Windows and macOS/Linux checkouts agree.
+* text=auto eol=lf
+
+# Windows-only files keep CRLF.
+*.bat text eol=crlf
+*.cmd text eol=crlf
+
+# Binary assets — never diff, never munge line endings.
+*.webp binary
+*.png binary
+*.jpg binary
+*.jpeg binary
+*.avif binary
+*.woff binary
+*.woff2 binary
+*.ico binary
+*.zip binary
+
+# index.html is a 1.6 MB single-line minified bundle. Diffing it is useless
+# noise in review; mark it generated so hosts collapse it by default.
+index.html linguist-generated=true -diff
+
+# Lockfiles: keep them, but keep them out of diffs and language stats.
+package-lock.json linguist-generated=true -diff
+
+# Vendored license text should not skew the repository's language breakdown.
+THIRD-PARTY-LICENSES.txt linguist-vendored=true

@@ -1,0 +1,1228 @@
+import {
+  recipes,
+  type Protein,
+  type Recipe,
+  type Step,
+  type Temperatures,
+} from './recipes';
+
+export type WeightUnit = 'lb' | 'kg';
+export type Cut = {
+  id: string;
+  protein: Protein;
+  name: string;
+  baseId: string;
+  baseLb: number;
+  minLb: number;
+  maxLb: number;
+  method: string;
+  grill: Temperatures;
+  internal: Temperatures;
+  time: string;
+  rest: string;
+  timing: string;
+  family:
+    | 'steak'
+    | 'shoulder'
+    | 'chop'
+    | 'tenderloin'
+    | 'thigh'
+    | 'breast'
+    | 'drumstick'
+    | 'fish';
+};
+export const cuts: Cut[] = [
+  {
+    id: 'pepper-ribeye',
+    protein: 'Beef',
+    name: 'Ribeye steak',
+    baseId: 'pepper-ribeye',
+    baseLb: 2,
+    minLb: 0.5,
+    maxLb: 12,
+    method: 'Reverse sear',
+    grill: [225, 250],
+    internal: [145],
+    time: '35–65 min + rest',
+    rest: 'At least 3 minutes',
+    timing:
+      'For steaks about 1½–2 inches thick. Finish over high direct heat. Thinner steaks cook faster; check early.',
+    family: 'steak',
+  },
+  {
+    id: 'strip-steak',
+    protein: 'Beef',
+    name: 'New York strip',
+    baseId: 'pepper-ribeye',
+    baseLb: 2,
+    minLb: 0.5,
+    maxLb: 12,
+    method: 'Reverse sear',
+    grill: [225, 250],
+    internal: [145],
+    time: '35–65 min + rest',
+    rest: 'At least 3 minutes',
+    timing:
+      'For steaks about 1½–2 inches thick. Total batch weight changes seasoning, not minutes per steak.',
+    family: 'steak',
+  },
+  {
+    id: 'sirloin-steak',
+    protein: 'Beef',
+    name: 'Top sirloin steak',
+    baseId: 'pepper-ribeye',
+    baseLb: 2,
+    minLb: 0.5,
+    maxLb: 12,
+    method: 'Direct, then indirect',
+    grill: [400, 450],
+    internal: [145],
+    time: '12–25 min + rest',
+    rest: '5 minutes',
+    timing:
+      'For steaks about 1 inch thick. Sirloin is lean; probe early and slice against the grain.',
+    family: 'steak',
+  },
+  {
+    id: 'pork-shoulder',
+    protein: 'Pork',
+    name: 'Bone-in pork shoulder',
+    baseId: 'pork-shoulder',
+    baseLb: 8,
+    minLb: 3,
+    maxLb: 12,
+    method: 'Indirect low heat',
+    grill: [250, 275],
+    internal: [195, 205],
+    time: 'Allow a full day + rest',
+    rest: '1–2 hours',
+    timing:
+      'One shoulder, 3–12 lb. A 7–9 lb shoulder may take 10–16 hours; smaller or larger cuts vary. Weight alone cannot predict the stall.',
+    family: 'shoulder',
+  },
+  {
+    id: 'pork-chop',
+    protein: 'Pork',
+    name: 'Bone-in pork chops',
+    baseId: 'pork-shoulder',
+    baseLb: 2,
+    minLb: 0.5,
+    maxLb: 12,
+    method: 'Direct, then indirect',
+    grill: [400, 450],
+    internal: [145],
+    time: '15–25 min + rest',
+    rest: '5 minutes',
+    timing:
+      'For chops about 1–1½ inches thick. Probe beside the bone without touching it.',
+    family: 'chop',
+  },
+  {
+    id: 'pork-tenderloin',
+    protein: 'Pork',
+    name: 'Pork tenderloin',
+    baseId: 'pork-shoulder',
+    baseLb: 2,
+    minLb: 0.5,
+    maxLb: 12,
+    method: 'Direct, then indirect',
+    grill: [400, 450],
+    internal: [145],
+    time: '20–35 min + rest',
+    rest: '5–10 minutes',
+    timing:
+      'For individual tenderloins around 1–1½ lb. This is tenderloin, not the much thicker pork loin roast.',
+    family: 'tenderloin',
+  },
+  {
+    id: 'smoky-chicken',
+    protein: 'Poultry',
+    name: 'Bone-in chicken thighs',
+    baseId: 'smoky-chicken',
+    baseLb: 3,
+    minLb: 0.5,
+    maxLb: 12,
+    method: 'Indirect, then crisp',
+    grill: [375, 425],
+    internal: [175, 185],
+    time: '35–50 min + rest',
+    rest: '5 minutes',
+    timing:
+      'For bone-in, skin-on thighs. Check each piece, especially the largest.',
+    family: 'thigh',
+  },
+  {
+    id: 'chicken-breast',
+    protein: 'Poultry',
+    name: 'Boneless chicken breasts',
+    baseId: 'smoky-chicken',
+    baseLb: 2,
+    minLb: 0.5,
+    maxLb: 12,
+    method: 'Direct, then indirect',
+    grill: [375, 425],
+    internal: [165],
+    time: '15–25 min + rest',
+    rest: '5 minutes',
+    timing:
+      'For boneless breasts pounded to an even ¾–1 inch. Thick unflattened breasts need longer.',
+    family: 'breast',
+  },
+  {
+    id: 'chicken-drumsticks',
+    protein: 'Poultry',
+    name: 'Chicken drumsticks',
+    baseId: 'smoky-chicken',
+    baseLb: 3,
+    minLb: 0.5,
+    maxLb: 12,
+    method: 'Indirect, then crisp',
+    grill: [375, 425],
+    internal: [175, 185],
+    time: '35–50 min + rest',
+    rest: '5 minutes',
+    timing:
+      'For standard bone-in drumsticks. Rotate the pieces for even browning and check away from bone.',
+    family: 'drumstick',
+  },
+  {
+    id: 'lemon-salmon',
+    protein: 'Fish',
+    name: 'Skin-on salmon fillets',
+    baseId: 'lemon-salmon',
+    baseLb: 1.5,
+    minLb: 0.25,
+    maxLb: 8,
+    method: 'Direct medium heat',
+    grill: [400, 450],
+    internal: [145],
+    time: '10–15 min',
+    rest: 'About 3 minutes',
+    timing:
+      'For fillets about 1 inch thick. Cook skin-side down and start checking at 8 minutes.',
+    family: 'fish',
+  },
+  {
+    id: 'cod-fillet',
+    protein: 'Fish',
+    name: 'Cod fillets',
+    baseId: 'lemon-salmon',
+    baseLb: 1.5,
+    minLb: 0.25,
+    maxLb: 8,
+    method: 'Basket over medium heat',
+    grill: [375, 425],
+    internal: [145],
+    time: '8–15 min',
+    rest: 'About 3 minutes',
+    timing:
+      'For fillets about 1 inch thick. A lightly oiled fish basket supports cod’s delicate flakes.',
+    family: 'fish',
+  },
+  {
+    id: 'halibut-fillet',
+    protein: 'Fish',
+    name: 'Halibut fillets',
+    baseId: 'lemon-salmon',
+    baseLb: 1.5,
+    minLb: 0.25,
+    maxLb: 8,
+    method: 'Direct medium heat',
+    grill: [400, 450],
+    internal: [145],
+    time: '10–18 min',
+    rest: 'About 3 minutes',
+    timing:
+      'For fillets about 1–1½ inches thick. Halibut is lean; check early and lift with a wide spatula.',
+    family: 'fish',
+  },
+];
+export const defaultCuts: Record<Protein, string> = {
+  Beef: 'pepper-ribeye',
+  Pork: 'pork-shoulder',
+  Poultry: 'smoky-chicken',
+  Fish: 'lemon-salmon',
+};
+type Measure = { amount: number; unit: string; name: string };
+type Group = { title: string; items: (Measure | string)[] };
+const m = (amount: number, unit: string, name: string): Measure => ({
+  amount,
+  unit,
+  name,
+});
+type SeasoningGroup = 'shoulder' | 'steak' | 'leanPork' | 'chicken' | 'fish';
+const seasonings: Record<SeasoningGroup, Group[]> = {
+  shoulder: [
+    {
+      title: 'Mustard & salt-free rub',
+      items: [
+        m(3.5, 'tbsp', 'yellow mustard, for a thin binder coat'),
+        m(0.25, 'cup', 'packed brown sugar'),
+        m(3, 'tbsp', 'smoked paprika'),
+        m(2, 'tbsp', 'coarse black pepper'),
+        m(1, 'tbsp', 'garlic powder'),
+        m(1, 'tbsp', 'onion powder'),
+        m(1, 'tsp', 'cayenne, then adjust to taste'),
+      ],
+    },
+    {
+      title: 'Spritz & wrap',
+      items: [
+        m(0.5, 'cup', 'apple cider vinegar, for optional spritz'),
+        m(0.5, 'cup', 'apple juice, for optional spritz'),
+        m(0.25, 'cup', 'apple juice, for the wrap'),
+        'Apple or hickory chips, as your smoker box needs; do not scale with meat weight',
+      ],
+    },
+    {
+      title: 'Vinegar finishing sauce',
+      items: [
+        m(1, 'cup', 'apple cider vinegar'),
+        m(2, 'tbsp', 'brown sugar'),
+        m(1, 'tbsp', 'hot sauce'),
+        m(0.5, 'tsp', 'black pepper'),
+        'Cayenne and salt, to taste after mixing the sauce',
+      ],
+    },
+  ],
+  steak: [
+    {
+      title: 'Mustard & seasoning',
+      items: [
+        m(2, 'tsp', 'Dijon mustard, for a very thin binder coat'),
+        m(2, 'tsp', 'coarse black pepper'),
+        m(1, 'tsp', 'garlic powder'),
+      ],
+    },
+    {
+      title: 'Garlic butter',
+      items: [
+        m(2, 'tbsp', 'unsalted butter, softened'),
+        m(1, 'tsp', 'finely grated fresh garlic'),
+        m(1, 'tsp', 'chopped parsley'),
+        m(1, 'tsp', 'lemon juice'),
+      ],
+    },
+  ],
+  leanPork: [
+    {
+      title: 'Mustard & seasoning',
+      items: [
+        m(1.5, 'tbsp', 'Dijon mustard'),
+        m(2, 'tsp', 'smoked paprika'),
+        m(1, 'tsp', 'garlic powder'),
+        m(1, 'tsp', 'black pepper'),
+        m(0.5, 'tsp', 'dried thyme'),
+      ],
+    },
+    {
+      title: 'Finish',
+      items: [m(1, 'tbsp', 'unsalted butter'), m(2, 'tsp', 'lemon juice')],
+    },
+  ],
+  chicken: [
+    {
+      title: 'Mustard & salt-free rub',
+      items: [
+        m(2, 'tbsp', 'yellow or Dijon mustard'),
+        m(2, 'tsp', 'smoked paprika'),
+        m(1, 'tsp', 'garlic powder'),
+        m(1, 'tsp', 'black pepper'),
+        m(2, 'tsp', 'brown sugar'),
+        m(0.5, 'tsp', 'cayenne, optional'),
+        m(0.25, 'cup', 'barbecue sauce, optional; brush on near the end'),
+      ],
+    },
+  ],
+  fish: [
+    {
+      title: 'Dijon & lemon',
+      items: [
+        m(1.5, 'tbsp', 'Dijon mustard'),
+        m(0.5, 'tsp', 'black pepper'),
+        m(0.5, 'tsp', 'garlic powder'),
+        m(1, 'tsp', 'lemon zest'),
+        m(1, 'tbsp', 'lemon juice'),
+        m(1, 'tbsp', 'fresh dill, chopped'),
+        'Neutral oil, just enough for the grates or fish basket; mustard remains the binder',
+      ],
+    },
+  ],
+};
+export function fromLb(lb: number, unit: WeightUnit) {
+  return unit === 'lb' ? lb : lb * 0.45359237;
+}
+export function toLb(value: number, unit: WeightUnit) {
+  return unit === 'lb' ? value : value / 0.45359237;
+}
+export function numberLabel(value: number) {
+  return Number(value.toFixed(2)).toString();
+}
+function amountLabel(value: number) {
+  const eighths = Math.round(value * 8);
+  if (value >= 0.125 && Math.abs(value - eighths / 8) < 0.025) {
+    const whole = Math.floor(eighths / 8),
+      fraction = ['', '⅛', '¼', '⅜', '½', '⅝', '¾', '⅞'][eighths % 8];
+    return (
+      (whole ? String(whole) : '') + (whole && fraction ? ' ' : '') + fraction
+    );
+  }
+  return numberLabel(value);
+}
+export function measured(item: Measure, scale: number) {
+  let v = item.amount * scale,
+    u = item.unit;
+  if (u === 'cup' && v < 0.25) {
+    v *= 16;
+    u = 'tbsp';
+  }
+  if (u === 'tbsp' && v < 1) {
+    v *= 3;
+    u = 'tsp';
+  }
+  return amountLabel(v) + ' ' + u + ' ' + item.name;
+}
+export function validateWeight(cut: Cut, value: number) {
+  return (
+    Number.isFinite(value) &&
+    value >= cut.minLb - 1e-6 &&
+    value <= cut.maxLb + 1e-6
+  );
+}
+export type ConfiguredRecipe = Recipe & {
+  cut: Cut;
+  weightLb: number;
+  sizeLabel: string;
+  scale: number;
+  timingNote: string;
+  photo: string;
+  photoAlt: string;
+  photoCaption: string;
+  ingredients: Recipe['ingredients'];
+};
+export function buildRecipe(
+  cutId: string,
+  weightLb: number,
+  weightUnit: WeightUnit = 'lb',
+): ConfiguredRecipe {
+  const cut = cuts.find((c) => c.id === cutId);
+  if (!cut) throw new Error('Unknown cut');
+  if (!validateWeight(cut, weightLb))
+    throw new Error('Weight outside supported range');
+  const base = recipes.find((r) => r.id === cut.baseId)!;
+  const f = cut.family;
+  const scale = weightLb / cut.baseLb;
+  const sizeLabel =
+    numberLabel(fromLb(weightLb, weightUnit)) + ' ' + weightUnit;
+  const salt = numberLabel(weightLb * 453.59237 * 0.005) + ' g kosher salt';
+  const group: SeasoningGroup =
+    f === 'shoulder'
+      ? 'shoulder'
+      : f === 'steak'
+        ? 'steak'
+        : f === 'chop' || f === 'tenderloin'
+          ? 'leanPork'
+          : f === 'fish'
+            ? 'fish'
+            : 'chicken';
+  const ingredients = [
+    {
+      title: 'Your meat & salt',
+      items: [
+        sizeLabel + ' ' + cut.name.toLowerCase(),
+        salt + ' total for the meat — use once, not again in the rub',
+      ],
+    },
+    ...seasonings[group].map((g) => ({
+      title: g.title,
+      items: g.items.map((i) =>
+        typeof i === 'string' ? i : measured(i, scale),
+      ),
+    })),
+  ];
+  const safety =
+    cut.protein === 'Poultry'
+      ? 'Chicken must reach 165°F in every piece. Thighs and drumsticks can go higher for tenderness.'
+      : cut.protein === 'Fish'
+        ? 'Fish must reach 145°F in its thickest part before it leaves the grill.'
+        : cut.protein === 'Beef'
+          ? 'Whole beef steaks: at least 145°F before removal, followed by a 3-minute rest.'
+          : 'Whole pork: at least 145°F before removal, followed by a 3-minute rest.';
+  const finish =
+    f === 'shoulder'
+      ? 'Pull-apart target: 195–205°F. Probe several thick spots; finish when it slides in with almost no resistance.'
+      : f === 'thigh' || f === 'drumstick'
+        ? 'For tender dark meat, aim for 175–185°F. The poultry safety minimum is 165°F.'
+        : cut.protein === 'Poultry'
+          ? 'Reach 165°F in the thickest part of every breast.'
+          : cut.protein === 'Fish'
+            ? 'Reach 145°F at the center of the thickest part.'
+            : 'Reach 145°F before removing from heat, then rest at least 3 minutes.';
+  const prepTime =
+    f === 'shoulder'
+      ? '12–24 hr ahead, optional'
+      : cut.protein === 'Poultry'
+        ? '2–12 hr ahead, optional'
+        : f === 'fish'
+          ? 'Just before cooking'
+          : '2–4 hr ahead, optional';
+  const steps: [Step, ...Step[]] = [
+    {
+      title: f === 'fish' ? 'Season lightly' : 'Salt ahead. Mustard later.',
+      cue: prepTime,
+      body:
+        f === 'fish'
+          ? `Pat the fish dry and remove pin bones. Use the listed ${salt} across the batch, then brush the flesh with Dijon and add the pepper, garlic, and zest. Keep it refrigerated until the grill is ready.`
+          : `Use the listed ${salt} once across the meat. Refrigerate on a rack ${f === 'shoulder' ? '12–24 hours' : cut.protein === 'Poultry' ? '2–12 hours' : '2–4 hours'} if time allows. Just before grilling, pat any wet patches dry, add a thin mustard coat, and apply the salt-free rub. If cooking immediately, apply the same measured salt just before the mustard and rub. For injected, enhanced, koshered, or already salted meat, skip the added dry-brine salt.`,
+    },
+  ];
+  if (f === 'shoulder')
+    steps.push(
+      {
+        title: 'Set up the unlit zone',
+        cue: 'Grill ambient: 250–275°F',
+        body: 'Use your chosen burner layout to leave enough unlit space for the whole shoulder. Stabilize the air temperature near the meat at grate level. Place a drip pan below it without obstructing airflow. Put dry wood chips in a smoker box positioned only where your grill manufacturer permits; never on a burner tube.',
+      },
+      {
+        title: 'Build the bark',
+        cue: 'Light smoke early · watch the surface',
+        body: 'Place the shoulder over unlit burners with the fat cap toward the strongest heat. Keep the lid closed and replenish the smoke box as needed for the first 3–4 hours. After that, spritz dry-looking patches only if needed, at most hourly. Expect a stall around 150–170°F; a steady grill and patience matter more than a clock.',
+      },
+      {
+        title: 'Wrap the set bark',
+        cue: 'Usually 160–175°F internally',
+        body: `Once the bark is dark and firmly attached, wrap tightly in two layers of heavy foil with ${measured(m(0.25, 'cup', 'apple juice'), scale)} from the wrap ingredients. Return to 250–275°F indirect heat. Once wrapped, a 275°F oven can finish the job too.`,
+      },
+      {
+        title: 'Probe for tenderness',
+        cue: 'Usually 195–205°F',
+        body: 'Start checking at 195°F in several thick spots away from bone. Keep cooking if the probe still meets resistance; even 203°F is not a guarantee. A 7–9 lb shoulder often takes 10–16 hours total. Build in extra time for the stall and rest; do not multiply that time by the ingredient scale.',
+      },
+      {
+        title: 'Rest, pull, and season',
+        cue: 'Rest 1–2 hr · hot hold at 140°F or above',
+        body: 'Vent the wrap for about 10 minutes, then rewrap and rest in an insulated cooler or low oven. Check the meat stays at least 140°F while hot holding. Pull the pork, discard large fat pockets, and fold in defatted juices. Mix the listed sauce ingredients, then add to the meat a little at a time. Refrigerate leftovers within 2 hours after hot holding ends, or 1 hour if the air is above 90°F.',
+      },
+    );
+  else if (f === 'steak') {
+    const reverse = cut.method === 'Reverse sear';
+    steps.push(
+      {
+        title: reverse ? 'Warm the center gently' : 'Set up two zones',
+        cue: reverse
+          ? 'Indirect ambient: 225–250°F'
+          : 'Grill ambient: 400–450°F',
+        body: reverse
+          ? 'Choose which burners stay lit and place the steaks over unlit burners. Keep the grill near 225–250°F and turn the steaks occasionally. Begin probing after 20 minutes. When the center is around 120–125°F, move the steaks to a clean plate while you heat the searing zone. This is an intermediate temperature, not the serving target.'
+          : 'Preheat and clean the grill. Leave a cool area using the burners you choose. Sear the steaks on the hot side for about 2–4 minutes per side, checking early if thinner than 1 inch.',
+      },
+      {
+        title: reverse ? 'Finish with a hard sear' : 'Finish gently',
+        cue: reverse
+          ? 'Direct sear: about 450–550°F'
+          : 'Move to indirect heat as needed',
+        body: reverse
+          ? 'Turn up your selected searing burners and let the grates heat. Pat the steaks dry if needed, then sear, turning every 30–60 seconds. Stop when the crust is brown and the center has reached at least 145°F. If the crust finishes first, move to indirect heat until the center reaches that target.'
+          : 'Once a crust develops, move the steaks over unlit burners. Check the center from the side and finish to at least 145°F before removing. Avoid probing fat or bone.',
+      },
+      {
+        title: 'Add the garlic butter',
+        cue: 'Rest at least 3 min',
+        body: 'Combine the listed softened butter, grated garlic, parsley, and lemon juice. Add it after searing so the garlic does not scorch. Rest at least 3 minutes, then slice across the grain.',
+      },
+    );
+  } else if (f === 'chop' || f === 'tenderloin')
+    steps.push(
+      {
+        title: 'Prep your cut and zones',
+        cue: 'Grill ambient: 400–450°F',
+        body:
+          f === 'tenderloin'
+            ? 'Remove silverskin and tuck the thin tail under for a more even shape. Preheat and clean the grates. Use your chosen burners to create direct heat and an unlit finishing area.'
+            : 'Trim hanging fat and preheat the grill. Clean the grates and reserve an unlit finishing area with your chosen burner layout.',
+      },
+      {
+        title: 'Brown, then finish',
+        cue: cut.time,
+        body:
+          f === 'tenderloin'
+            ? 'Brown each side over direct heat, turning every few minutes, then move to indirect heat. Start checking around 15 minutes. Finish when the thickest part reaches 145°F; check each tenderloin separately.'
+            : 'Brown over direct heat for roughly 3–4 minutes per side, then move to the unlit zone as needed. Start checking at 10 minutes. Cook the thickest part to 145°F, keeping the probe clear of the bone.',
+      },
+      {
+        title: 'Rest and slice',
+        cue: 'At least 3 min · 5 min is useful',
+        body: 'Remove only after reaching 145°F. Rest at least 3 minutes, then finish with the listed butter and lemon juice. Slice tenderloin into medallions; serve chops whole or cut off the bone.',
+      },
+    );
+  else if (f === 'thigh' || f === 'breast' || f === 'drumstick')
+    steps.push(
+      {
+        title: 'Prep for even cooking',
+        cue: 'Grill ambient: 375–425°F',
+        body:
+          f === 'breast'
+            ? 'Pound the thick ends of boneless breasts to an even ¾–1 inch. Preheat and clean the grill; leave an unlit area using your chosen burners.'
+            : 'Trim loose skin and fat. Preheat and clean the grill. Leave enough room over unlit burners for the chicken without crowding it. Do not rinse raw chicken.',
+      },
+      {
+        title:
+          f === 'breast'
+            ? 'Brown, then move off the flame'
+            : 'Roast on the cool side',
+        cue: cut.time,
+        body:
+          f === 'breast'
+            ? 'Brown over direct heat for about 3–5 minutes per side. Transfer to the unlit zone whenever the outside is sufficiently browned. Begin checking the thickest part at about 12 minutes; stop only after every breast reaches 165°F.'
+            : `Cook over unlit burners, ${f === 'thigh' ? 'skin-side up' : 'rotating the drumsticks occasionally'}, with the lid closed. Begin probing after 25 minutes. Each piece must pass 165°F; continue toward 175–185°F for tender dark meat.`,
+      },
+      {
+        title: f === 'breast' ? 'Glaze lightly' : 'Crisp the skin',
+        cue:
+          f === 'breast'
+            ? 'Internal finish: 165°F'
+            : 'Internal finish: 175–185°F',
+        body:
+          f === 'breast'
+            ? 'If using barbecue sauce, brush it on during the last few minutes over indirect heat. Check every piece rather than assuming they finish together.'
+            : 'Once nearly done, briefly brown the skin over moderate direct heat, turning and watching closely for flare-ups. Move back to the cool zone as needed. Sweet sauce goes on only during the last few minutes.',
+      },
+      {
+        title: 'Rest on a clean platter',
+        cue: 'Rest 5 min',
+        body: 'Use clean utensils to transfer the cooked chicken. Rest 5 minutes and serve. This timing assumes individual pieces, not a whole bird.',
+      },
+    );
+  else
+    steps.push(
+      {
+        title: 'Support the fish',
+        cue: `Grill ambient: ${cut.grill.join('–')}°F`,
+        body:
+          cut.id === 'cod-fillet'
+            ? 'Preheat a clean grill and lightly oil a fish basket. Cod breaks easily, so keep it supported throughout cooking. Leave an unlit area available.'
+            : 'Preheat and clean the grates, then lightly oil the cooking surface or a fish basket. Leave an unlit area available so you can move the fish if it browns too quickly.',
+      },
+      {
+        title: 'Cook with a light touch',
+        cue: cut.time,
+        body:
+          cut.id === 'lemon-salmon'
+            ? 'Cook skin-side down with the lid closed; flipping is usually unnecessary. Begin checking the thickest part at 8 minutes. Move to the unlit zone if the skin is getting too dark.'
+            : `Cook the ${cut.id === 'cod-fillet' ? 'basket over moderate direct heat, turning the basket carefully once' : 'fillets over medium direct heat, turning once only when they release easily'}. Start checking at about 8 minutes. Finish over the unlit zone if the exterior is browning too quickly.`,
+      },
+      {
+        title: 'Probe and brighten',
+        cue: 'Internal finish: 145°F',
+        body:
+          'Probe the center of the thickest part from the side. Reach 145°F before removal. Lift with a wide spatula, rest briefly, and finish with the measured lemon juice and dill.' +
+          (cut.id === 'lemon-salmon'
+            ? ' A little white albumin on salmon is edible protein, not a doneness test.'
+            : ''),
+      },
+    );
+  const title =
+    f === 'shoulder'
+      ? base.title
+      : f === 'steak'
+        ? 'Pepper & garlic ' + cut.name.toLowerCase()
+        : f === 'chop' || f === 'tenderloin'
+          ? 'Smoky Dijon ' + cut.name.toLowerCase()
+          : cut.protein === 'Poultry'
+            ? 'Smoky mustard ' + cut.name.toLowerCase()
+            : 'Dijon & lemon ' + cut.name.toLowerCase();
+  const portionLb =
+    f === 'shoulder'
+      ? 0.6
+      : cut.protein === 'Poultry' && f !== 'breast'
+        ? 0.75
+        : cut.protein === 'Fish'
+          ? 0.375
+          : 0.5;
+  const photo = '/meals/' + cut.id + '.webp';
+  const photoCaption = cut.name;
+  return {
+    ...base,
+    id: cut.id,
+    protein: cut.protein,
+    title,
+    description:
+      f === 'shoulder'
+        ? base.description
+        : f === 'steak'
+          ? 'Pepper, garlic butter, and a crust worth waiting for. Seasoning scaled to your cut.'
+          : cut.protein === 'Pork'
+            ? 'A mustard binder, smoky seasoning, and a juicy finish for this lean cut.'
+            : base.description,
+    headline:
+      f === 'shoulder'
+        ? base.headline
+        : cut.protein === 'Pork'
+          ? ['Good crust.', 'Juicy center.']
+          : base.headline,
+    cut,
+    weightLb,
+    sizeLabel,
+    scale,
+    timingNote: cut.timing,
+    photo,
+    photoAlt: photoCaption + ' with a browned exterior on a dark serving board',
+    photoCaption,
+    ingredients,
+    steps,
+    grill: cut.grill,
+    internal: cut.internal,
+    method: cut.method,
+    time: cut.time,
+    rest: cut.rest,
+    finish,
+    safety,
+    serves: String(Math.max(1, Math.round(weightLb / portionLb))),
+    wood:
+      f === 'shoulder'
+        ? 'Apple + hickory'
+        : cut.protein === 'Poultry'
+          ? 'Apple, optional'
+          : 'No smoke needed',
+    tip:
+      f === 'shoulder'
+        ? base.tip
+        : 'Ingredient amounts scale with total raw weight. Cooking time depends on individual thickness, airflow, and the actual heat near the food.',
+  };
+}
+
+export type Science = { title: string; body: string; takeaway: string };
+export const dryBrineScience: Science = {
+  title: 'What dry-brining actually does',
+  body: 'Salt dissolves in moisture on the surface, then its ions diffuse into the meat. It changes muscle proteins in ways that help them retain more water during cooking. Given time in the refrigerator, you get seasoning below the surface and a drier exterior that browns more readily.',
+  takeaway:
+    'Measure the salt once. Refrigerate while it works. A mustard binder and salt-free rub go on later.',
+};
+export const zoneScience: Science = {
+  title: 'An OFF burner is still a cooking zone',
+  body: 'Radiant heat from a lit burner browns the surface intensely. Away from that flame, hot air and surrounding surfaces heat the food more gently. An unlit section lets you control the outside and center separately; its actual temperature still needs a thermometer.',
+  takeaway:
+    'Choose the burners that fit your grill. Measure beside the food instead of treating knob position as a temperature.',
+};
+export function cookingScience(cut: Cut): Science {
+  if (cut.family === 'shoulder')
+    return {
+      title: 'The stall is evaporative cooling',
+      body: 'As surface water evaporates, it carries heat away. For a while, that cooling can offset the heat entering a pork shoulder, and the probe barely moves. Collagen breakdown is happening too, but it is not the main cause of the stall.',
+      takeaway:
+        'Foil reduces evaporation and speeds the cook, but softens bark. Wrap after the bark is set.',
+    };
+  if (cut.id === 'lemon-salmon')
+    return {
+      title: 'That white stuff on salmon?',
+      body: 'The pale material that can appear on cooked salmon is albumin, a protein. It is edible. Its appearance varies and does not reliably tell you whether the center has reached a safe temperature.',
+      takeaway:
+        'Use a probe in the thickest part; finish this recipe at 145°F.',
+    };
+  if (cut.protein === 'Fish')
+    return {
+      title: 'Brown the outside, check the center',
+      body: 'Maillard reactions create browned flavor at the hot surface. The center can still be behind, especially in a thick fillet. A browned exterior is not evidence that the fish has reached its internal target.',
+      takeaway:
+        'Move to the unlit zone if the surface is ready first. Probe the center and finish at 145°F.',
+    };
+  if (cut.protein === 'Poultry')
+    return {
+      title: 'Skin needs a different finish',
+      body: 'Chicken skin browns and renders better with more heat than a long, low smoking session usually provides. A brief finish over direct heat can crisp it after the interior is almost ready. Sweet sauces can scorch during that finish.',
+      takeaway:
+        cut.family === 'breast'
+          ? 'Skinless breasts do not need a skin-crisping step. Finish at 165°F and keep the sauce away from hard flame.'
+          : 'Brown the skin late and watch closely. Check each piece with a thermometer.',
+    };
+  return {
+    title: 'A sear makes flavor, not a seal',
+    body: 'Heat drives reactions between amino acids and reducing sugars at the meat’s surface. These Maillard reactions create the savory aromas and brown crust we love. A wet surface spends more energy evaporating water, which slows browning; a crust does not seal juices inside.',
+    takeaway:
+      'Pat the surface dry and use only a thin mustard coat. Add finishing butter after the sear.',
+  };
+}
+
+export type BurnerLevel = 'off' | 'lo' | 'med' | 'hi';
+export const burnerLevels: BurnerLevel[] = ['off', 'lo', 'med', 'hi'];
+export const burnerLevelLabels: Record<BurnerLevel, string> = {
+  off: 'OFF',
+  lo: 'LO',
+  med: 'MED',
+  hi: 'HI',
+};
+
+// Relative heat output per setting. A gas burner's usable turndown is roughly
+// 3:1, so LO is about a third of HI rather than a tenth of it.
+export const burnerOutput: Record<BurnerLevel, number> = {
+  off: 0,
+  lo: 0.33,
+  med: 0.62,
+  hi: 1,
+};
+
+/** Mean burner output across the whole grill, 0-1. */
+export function heatFraction(levels: readonly BurnerLevel[]) {
+  if (!levels.length) return 0;
+  return (
+    levels.reduce((sum, level) => sum + burnerOutput[level], 0) / levels.length
+  );
+}
+
+// Lid-closed chamber temperature rises roughly linearly with total heat input
+// over a gas grill's usable range. Anchored so one of three burners on MED
+// lands in the 250-275F low-and-slow window and everything on HI reaches 570F.
+const AMBIENT_FLOOR = 180;
+const AMBIENT_SPAN = 390;
+/** Refrigerated starting temperature, in Fahrenheit. */
+const START_F = 40;
+/** Below this margin above the target the estimate stops being meaningful. */
+const MIN_DRIVING_F = 15;
+
+/** Rough lid-closed ambient for a burner layout, or null if nothing is lit. */
+export function estimatedAmbient(levels: readonly BurnerLevel[]) {
+  const fraction = heatFraction(levels);
+  if (fraction <= 0) return null;
+  return Math.round(AMBIENT_FLOOR + AMBIENT_SPAN * fraction);
+}
+
+/** The stated cook window in minutes, or null when the copy has no range. */
+export function parseMinutes(time: string): [number, number] | null {
+  const match = time.match(/(\d+)\s*[\u2013-]\s*(\d+)\s*(min|hr)/);
+  if (!match) return null;
+  const scale = match[3] === 'hr' ? 60 : 1;
+  return [Number(match[1]) * scale, Number(match[2]) * scale];
+}
+
+export function formatMinutes(total: number) {
+  const minutes = Math.max(1, Math.round(total));
+  if (minutes < 60) return `${minutes} min`;
+  const hours = Math.floor(minutes / 60);
+  const rest = Math.round((minutes % 60) / 5) * 5;
+  if (rest === 0 || rest === 60) return `${hours + (rest === 60 ? 1 : 0)} hr`;
+  return `${hours} hr ${rest} min`;
+}
+
+export type HeatEstimate =
+  | { kind: 'unlit' }
+  | { kind: 'tooCool'; ambient: number; target: number }
+  | {
+      kind: 'scaled';
+      ambient: number;
+      target: number;
+      nominal: number;
+      factor: number;
+      clamped: boolean;
+      window: [number, number] | null;
+    };
+
+// Heating a cold mass in a hot chamber follows Newton's law of cooling, so the
+// time to reach a target internal temperature goes as
+//   t = tau * ln((ambient - start) / (ambient - target))
+// The thermal time constant tau depends on the cut's mass and shape, but it
+// cancels when comparing two ambients -- which is all this estimate needs.
+function heatingTime(ambient: number, target: number) {
+  return Math.log((ambient - START_F) / (ambient - target));
+}
+
+const MIN_FACTOR = 0.4;
+const MAX_FACTOR = 6;
+
+/**
+ * Estimates how a burner layout changes the stated cook time. This is a
+ * planning aid only: it models chamber ambient, not the radiant heat of a
+ * direct sear, and it does not model the evaporative stall on a shoulder.
+ * Doneness is still decided by a probe.
+ */
+export function cookTimeEstimate(
+  cut: Cut,
+  levels: readonly BurnerLevel[],
+): HeatEstimate {
+  const ambient = estimatedAmbient(levels);
+  if (ambient === null) return { kind: 'unlit' };
+
+  const target = cut.internal[0];
+  const nominal = Math.round(
+    cut.grill.reduce((sum, value) => sum + value, 0) / cut.grill.length,
+  );
+  if (ambient < target + MIN_DRIVING_F)
+    return { kind: 'tooCool', ambient, target };
+
+  const raw = heatingTime(ambient, target) / heatingTime(nominal, target);
+  const factor = Math.min(MAX_FACTOR, Math.max(MIN_FACTOR, raw));
+  const window = parseMinutes(cut.time);
+  return {
+    kind: 'scaled',
+    ambient,
+    target,
+    nominal,
+    factor,
+    clamped: factor !== raw,
+    window: window && [window[0] * factor, window[1] * factor],
+  };
+}
+
+export function burnerMessage(levels: readonly BurnerLevel[], method: string) {
+  const lit = levels.filter((level) => level !== 'off').length;
+  if (!lit)
+    return 'No burners selected. Choose the burners you plan to light; the diagram does not control a real grill.';
+  if (lit === levels.length)
+    return method === 'indirect'
+      ? 'Every burner is lit. Turn at least one OFF to create an indirect area.'
+      : 'Every burner is lit. You have direct heat everywhere, but no unlit finishing area.';
+  return method === 'indirect'
+    ? 'Use the OFF zones for meat and your chosen lit zones for heat. Verify the ambient temperature beside the food.'
+    : 'Sear over your chosen lit zones. Use an OFF zone when the crust is ready or to move away from a flare-up.';
+}
+
+export type Swap = {
+  /** What to reach for instead. */
+  use: string;
+  /** How much, relative to the amount already listed. */
+  amount: string;
+  note?: string;
+  /**
+   * True when the substitute carries its own salt. The dry brine is measured
+   * once at 0.5% of raw weight, so these need the measured salt cut back.
+   */
+  addsSalt?: boolean;
+};
+export type SwapSet = { match: string; label: string; options: Swap[] };
+
+export const saltWarning =
+  'This is pre-salted. Cut the measured kosher salt by about a third, or the meat ends up over-salted.';
+
+// Longest match wins, so 'garlic powder' is checked before 'fresh garlic'.
+export const swapSets: SwapSet[] = [
+  {
+    match: 'garlic powder',
+    label: 'Garlic powder',
+    options: [
+      { use: 'Granulated garlic', amount: 'Same amount' },
+      {
+        use: 'Garlic salt',
+        amount: 'About 3× as much',
+        addsSalt: true,
+        note: 'Garlic salt is mostly salt, so you need more of it for the same garlic flavour.',
+      },
+      {
+        use: 'Fresh garlic, finely grated',
+        amount: 'About 1 clove per ⅛ tsp',
+        note: 'Fresh garlic burns faster over direct heat. Keep it away from the hottest zone.',
+      },
+    ],
+  },
+  {
+    match: 'onion powder',
+    label: 'Onion powder',
+    options: [
+      {
+        use: 'Dried minced onion, crushed',
+        amount: 'About 3× as much',
+        note: 'Crush it first or it will not stick to the binder.',
+      },
+      {
+        use: 'Onion salt',
+        amount: 'About 3× as much',
+        addsSalt: true,
+      },
+      {
+        use: 'Granulated onion',
+        amount: 'Same amount',
+      },
+    ],
+  },
+  {
+    match: 'smoked paprika',
+    label: 'Smoked paprika',
+    options: [
+      {
+        use: 'Sweet paprika',
+        amount: 'Same amount',
+        note: 'You lose the smoke. Add wood chips if your grill takes a smoker box.',
+      },
+      {
+        use: 'Chipotle powder',
+        amount: 'About half as much',
+        note: 'Considerably hotter. Cut the cayenne to match.',
+      },
+      { use: 'Ancho chile powder', amount: 'Same amount' },
+    ],
+  },
+  {
+    match: 'kosher salt',
+    label: 'Kosher salt',
+    options: [
+      {
+        use: 'Fine sea salt or table salt',
+        amount: 'Same weight, not the same volume',
+        note: 'This recipe measures salt in grams, so weight is a straight swap. By the spoon, table salt is nearly twice as salty — weigh it if you can.',
+      },
+      {
+        use: 'Coarse sea salt',
+        amount: 'Same weight',
+      },
+    ],
+  },
+  {
+    match: 'dijon mustard',
+    label: 'Dijon mustard',
+    options: [
+      {
+        use: 'Yellow mustard',
+        amount: 'Same amount',
+        note: 'Milder and a little sweeter. It binds just as well.',
+      },
+      { use: 'Stone-ground mustard', amount: 'Same amount' },
+      {
+        use: 'Mayonnaise',
+        amount: 'Same amount',
+        note: 'Works purely as a binder — it adds no tang, and it browns a little faster.',
+      },
+    ],
+  },
+  {
+    match: 'yellow mustard',
+    label: 'Yellow mustard',
+    options: [
+      {
+        use: 'Dijon mustard',
+        amount: 'Same amount',
+        note: 'Sharper, but fine.',
+      },
+      { use: 'Stone-ground mustard', amount: 'Same amount' },
+      {
+        use: 'Mayonnaise or a thin film of oil',
+        amount: 'Same amount',
+        note: 'Binder only. The rub is what carries the flavour.',
+      },
+    ],
+  },
+  {
+    match: 'brown sugar',
+    label: 'Brown sugar',
+    options: [
+      {
+        use: 'White sugar plus molasses',
+        amount: '1 tbsp molasses per cup of sugar',
+      },
+      { use: 'Coconut sugar or turbinado', amount: 'Same amount' },
+      {
+        use: 'Honey or maple syrup',
+        amount: 'About ¾ as much',
+        note: 'Liquid sugars burn sooner. Keep them off direct heat until the last few minutes.',
+      },
+    ],
+  },
+  {
+    match: 'apple cider vinegar',
+    label: 'Apple cider vinegar',
+    options: [
+      { use: 'White wine vinegar', amount: 'Same amount' },
+      {
+        use: 'Distilled white vinegar',
+        amount: 'About ¾ as much',
+        note: 'Sharper and less fruity.',
+      },
+      { use: 'Lemon juice', amount: 'Same amount' },
+    ],
+  },
+  {
+    match: 'apple juice',
+    label: 'Apple juice',
+    options: [
+      { use: 'Apple cider', amount: 'Same amount' },
+      { use: 'White grape juice', amount: 'Same amount' },
+      {
+        use: 'Water',
+        amount: 'Same amount',
+        note: 'Fine for the wrap. You lose a little sweetness in the bark.',
+      },
+    ],
+  },
+  {
+    match: 'unsalted butter',
+    label: 'Unsalted butter',
+    options: [
+      {
+        use: 'Salted butter',
+        amount: 'Same amount',
+        addsSalt: true,
+        note: 'Most salted butter runs about 1.5% salt. With a finishing butter this is minor, but taste before adding more.',
+      },
+      { use: 'Ghee or clarified butter', amount: 'Same amount' },
+      {
+        use: 'Olive oil',
+        amount: 'About ¾ as much',
+        note: 'It will not set on the meat the way butter does.',
+      },
+    ],
+  },
+  {
+    match: 'fresh dill',
+    label: 'Fresh dill',
+    options: [
+      { use: 'Dried dill', amount: 'About ⅓ as much' },
+      { use: 'Fennel fronds', amount: 'Same amount' },
+      { use: 'Tarragon or chervil', amount: 'About half as much' },
+    ],
+  },
+  {
+    match: 'dried thyme',
+    label: 'Dried thyme',
+    options: [
+      { use: 'Fresh thyme, chopped', amount: 'About 3× as much' },
+      { use: 'Dried oregano or marjoram', amount: 'Same amount' },
+      { use: 'Italian seasoning', amount: 'Same amount' },
+    ],
+  },
+  {
+    match: 'chopped parsley',
+    label: 'Parsley',
+    options: [
+      { use: 'Chives', amount: 'Same amount' },
+      {
+        use: 'Cilantro',
+        amount: 'Same amount',
+        note: 'A different direction, but it works.',
+      },
+      {
+        use: 'Leave it out',
+        amount: '—',
+        note: 'It is a garnish. Nothing breaks without it.',
+      },
+    ],
+  },
+  {
+    match: 'lemon zest',
+    label: 'Lemon zest',
+    options: [
+      { use: 'Lime or orange zest', amount: 'Same amount' },
+      {
+        use: 'Extra lemon juice',
+        amount: 'About 2× as much',
+        note: 'Less aromatic — the oils live in the peel.',
+      },
+      { use: 'Dried lemon peel', amount: 'About ⅓ as much' },
+    ],
+  },
+  {
+    match: 'lemon juice',
+    label: 'Lemon juice',
+    options: [
+      { use: 'Lime juice', amount: 'Same amount' },
+      { use: 'White wine vinegar', amount: 'About ¾ as much' },
+      { use: 'Apple cider vinegar', amount: 'About ¾ as much' },
+    ],
+  },
+  {
+    match: 'hot sauce',
+    label: 'Hot sauce',
+    options: [
+      {
+        use: 'Cayenne plus a splash of vinegar',
+        amount: '¼ tsp cayenne per tsp',
+      },
+      {
+        use: 'Sriracha or sambal',
+        amount: 'Same amount',
+        note: 'Sweeter and thicker.',
+      },
+      { use: 'Red pepper flakes', amount: '½ tsp per tsp' },
+    ],
+  },
+  {
+    match: 'barbecue sauce',
+    label: 'Barbecue sauce',
+    options: [
+      {
+        use: 'Ketchup, vinegar and brown sugar',
+        amount: '2 parts ketchup to 1 part each',
+      },
+      {
+        use: 'Any sauce you already have',
+        amount: 'Same amount',
+        note: 'Sweet sauces still go on in the last few minutes.',
+      },
+      { use: 'Leave it out', amount: '—', note: 'It is listed as optional.' },
+    ],
+  },
+  {
+    match: 'cayenne',
+    label: 'Cayenne',
+    options: [
+      { use: 'Red pepper flakes', amount: 'About 2× as much' },
+      {
+        use: 'Chipotle powder',
+        amount: 'Same amount',
+        note: 'Smokier, slightly milder.',
+      },
+      {
+        use: 'Hot sauce',
+        amount: 'About 1 tsp per ¼ tsp',
+        note: 'Adds liquid — keep the rub from going pasty.',
+      },
+    ],
+  },
+  {
+    match: 'black pepper',
+    label: 'Black pepper',
+    options: [
+      {
+        use: 'White pepper',
+        amount: 'About ¾ as much',
+        note: 'Sharper, and it disappears into the bark.',
+      },
+      { use: 'Mixed peppercorns, cracked', amount: 'Same amount' },
+      {
+        use: 'Pre-ground pepper',
+        amount: 'Same amount',
+        note: 'Coarse-cracked gives a better crust, but this works.',
+      },
+    ],
+  },
+  {
+    match: 'fresh garlic',
+    label: 'Fresh garlic',
+    options: [
+      { use: 'Garlic powder', amount: 'About ⅛ tsp per clove' },
+      { use: 'Granulated garlic', amount: 'About ¼ tsp per clove' },
+      {
+        use: 'Jarred minced garlic',
+        amount: 'Same amount',
+        note: 'Milder. Pat it dry before it goes on.',
+      },
+    ],
+  },
+];
+
+/**
+ * Finds substitutions for a generated ingredient line. Matching is on the
+ * ingredient name inside the string, longest match first so that
+ * 'garlic powder' never resolves as 'fresh garlic'.
+ */
+export function substitutionsFor(item: string): SwapSet | null {
+  const haystack = item.toLowerCase();
+  let best: SwapSet | null = null;
+  for (const set of swapSets)
+    if (
+      haystack.includes(set.match) &&
+      (best === null || set.match.length > best.match.length)
+    )
+      best = set;
+  return best;
+}
+
+/**
+ * How a chosen substitution reads on the checklist and in the print view.
+ * Only the measured half of the original line is quoted back: several items
+ * carry an em-dash clause of advice that would otherwise run on.
+ */
+export function measuredPart(item: string) {
+  return item.split(' — ')[0] ?? item;
+}
+export function substitutedItem(item: string, set: SwapSet, option: Swap) {
+  if (option.amount === '—')
+    return `Skip the ${set.label.toLowerCase()} (listed: ${measuredPart(item)})`;
+  return `${option.use} — ${option.amount}, in place of ${measuredPart(item)}`;
+}

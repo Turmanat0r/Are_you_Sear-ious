@@ -1,0 +1,1756 @@
+.header-actions {
+  display: flex;
+  gap: 18px;
+  align-items: center;
+}
+.save-nav {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 14px;
+  background: none;
+  border: 0;
+  color: #c7cbbf;
+}
+.save-nav:hover {
+  color: var(--primary);
+}
+.unit-select {
+  min-width: 66px;
+  height: 37px !important;
+  font-size: 14px;
+  background: #242720 !important;
+}
+.protein-grid[data-slot='tabs-list'] {
+  display: grid;
+  width: 100%;
+  height: auto;
+  padding: 0;
+  background: none;
+  border-radius: 0;
+  gap: 14px;
+  margin-bottom: 24px;
+}
+.protein-card[data-slot='tabs-trigger'] {
+  height: auto;
+  white-space: normal;
+  justify-content: flex-start;
+  min-height: 94px;
+  border: 1px solid var(--border);
+  background: var(--card);
+  padding: 20px 22px;
+  gap: 18px;
+  border-radius: 9px;
+  box-shadow: none;
+}
+.protein-card.selected[data-slot='tabs-trigger'] {
+  background: #30251f;
+  border-color: #a35d3c;
+  box-shadow: inset 0 -2px #f47b45;
+}
+.protein-card .protein-icon {
+  width: 30px !important;
+  height: 30px !important;
+}
+.protein-card .category-arrow {
+  width: 19px !important;
+  height: 19px !important;
+}
+.feature-grid[data-slot='tabs-content'] {
+  font-size: 16px;
+}
+.no-photo .feature-copy {
+  width: 64%;
+}
+.feature-data {
+  width: 36%;
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+  align-items: center;
+  justify-content: center;
+  border-left: 1px solid var(--border);
+  margin: 40px 20px 40px 30px;
+  color: #b0ba9a;
+  text-align: center;
+}
+.feature-data > strong {
+  font-size: 30px;
+  color: var(--foreground);
+  letter-spacing: -1px;
+}
+.feature-data > span:last-child {
+  font-size: 13px;
+}
+.feature-data > .eyebrow {
+  font-size: 12px;
+  letter-spacing: 1px;
+}
+.section-heading {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 24px;
+  margin-bottom: 20px;
+}
+.section-heading h2 {
+  font-size: 29px;
+  font-weight: 580;
+  line-height: 1.25;
+  letter-spacing: -0.8px;
+  margin-top: 8px;
+}
+.action-row {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  flex-shrink: 0;
+}
+.icon-button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 44px;
+  height: 44px;
+  flex-shrink: 0;
+  border: 1px solid #494d43;
+  background: transparent;
+  border-radius: 6px;
+  color: #d0d5c6;
+}
+.icon-button:hover {
+  background: var(--secondary);
+}
+.icon-button.is-saved {
+  color: var(--primary);
+  background: #30251f;
+  border-color: #805037;
+}
+.recipe-section {
+  padding: 48px 0 45px;
+  border-bottom: 1px solid var(--border);
+}
+.recipe-facts {
+  display: flex;
+  gap: 24px;
+  flex-wrap: wrap;
+  font-size: 14px;
+  color: var(--muted-foreground);
+  padding-bottom: 28px;
+  border-bottom: 1px solid var(--border);
+}
+.recipe-facts > span {
+  display: flex;
+  gap: 8px;
+  align-items: center;
+}
+.recipe-columns {
+  display: grid;
+  grid-template-columns: 340px minmax(0, 1fr);
+  gap: 54px;
+  padding-top: 35px;
+}
+.ingredients {
+  align-self: start;
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  background: var(--card);
+  padding: 26px;
+}
+.ingredients-heading {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+}
+.ingredients-heading > span {
+  font-family: var(--font-geist-mono), monospace;
+  font-size: 13px;
+  color: var(--muted-foreground);
+}
+.ingredients h3,
+.method h3 {
+  font-size: 20px;
+  font-weight: 550;
+  letter-spacing: -0.4px;
+}
+.micro {
+  font-size: 13px;
+  color: var(--muted-foreground);
+  line-height: 1.6;
+}
+.ingredients > .micro {
+  margin-top: 5px;
+}
+.ingredient-group {
+  margin-top: 25px;
+}
+.ingredient-group h4 {
+  font-size: 12px;
+  text-transform: uppercase;
+  color: #b2bba3;
+  letter-spacing: 1.1px;
+  font-weight: 600;
+  margin: 0 0 12px;
+}
+.ingredient {
+  display: flex;
+  align-items: flex-start;
+  gap: 12px;
+  font-size: 14px;
+  color: #dde0d6;
+  line-height: 1.65;
+  padding: 8px 0;
+  cursor: pointer;
+}
+.ingredient > [data-slot='checkbox'] {
+  margin-top: 5px;
+}
+.ingredient.checked > span {
+  text-decoration: line-through;
+  color: #92988a;
+}
+.text-button {
+  font-size: 14px;
+  color: var(--primary);
+  background: none;
+  border: 0;
+  text-decoration: underline;
+  text-underline-offset: 4px;
+  padding: 12px 0 0;
+}
+.method > ol {
+  list-style: none;
+  padding: 0;
+  margin: 22px 0 0;
+}
+.method li {
+  display: flex;
+  gap: 20px;
+  padding: 0 0 30px;
+}
+.step-number {
+  font-family: var(--font-geist-mono), monospace;
+  font-size: 14px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 34px;
+  height: 34px;
+  flex-shrink: 0;
+  background: #292d24;
+  border-radius: 50%;
+  color: #b4c19f;
+  margin-top: 2px;
+}
+.method h4 {
+  font-size: 19px;
+  font-weight: 550;
+  margin: 0 0 4px;
+}
+.step-cue {
+  color: #c98b66 !important;
+  font-size: 13px !important;
+  margin-bottom: 10px;
+}
+.method li p {
+  color: #b8bdb0;
+  font-size: 16px;
+  line-height: 1.85;
+}
+.grill-note {
+  display: flex;
+  gap: 15px;
+  padding: 22px;
+  background: #252a20;
+  border-left: 2px solid #aab88e;
+  border-radius: 0 7px 7px 0;
+}
+.grill-note > svg {
+  color: #b2c393;
+  margin-top: 3px;
+}
+.grill-note strong {
+  font-size: 15px;
+  font-weight: 600;
+}
+.grill-note p {
+  font-size: 14px;
+  margin-top: 5px;
+  color: #b9c1ae;
+}
+.guide-section {
+  padding: 48px 0;
+  border-bottom: 1px solid var(--border);
+}
+.guide-unit {
+  font-family: var(--font-geist-mono), monospace;
+  font-size: 13px;
+  color: #bec5b0;
+  padding: 7px 12px;
+  border: 1px solid var(--border);
+  border-radius: 5px;
+}
+.section-description {
+  font-size: 16px;
+  color: var(--muted-foreground);
+  max-width: 750px;
+  line-height: 1.8;
+  margin-bottom: 24px;
+}
+.temperature-table {
+  border-top: 1px solid var(--border);
+}
+.temperature-table th {
+  font-size: 12px;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  color: #aab39c;
+  padding: 15px 20px;
+}
+.temperature-table td {
+  padding: 17px 20px;
+  font-size: 15px;
+}
+.temperature-table td:first-child {
+  font-weight: 550;
+}
+.temperature-table td strong {
+  font-size: 16px;
+  font-weight: 550;
+  color: #eeae88;
+}
+.temperature-table td small {
+  display: block;
+  font-size: 12px;
+  color: #9fa791;
+}
+.temperature-table tr {
+  border-color: #30362a;
+}
+.source-note {
+  font-size: 13px;
+  line-height: 1.85;
+  color: var(--muted-foreground);
+  margin-top: 22px;
+}
+.source-note a {
+  display: inline-flex;
+  gap: 3px;
+  align-items: center;
+  color: #c7d0b5;
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
+.setup-section {
+  padding: 48px 0;
+  border-bottom: 1px solid var(--border);
+}
+.setup-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 50px;
+}
+.setup-selects {
+  display: flex;
+  gap: 18px;
+  margin: 20px 0;
+}
+.setup-selects > div {
+  flex: 1;
+  min-width: 0;
+}
+.setup-selects label,
+.setup-selects .field-label {
+  display: block;
+  font-size: 13px;
+  color: #b9c0af;
+  margin-bottom: 7px;
+}
+.select-control {
+  height: 42px !important;
+  width: 100%;
+  font-size: 14px;
+  padding: 10px 12px !important;
+  background: #242720 !important;
+}
+.setup-tip {
+  font-size: 15px;
+  line-height: 1.8;
+  color: #d1d6c8;
+  margin-bottom: 14px;
+}
+.zone-board {
+  padding: 24px;
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  align-self: start;
+}
+.zone-board-heading {
+  display: flex;
+  justify-content: space-between;
+  font-size: 12px;
+  letter-spacing: 1px;
+  color: #b0b8a3;
+  gap: 12px;
+  margin-bottom: 20px;
+}
+.burner-diagram {
+  display: grid;
+  gap: 7px;
+  border: 2px solid #4b5045;
+  padding: 7px;
+  border-radius: 12px;
+}
+.burner-zone {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  min-height: 205px;
+  border-radius: 5px;
+  border: 1px solid #48523a;
+  background: #293022;
+  color: #b4c497;
+  overflow: hidden;
+}
+.burner-zone > span {
+  font-size: 12px;
+  letter-spacing: 0.3px;
+  z-index: 1;
+  white-space: nowrap;
+}
+.burner-zone strong {
+  font-size: 16px;
+  z-index: 1;
+}
+.burner-zone small {
+  font-size: 12px;
+  z-index: 1;
+}
+.burner-zone svg {
+  z-index: 1;
+}
+.grate-lines {
+  position: absolute;
+  inset: 36px 12px 46px;
+  background: repeating-linear-gradient(
+    90deg,
+    transparent 0,
+    transparent 11px,
+    #b7ba9e12 11px,
+    #b7ba9e12 14px
+  );
+  border-top: 1px solid #7b796933;
+  border-bottom: 1px solid #7b796933;
+}
+.zone-board > p {
+  font-size: 12px;
+  line-height: 1.7;
+  color: #a0a895;
+  margin-top: 16px;
+}
+.cook-dialog[data-slot='dialog-content'] {
+  width: min(760px, calc(100vw - 32px));
+  max-width: 760px;
+  padding: 30px;
+  max-height: 90dvh;
+  overflow-y: auto;
+  border: 1px solid var(--border);
+  gap: 10px;
+}
+.saved-dialog[data-slot='dialog-content'] {
+  width: min(540px, calc(100vw - 32px));
+  max-width: 540px;
+  padding: 28px;
+  max-height: 85dvh;
+  overflow-y: auto;
+  border: 1px solid var(--border);
+}
+[data-slot='dialog-overlay'] {
+  background: #000b;
+}
+.dialog-title[data-slot='dialog-title'] {
+  font-size: 21px;
+  line-height: 1.4;
+  font-weight: 550;
+  padding-right: 22px;
+}
+.cook-targets {
+  display: flex;
+  gap: 20px;
+  padding: 20px 0;
+  margin-bottom: 12px;
+  border-bottom: 1px solid var(--border);
+  font-size: 14px;
+}
+.cook-targets > span {
+  display: flex;
+  gap: 7px;
+  align-items: center;
+  flex-wrap: wrap;
+}
+.cook-targets svg {
+  color: var(--primary);
+}
+.progress-label {
+  display: flex;
+  justify-content: space-between;
+  gap: 12px;
+  font-size: 12px;
+  color: #acb79d;
+  margin: 16px 0 9px;
+}
+.cook-step {
+  padding: 25px 0 0;
+  min-height: 285px;
+}
+.cook-step h2 {
+  font-size: 30px;
+  letter-spacing: -0.7px;
+  font-weight: 550;
+  margin: 9px 0 14px;
+}
+.cook-step > p:not(.eyebrow) {
+  font-size: 16px;
+  color: #c4caba;
+  line-height: 1.85;
+}
+.cook-step > .secondary-button {
+  margin-top: 20px;
+}
+.cook-navigation {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 25px;
+}
+.timer-panel {
+  margin-top: 28px;
+  border-top: 1px solid var(--border);
+  padding-top: 20px;
+}
+.timer-title {
+  display: flex;
+  align-items: center;
+  gap: 9px;
+  font-size: 14px;
+}
+.timer-title > span {
+  font-size: 12px;
+  color: var(--muted-foreground);
+  margin-left: auto;
+}
+.timer-controls {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin: 15px 0;
+}
+.timer-controls .select-control {
+  width: 104px;
+}
+.timer-digits {
+  font-size: 34px;
+  font-family: var(--font-geist-mono), monospace;
+  font-variant-numeric: tabular-nums;
+  margin-right: auto;
+}
+.timer-alert {
+  font-size: 14px;
+  color: #f4b68e;
+  background: #382b22;
+  padding: 10px;
+  border-radius: 5px;
+}
+.saved-empty {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 35px 0;
+  text-align: center;
+  gap: 14px;
+}
+.saved-empty > svg {
+  color: #b3c19d;
+}
+.saved-empty h3 {
+  font-size: 18px;
+}
+.saved-empty p {
+  font-size: 14px;
+  color: var(--muted-foreground);
+}
+.saved-list {
+  display: flex;
+  flex-direction: column;
+  margin-top: 15px;
+}
+.saved-list > button {
+  display: flex;
+  text-align: left;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  padding: 17px 0;
+  background: none;
+  border: 0;
+  border-bottom: 1px solid var(--border);
+}
+.saved-list strong {
+  display: block;
+  font-size: 16px;
+  font-weight: 500;
+}
+.saved-list small {
+  font-size: 12px;
+  color: var(--muted-foreground);
+}
+.saved-list > button:hover {
+  color: var(--primary);
+}
+.print-recipe {
+  display: none;
+}
+@media (max-width: 1023.98px) {
+  .recipe-columns {
+    grid-template-columns: 300px minmax(0, 1fr);
+    gap: 30px;
+  }
+  .section-heading {
+    align-items: flex-start;
+  }
+  .recipe-section > .section-heading {
+    flex-wrap: wrap;
+  }
+  .protein-card[data-slot='tabs-trigger'] {
+    padding: 16px;
+    gap: 12px;
+  }
+  .feature-data {
+    margin: 35px 12px 35px 15px;
+  }
+  .feature-data > strong {
+    font-size: 24px;
+  }
+  .setup-grid {
+    gap: 26px;
+  }
+  .zone-board {
+    padding: 18px;
+  }
+  .site-header nav {
+    gap: 23px;
+  }
+  .header-actions {
+    gap: 10px;
+  }
+  .save-nav > span {
+    display: none;
+  }
+}
+@media (max-width: 767.98px) {
+  .site-header {
+    position: relative;
+    padding-top: 17px;
+  }
+  .site-header nav {
+    order: 3;
+    overflow: auto;
+    white-space: nowrap;
+  }
+  .header-actions {
+    margin-left: auto;
+  }
+  .intro > .gas-label {
+    display: none;
+  }
+  .protein-grid[data-slot='tabs-list'] {
+    gap: 10px;
+    margin-bottom: 16px;
+  }
+  .protein-card[data-slot='tabs-trigger'] {
+    padding: 14px;
+    min-height: 84px;
+    gap: 12px;
+  }
+  .protein-card .category-arrow {
+    display: none;
+  }
+  .feature-data {
+    width: 31%;
+    margin: 25px 10px;
+    gap: 12px;
+  }
+  .feature-data > strong {
+    font-size: 20px;
+    white-space: nowrap;
+  }
+  .feature-data > .eyebrow {
+    font-size: 12px;
+    letter-spacing: 0;
+  }
+  .feature-data > svg {
+    width: 40px;
+  }
+  .no-photo .feature-copy {
+    width: 64%;
+    padding-left: 22px;
+  }
+  .no-photo.feature-card h2 {
+    font-size: 31px;
+  }
+  .recipe-section,
+  .guide-section,
+  .setup-section {
+    padding: 32px 0;
+  }
+  .section-heading h2 {
+    font-size: 25px;
+  }
+  .section-heading {
+    gap: 15px;
+    flex-wrap: wrap;
+  }
+  .action-row {
+    gap: 8px;
+    flex-wrap: wrap;
+  }
+  .action-row .primary-button,
+  .action-row .secondary-button {
+    padding: 10px 14px;
+  }
+  .recipe-facts {
+    gap: 12px 22px;
+    font-size: 13px;
+    padding-bottom: 23px;
+  }
+  .recipe-columns {
+    grid-template-columns: 1fr;
+    gap: 30px;
+    padding-top: 24px;
+  }
+  .ingredients {
+    padding: 23px;
+  }
+  .ingredient {
+    font-size: 15px;
+  }
+  .method li {
+    gap: 15px;
+  }
+  .method li p {
+    font-size: 16px;
+  }
+  .setup-grid {
+    grid-template-columns: 1fr;
+    gap: 22px;
+  }
+  .setup-selects {
+    gap: 12px;
+  }
+  .temperature-table th,
+  .temperature-table td {
+    padding: 14px 12px;
+  }
+  .temperature-table td {
+    font-size: 14px;
+  }
+  .zone-board {
+    padding: 18px;
+  }
+  .burner-zone > span {
+    font-size: 12px;
+    white-space: normal;
+    text-align: center;
+  }
+  .cook-dialog[data-slot='dialog-content'] {
+    padding: 23px 20px;
+  }
+  .cook-targets {
+    gap: 12px;
+    font-size: 13px;
+    flex-wrap: wrap;
+  }
+  .cook-step h2 {
+    font-size: 26px;
+  }
+  .cook-step {
+    min-height: 0;
+  }
+  .timer-title {
+    flex-wrap: wrap;
+  }
+  .timer-title > span {
+    margin-left: 0;
+    width: 100%;
+    padding-left: 27px;
+  }
+  .timer-digits {
+    font-size: 29px;
+  }
+  .timer-controls {
+    gap: 8px;
+  }
+  .timer-controls .select-control {
+    width: 88px;
+  }
+  .timer-controls .icon-button {
+    width: 38px;
+    height: 40px;
+  }
+  .cook-navigation .primary-button,
+  .cook-navigation .secondary-button {
+    padding: 10px 13px;
+  }
+  footer.container {
+    flex-wrap: wrap;
+    gap: 15px;
+    font-size: 12px;
+  }
+  footer.container > a {
+    width: 100%;
+  }
+  .ingredient-group h4 {
+    font-size: 13px;
+  }
+  .guide-unit {
+    font-size: 13px;
+  }
+}
+@media print {
+  @page {
+    size: auto;
+    margin: 16mm;
+  }
+  html,
+  body {
+    background: white !important;
+    color: black !important;
+    color-scheme: light;
+    font-family: Arial, sans-serif;
+    font-size: 11pt;
+    line-height: 1.5;
+  }
+  body > *:has(.screen-app) {
+    display: contents !important;
+  }
+  .screen-app,
+  [data-slot='dialog-overlay'],
+  [data-slot='dialog-content'],
+  nextjs-portal {
+    display: none !important;
+  }
+  .print-recipe {
+    display: block !important;
+    color: black !important;
+    font-size: 11pt;
+  }
+  .print-recipe h1 {
+    font-size: 23pt;
+    line-height: 1.2;
+    margin: 8pt 0 12pt;
+    letter-spacing: -0.5pt;
+  }
+  .print-recipe h2 {
+    font-size: 16pt;
+    margin: 16pt 0 8pt;
+    break-after: avoid;
+  }
+  .print-recipe h3 {
+    font-size: 12pt;
+    margin: 10pt 0 5pt;
+    break-after: avoid;
+  }
+  .print-recipe p {
+    margin: 7pt 0;
+    overflow-wrap: anywhere;
+  }
+  .print-recipe section {
+    break-inside: avoid;
+  }
+  .print-recipe ul {
+    list-style: disc;
+    padding-left: 18pt;
+    margin: 6pt 0;
+  }
+  .print-recipe ol {
+    list-style: decimal;
+    padding-left: 18pt;
+  }
+  .print-recipe ol > li {
+    break-inside: avoid;
+    padding-left: 4pt;
+    margin-bottom: 14pt;
+  }
+  .print-recipe li {
+    margin: 3pt 0;
+  }
+  a {
+    color: black !important;
+  }
+  button {
+    display: none !important;
+  }
+}
+.brand {
+  font-size: 22px;
+  letter-spacing: -0.7px;
+  line-height: 1.1;
+  white-space: nowrap;
+}
+.brand-accent {
+  color: var(--primary);
+}
+.recipe-controls {
+  display: grid;
+  grid-template-columns: minmax(230px, 1.7fr) minmax(140px, 0.8fr) minmax(
+      130px,
+      0.7fr
+    ) minmax(160px, 1fr);
+  align-items: start;
+  gap: 22px;
+  background: #1c1f1a;
+  padding: 24px;
+  border: 1px solid #363e2e;
+  border-radius: 10px;
+  margin: 0 0 24px;
+}
+.recipe-controls label,
+.recipe-controls .field-label,
+.method-choice > label,
+.method-choice > .field-label {
+  display: block;
+  font-size: 14px;
+  color: #bdc5b1;
+  margin-bottom: 7px;
+}
+.weight-input {
+  display: flex;
+  align-items: center;
+  position: relative;
+}
+.weight-input input {
+  height: 42px;
+  padding-right: 43px;
+  border-color: #454d3b;
+  background: #242720;
+  font-size: 16px;
+  font-variant-numeric: tabular-nums;
+}
+.weight-input > span {
+  position: absolute;
+  right: 13px;
+  color: #9faa91;
+  font-size: 13px;
+  pointer-events: none;
+}
+.weight-field > .micro,
+.weight-error {
+  margin-top: 5px;
+  font-size: 12px;
+}
+.weight-error {
+  color: #ffc599;
+}
+.scale-status {
+  align-self: center;
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+  padding-left: 23px;
+  border-left: 1px solid #465039;
+}
+.scale-status strong {
+  font-size: 17px;
+  font-weight: 550;
+  color: #bed296;
+}
+.scale-status span {
+  font-size: 12px;
+  color: #aebba0;
+}
+.scaling-note {
+  grid-column: 1/-1;
+  font-size: 13px;
+  line-height: 1.7;
+  color: #a4af98;
+  border-top: 1px solid #353e2c;
+  padding-top: 14px;
+}
+.photo-caption {
+  position: absolute;
+  bottom: 16px;
+  right: 18px;
+  z-index: 2;
+  font-size: 12px;
+  color: #d3d6cc;
+  text-shadow: 0 1px 5px #000;
+  background: #151914b8;
+  padding: 3px 8px;
+  border-radius: 3px;
+}
+.timing-note {
+  font-size: 14px;
+  line-height: 1.8;
+  color: #b9c5a8;
+  margin-top: 20px;
+}
+.science-note {
+  background: #1e2825;
+  border: 1px solid #3b5148;
+  border-left: 3px solid #8ba89b;
+  border-radius: 0 9px 9px 0;
+  padding: 23px;
+  margin: 24px 0 10px;
+}
+.science-label {
+  display: flex;
+  gap: 8px;
+  align-items: center;
+  font-size: 12px;
+  letter-spacing: 1.6px;
+  color: #a9c4b8;
+  margin-bottom: 11px;
+}
+.science-note h3,
+.method .science-note h3 {
+  font-size: 20px;
+  line-height: 1.3;
+  color: #e0e8df;
+  letter-spacing: -0.3px;
+  font-weight: 550;
+  margin-bottom: 11px;
+}
+.science-note p,
+.method .science-note p {
+  font-size: 16px;
+  line-height: 1.85;
+  color: #bacdc2;
+}
+.science-note .science-takeaway,
+.method .science-note .science-takeaway {
+  color: #e0e6d5;
+  margin: 13px 0;
+  font-size: 14px;
+}
+.temperature-table [data-selected='true'] {
+  background: #2a3023;
+}
+.temperature-table small {
+  display: block;
+  font-size: 12px;
+  color: #acb69f;
+}
+.selected-cut-label {
+  color: #c0d19d !important;
+}
+.method-choice {
+  margin-bottom: 20px;
+}
+.interactive-burners .burner-zone {
+  cursor: pointer;
+  min-height: 230px;
+  gap: 13px;
+}
+.interactive-burners .burner-position {
+  font-size: 12px;
+  text-transform: uppercase;
+  white-space: normal;
+  text-align: center;
+}
+.interactive-burners .burner-zone:hover {
+  border-color: #c3cba9;
+}
+.interactive-burners.vertical .burner-zone {
+  min-height: 72px;
+  flex-direction: row;
+  justify-content: space-around;
+  gap: 12px;
+  padding: 12px;
+}
+.interactive-burners.vertical .grate-lines {
+  inset: 10px 70px;
+  background: repeating-linear-gradient(
+    0deg,
+    transparent 0,
+    transparent 8px,
+    #b7ba9e12 8px,
+    #b7ba9e12 11px
+  );
+}
+.burner-summary {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-top: 14px;
+  font-size: 13px;
+  color: #bac9a7;
+}
+.burner-summary .text-button {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 4px 0;
+  font-size: 13px;
+}
+.interactive-burners .burner-zone small {
+  font-size: 12px;
+  text-align: center;
+}
+.zone-board-heading {
+  font-size: 12px;
+  letter-spacing: 0.7px;
+}
+.temp-card > .eyebrow {
+  font-size: 12px;
+  letter-spacing: 1px;
+}
+.brand {
+  font-size: 22px;
+  letter-spacing: -0.7px;
+  line-height: 1.1;
+  white-space: nowrap;
+}
+.brand-accent {
+  color: var(--primary);
+}
+@media (max-width: 1023.98px) {
+  .recipe-controls {
+    grid-template-columns: 1.5fr 1fr 1fr;
+    gap: 18px;
+  }
+  .scale-status {
+    grid-column: 1/-1;
+    border-left: 0;
+    padding-left: 0;
+    flex-direction: row;
+    gap: 14px;
+    align-items: center;
+  }
+  .scaling-note {
+    padding-top: 10px;
+  }
+  .site-header {
+    gap: 18px;
+  }
+  .site-header nav {
+    gap: 18px;
+  }
+  .brand {
+    font-size: 21px;
+  }
+  .setup-grid {
+    grid-template-columns: 1fr;
+  }
+  .zone-board {
+    max-width: 640px;
+    width: 100%;
+  }
+  .setup-grid .science-note {
+    max-width: 750px;
+  }
+}
+@media (max-width: 767.98px) {
+  .recipe-controls {
+    grid-template-columns: 1fr 1fr;
+    padding: 20px;
+    gap: 16px;
+    margin-bottom: 18px;
+  }
+  .cut-field {
+    grid-column: 1/-1;
+  }
+  .scale-status {
+    flex-wrap: wrap;
+    gap: 3px 12px;
+  }
+  .scaling-note {
+    font-size: 12px;
+  }
+  .photo-caption {
+    bottom: 12px;
+    right: 12px;
+    font-size: 12px;
+    max-width: 45%;
+    text-align: right;
+  }
+  .site-header .brand {
+    font-size: 21px;
+  }
+  .site-header .brand > svg {
+    width: 23px;
+    height: 28px;
+  }
+  .science-note {
+    padding: 20px;
+    margin-top: 20px;
+  }
+  .science-label {
+    font-size: 12px;
+    letter-spacing: 1px;
+  }
+  .science-note h3,
+  .method .science-note h3 {
+    font-size: 19px;
+  }
+  .setup-selects {
+    flex-wrap: wrap;
+  }
+  .interactive-burners.horizontal {
+    gap: 4px;
+    padding: 5px;
+  }
+  .interactive-burners .burner-zone {
+    padding: 10px 2px;
+    gap: 11px;
+  }
+  .interactive-burners .burner-position {
+    font-size: 12px;
+  }
+  .interactive-burners .burner-zone small {
+    font-size: 12px;
+  }
+  .interactive-burners.vertical .burner-zone {
+    padding: 12px;
+    gap: 8px;
+  }
+  .zone-board {
+    padding: 15px;
+  }
+  .method .science-note p {
+    font-size: 16px;
+  }
+  .guide-unit {
+    white-space: normal;
+  }
+  .temperature-table th {
+    font-size: 12px;
+  }
+}
+
+/* Keyboard-only bypass link (WCAG 2.4.1). Visible once focused. */
+.skip-link {
+  position: absolute;
+  left: -9999px;
+  top: 0;
+  z-index: 100;
+  padding: 10px 16px;
+  background: var(--background, #141514);
+  color: var(--foreground, #f4f4f0);
+  border: 1px solid var(--border, #2c2f28);
+  border-radius: 0 0 6px 0;
+  font-size: 14px;
+  text-decoration: none;
+}
+.skip-link:focus-visible {
+  left: 0;
+  outline: 2px solid #f47b45;
+  outline-offset: 2px;
+}
+
+/* ---- Per-zone burner levels (OFF / LO / MED / HI) ---- */
+
+.burner-levels {
+  border: 0;
+  margin: 0;
+  padding: 0;
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 3px;
+  width: 100%;
+}
+.burner-levels legend {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip-path: inset(50%);
+  white-space: nowrap;
+}
+.burner-level {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 5px 0;
+  border-radius: 5px;
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  background: rgba(0, 0, 0, 0.28);
+  color: #9aa38d;
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.03em;
+  cursor: pointer;
+  transition:
+    background 0.15s ease,
+    color 0.15s ease,
+    border-color 0.15s ease;
+}
+.burner-level:hover {
+  border-color: rgba(255, 255, 255, 0.28);
+  color: #e6e9dd;
+}
+.burner-level input {
+  position: absolute;
+  opacity: 0;
+  width: 100%;
+  height: 100%;
+  margin: 0;
+  cursor: pointer;
+}
+.burner-level:has(input:checked) {
+  background: #f47b45;
+  border-color: #f47b45;
+  color: #17180f;
+}
+.burner-level:first-child:has(input:checked) {
+  background: #4a4f42;
+  border-color: #626857;
+  color: #e6e9dd;
+}
+.burner-level:has(input:focus-visible) {
+  outline: 2px solid #f47b45;
+  outline-offset: 2px;
+}
+
+/* Zone tint tracks the setting rather than a binary on/off. */
+.burner-zone.level-off {
+  background: #212418;
+  border-color: #2f3427;
+}
+.burner-zone.level-lo {
+  color: #d8c98f;
+  background: #33301c;
+  border-color: #574d27;
+}
+.burner-zone.level-med {
+  color: #efb27f;
+  background: #46341d;
+  border-color: #7d5526;
+}
+.burner-zone.level-hi {
+  color: #f39866;
+  background: #57331c;
+  border-color: #a35c28;
+}
+.burner-zone.level-off > svg {
+  opacity: 0.35;
+}
+.burner-zone.level-lo > svg {
+  opacity: 0.6;
+}
+.burner-zone.level-med > svg {
+  opacity: 0.8;
+}
+
+/* ---- Estimated heat / cook time ---- */
+
+.heat-estimate {
+  border: 1px solid var(--border, #2c2f28);
+  border-radius: 9px;
+  background: rgba(0, 0, 0, 0.22);
+  padding: 14px 16px;
+  margin: 16px 0;
+}
+.heat-estimate.is-warning {
+  border-color: #a35c28;
+  background: rgba(163, 92, 40, 0.12);
+}
+.heat-estimate-heading {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 10px;
+  color: #f47b45;
+}
+.heat-estimate-heading strong {
+  flex-grow: 1;
+  font-size: 13px;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  color: #e6e9dd;
+}
+.heat-ambient {
+  font-family: var(--font-geist-mono), monospace;
+  font-size: 15px;
+  font-weight: 700;
+  color: #f47b45;
+}
+.heat-estimate-grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 10px 14px;
+  margin: 0 0 10px;
+}
+.heat-estimate-grid dt {
+  font-size: 11px;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  color: #8d9682;
+  margin-bottom: 3px;
+}
+.heat-estimate-grid dd {
+  margin: 0;
+  font-family: var(--font-geist-mono), monospace;
+  font-size: 14px;
+  color: #e6e9dd;
+}
+.heat-estimate p {
+  margin: 0;
+}
+
+@media (max-width: 639.98px) {
+  .heat-estimate-grid {
+    grid-template-columns: 1fr;
+    gap: 8px;
+  }
+  .burner-level {
+    font-size: 10px;
+  }
+}
+
+/* ---- Ingredient substitutions ---- */
+
+.ingredient-row {
+  position: relative;
+  display: grid;
+  grid-template-columns: 1fr auto;
+  align-items: start;
+  gap: 6px;
+}
+.ingredient-row.is-swapped .ingredient > span {
+  color: #e6d3a8;
+}
+.swap-flag {
+  display: inline-block;
+  margin-left: 8px;
+  padding: 1px 6px;
+  border-radius: 999px;
+  background: rgba(230, 211, 168, 0.14);
+  border: 1px solid rgba(230, 211, 168, 0.35);
+  color: #e6d3a8;
+  font-size: 10px;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  vertical-align: middle;
+}
+.swap-button {
+  align-self: center;
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  padding: 3px 8px;
+  border: 1px solid var(--border, #2c2f28);
+  border-radius: 999px;
+  background: transparent;
+  color: #8d9682;
+  font-size: 11px;
+  white-space: nowrap;
+  cursor: pointer;
+}
+.swap-button:hover {
+  color: #f47b45;
+  border-color: #f47b45;
+}
+.swap-button:focus-visible {
+  outline: 2px solid #f47b45;
+  outline-offset: 2px;
+}
+.swap-panel {
+  grid-column: 1 / -1;
+  margin: 4px 0 10px;
+  padding: 12px;
+  border: 1px solid var(--border, #2c2f28);
+  border-radius: 8px;
+  background: rgba(0, 0, 0, 0.24);
+}
+.swap-panel-title {
+  margin: 0 0 8px;
+  font-size: 11px;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  color: #8d9682;
+}
+.swap-panel ul {
+  list-style: none;
+  margin: 0 0 6px;
+  padding: 0;
+  display: grid;
+  gap: 6px;
+}
+.swap-option {
+  display: grid;
+  gap: 3px;
+  width: 100%;
+  padding: 9px 11px;
+  text-align: left;
+  border: 1px solid var(--border, #2c2f28);
+  border-radius: 7px;
+  background: rgba(255, 255, 255, 0.02);
+  color: inherit;
+  cursor: pointer;
+}
+.swap-option:hover {
+  border-color: #6d7563;
+}
+.swap-option:focus-visible {
+  outline: 2px solid #f47b45;
+  outline-offset: 2px;
+}
+.swap-option.selected {
+  border-color: #f47b45;
+  background: rgba(244, 123, 69, 0.1);
+}
+.swap-option strong {
+  font-size: 14px;
+  color: #e6e9dd;
+}
+.swap-amount {
+  font-family: var(--font-geist-mono), monospace;
+  font-size: 12px;
+  color: #b4c19f;
+}
+.swap-note {
+  font-size: 12px;
+  color: #8d9682;
+  line-height: 1.45;
+}
+.swap-salt {
+  display: flex;
+  align-items: flex-start;
+  gap: 5px;
+  margin-top: 3px;
+  padding: 6px 8px;
+  border-radius: 5px;
+  background: rgba(163, 92, 40, 0.16);
+  color: #efb27f;
+  font-size: 12px;
+  line-height: 1.45;
+}
+.swap-salt svg {
+  flex-shrink: 0;
+  margin-top: 2px;
+}
+
+/* Estimated cook time on the recipe fact strip. */
+.fact-estimate {
+  color: #efb27f;
+}
+
+@media print {
+  .swap-button,
+  .swap-panel {
+    display: none !important;
+  }
+}
+
+/* =========================================================================
+   Responsive layer
+   Breakpoints match the --breakpoint-* tokens in globals.css, so Tailwind
+   utilities and this file agree:
+     xs 480 · sm 640 · md 768 · lg 1024 · xl 1280 · 2xl 1536
+   max-width queries use the -0.02px offset so they never overlap a
+   min-width query at the same tier.
+   ========================================================================= */
+
+/* The burner diagram is a top view of the grill, so its columns follow the
+   burner count. Driven by a custom property rather than an inline style so
+   the narrow-screen rules below can take over. */
+.burner-diagram.horizontal {
+  grid-template-columns: repeat(var(--burner-count, 3), minmax(0, 1fr));
+}
+.burner-diagram.vertical {
+  grid-template-columns: 1fr;
+}
+
+/* ---- lg and below: laptops ---- */
+@media (max-width: 1023.98px) {
+  .heat-estimate-grid {
+    gap: 8px 12px;
+  }
+}
+
+/* ---- md and below: tablets, phone landscape ---- */
+@media (max-width: 767.98px) {
+  /* Six 1/6-width zones cannot hold a four-way level control. Let them
+     reflow instead, keeping each zone wide enough to tap. */
+  .burner-diagram.horizontal {
+    grid-template-columns: repeat(auto-fit, minmax(112px, 1fr));
+  }
+  .burner-zone {
+    min-height: 178px;
+  }
+  .ingredient-row {
+    grid-template-columns: 1fr;
+  }
+  .swap-button {
+    justify-self: start;
+    margin-left: 34px;
+  }
+}
+
+/* ---- sm and below: large phones ---- */
+@media (max-width: 639.98px) {
+  .burner-zone {
+    min-height: 164px;
+    gap: 8px;
+  }
+  .zone-board-heading {
+    flex-wrap: wrap;
+    gap: 4px;
+  }
+  .burner-summary {
+    flex-wrap: wrap;
+    gap: 8px;
+  }
+  .recipe-facts {
+    gap: 6px 14px;
+  }
+  .swap-option strong {
+    font-size: 13px;
+  }
+}
+
+/* ---- xs and below: small phones (iPhone SE, Mini) ---- */
+@media (max-width: 479.98px) {
+  /* Two select columns stop fitting once the viewport is this narrow. */
+  .recipe-controls {
+    grid-template-columns: 1fr;
+  }
+  .burner-diagram.horizontal {
+    grid-template-columns: 1fr 1fr;
+  }
+  /* Four labels side by side stop being tappable here; go two by two. */
+  .burner-levels {
+    grid-template-columns: 1fr 1fr;
+  }
+  .burner-zone {
+    min-height: 150px;
+  }
+  .heat-estimate {
+    padding: 12px;
+  }
+  .heat-estimate-heading strong {
+    font-size: 12px;
+  }
+  .swap-panel {
+    padding: 10px;
+  }
+  .swap-button {
+    margin-left: 30px;
+  }
+}
+
+/* ---- 380px and below: the narrowest phones still in use ---- */
+@media (max-width: 379.98px) {
+  .burner-diagram.horizontal,
+  .burner-diagram.vertical {
+    grid-template-columns: 1fr;
+  }
+  .burner-levels {
+    grid-template-columns: repeat(4, 1fr);
+  }
+  .burner-zone {
+    min-height: 132px;
+  }
+  .timer-digits {
+    font-size: 30px;
+  }
+}
+
+/* ---- Phone landscape: vertical space is the scarce axis ---- */
+@media (max-height: 520px) and (orientation: landscape) {
+  .cook-dialog[data-slot='dialog-content'] {
+    max-height: 96dvh;
+    overflow-y: auto;
+  }
+  .cook-mode {
+    gap: 12px;
+  }
+  .cook-step {
+    padding: 14px 16px;
+  }
+  .cook-step h2 {
+    font-size: 19px;
+  }
+  .burner-zone {
+    min-height: 128px;
+  }
+  .site-header {
+    height: auto;
+    padding-top: 10px;
+    padding-bottom: 10px;
+  }
+}
+
+/* ---- 2xl and up: stop the measure from stretching ---- */
+@media (min-width: 1536px) {
+  .container {
+    width: min(1240px, calc(100% - 96px));
+  }
+  .section-description,
+  .scaling-note {
+    max-width: 68ch;
+  }
+}
+
+/* ---- Coarse pointers: meet the 44px touch-target guidance ---- */
+@media (pointer: coarse) {
+  .burner-level {
+    min-height: 44px;
+  }
+  .swap-button {
+    min-height: 36px;
+    padding: 6px 12px;
+  }
+  .swap-option {
+    padding: 12px;
+  }
+  .icon-button,
+  .text-button {
+    min-height: 44px;
+  }
+  .site-header nav a {
+    padding-top: 8px;
+    padding-bottom: 8px;
+  }
+}
+
+/* Hover affordances only where hovering exists, so tapping does not leave
+   a control stuck in its hover state. */
+@media (hover: none) {
+  .swap-button:hover,
+  .burner-level:hover {
+    color: inherit;
+    border-color: var(--border);
+  }
+}
+
+/* Keep content clear of notches and home indicators once the page paints
+   edge to edge (viewport-fit: cover in app/layout.tsx).
+   .container already insets itself with a width calc, so it only needs the
+   inset itself; .site-header has real padding, so that padding takes the max. */
+@supports (padding: max(0px)) {
+  .container {
+    padding-left: env(safe-area-inset-left);
+    padding-right: env(safe-area-inset-right);
+  }
+  .site-header {
+    padding-left: max(48px, env(safe-area-inset-left));
+    padding-right: max(48px, env(safe-area-inset-right));
+  }
+  footer.container {
+    padding-bottom: max(32px, env(safe-area-inset-bottom));
+  }
+  @media (max-width: 1023.98px) {
+    .site-header {
+      padding-left: max(24px, env(safe-area-inset-left));
+      padding-right: max(24px, env(safe-area-inset-right));
+    }
+  }
+}
