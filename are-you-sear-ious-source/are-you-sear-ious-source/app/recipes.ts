@@ -3,6 +3,13 @@ export type Unit = 'F' | 'C';
 /** A temperature range that always has at least a low bound. */
 export type Temperatures = [number, ...number[]];
 export type Step = { title: string; cue: string; body: string };
+/**
+ * Credit for a recipe adapted from someone else's published work. Ingredient
+ * proportions are facts and not copyrightable, but the prose that explains a
+ * method is, so adapted recipes here are rewritten and then say where the
+ * idea came from.
+ */
+export type Attribution = { label: string; url: string; note: string };
 export type Recipe = {
   id: string;
   protein: Protein;
@@ -21,6 +28,7 @@ export type Recipe = {
   tip: string;
   ingredients: { title: string; items: string[] }[];
   steps: [Step, ...Step[]];
+  attribution?: Attribution;
 };
 export const safetySource =
   'https://www.fsis.usda.gov/food-safety/safe-food-handling-and-preparation/food-safety-basics/safe-temperature-chart';

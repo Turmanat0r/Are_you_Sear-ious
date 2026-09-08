@@ -1,5 +1,6 @@
 import {
   recipes,
+  type Attribution,
   type Protein,
   type Recipe,
   type Step,
@@ -29,7 +30,10 @@ export type Cut = {
     | 'thigh'
     | 'breast'
     | 'drumstick'
-    | 'fish';
+    | 'fish'
+    | 'tri-tip';
+  /** Set only on cuts adapted from a published recipe. */
+  attribution?: Attribution;
 };
 export const cuts: Cut[] = [
   {
@@ -82,6 +86,30 @@ export const cuts: Cut[] = [
     timing:
       'For steaks about 1 inch thick. Sirloin is lean; probe early and slice against the grain.',
     family: 'steak',
+  },
+  {
+    id: 'coffee-ancho-tri-tip',
+    protein: 'Beef',
+    name: 'Tri-tip roast',
+    // Points at the ribeye entry only to satisfy the base lookup. Every
+    // field of it is replaced below, so no ribeye copy reaches this recipe.
+    baseId: 'pepper-ribeye',
+    baseLb: 2.25,
+    minLb: 1.5,
+    maxLb: 12,
+    method: 'Direct, then indirect',
+    grill: [350, 400],
+    internal: [145],
+    time: '35–60 min + rest',
+    rest: '10–15 minutes',
+    timing:
+      'For one 2–2½ lb roast: about 20 minutes of prep and 35–60 minutes on the grill, plus a 10–15 minute rest. Seasonings scale with weight, but thickness and the probe decide when it is done.',
+    family: 'tri-tip',
+    attribution: {
+      label: 'Jamie Purviance’s tri-tip roast, published by Weber',
+      url: 'https://www.weber.com/US/en/recipes/red-meat/tri-tip-roast/weber-2071757.html',
+      note: 'Adapted, not reproduced: the rub and sauce proportions are kept, and the method here is rewritten for a gas grill with a mustard binder, an optional dry-brine, and a USDA-guided 145°F finish in place of the original’s lower target. The illustration is AI-generated and is not Weber’s photograph.',
+    },
   },
   {
     id: 'pork-shoulder',
@@ -250,7 +278,13 @@ const m = (amount: number, unit: string, name: string): Measure => ({
   unit,
   name,
 });
-type SeasoningGroup = 'shoulder' | 'steak' | 'leanPork' | 'chicken' | 'fish';
+type SeasoningGroup =
+  | 'shoulder'
+  | 'steak'
+  | 'leanPork'
+  | 'chicken'
+  | 'fish'
+  | 'triTip';
 const seasonings: Record<SeasoningGroup, Group[]> = {
   shoulder: [
     {
@@ -348,6 +382,43 @@ const seasonings: Record<SeasoningGroup, Group[]> = {
       ],
     },
   ],
+  // The only bespoke set: this cut came from a published recipe rather than
+  // the app's own template, so its rub and sauce are listed as given and
+  // scale with weight like every other group.
+  triTip: [
+    {
+      title: 'Mustard binder',
+      items: [
+        m(1, 'tbsp', 'yellow or Dijon mustard, just enough for a thin coat'),
+      ],
+    },
+    {
+      title: 'Coffee–ancho rub · salt already counted above',
+      items: [
+        m(1, 'tbsp', 'ground dark-roast coffee, finely ground; not brewed'),
+        m(1, 'tbsp', 'packed light brown sugar'),
+        m(1, 'tbsp', 'ancho chile powder'),
+        m(2, 'tsp', 'ground cumin'),
+        m(1, 'tsp', 'smoked paprika'),
+      ],
+    },
+    {
+      title: 'Chipotle-lime sauce · served cold, alongside',
+      items: [
+        m(1, 'cup', 'plain whole-milk yogurt or sour cream'),
+        m(
+          2,
+          'tbsp',
+          'adobo sauce from canned chipotles; the sauce, not the peppers',
+        ),
+        m(1, 'clove(s)', 'fresh garlic, finely minced or pressed'),
+        m(1, 'tbsp', 'fresh lime juice'),
+        m(0.5, 'tsp', 'ground cumin'),
+        m(0.25, 'tsp', 'kosher salt for the sauce only; not the meat salt'),
+        m(0.125, 'tsp', 'black pepper'),
+      ],
+    },
+  ],
 };
 export function fromLb(lb: number, unit: WeightUnit) {
   return unit === 'lb' ? lb : lb * 0.45359237;
@@ -357,6 +428,13 @@ export function toLb(value: number, unit: WeightUnit) {
 }
 export function numberLabel(value: number) {
   return Number(value.toFixed(2)).toString();
+}
+/**
+ * Whether amountLabel can render this as a fraction rather than falling back
+ * to decimals. Kept next to it so the two cannot drift apart.
+ */
+function printsAsFraction(value: number) {
+  return value >= 0.125 && Math.abs(value - Math.round(value * 8) / 8) < 0.025;
 }
 function amountLabel(value: number) {
   const eighths = Math.round(value * 8);
@@ -380,7 +458,53 @@ export function measured(item: Measure, scale: number) {
     v *= 3;
     u = 'tsp';
   }
+  // Scaling up used to stop here, so a large batch read "12 tbsp butter".
+  // Climb back the other way for the same reason we climb down, but only
+  // when the larger unit lands on a fraction that prints: 12 tbsp is better
+  // read as a clean cup measure, while 4 tsp would turn into "1.33 tbsp",
+  // which is worse than what it replaced. The order is safe because the
+  // rules above only fire below these thresholds, so a value cannot
+  // oscillate between two units.
+  if (u === 'tsp' && v >= 3 && printsAsFraction(v / 3)) {
+    v /= 3;
+    u = 'tbsp';
+  }
+  if (u === 'tbsp' && v >= 8 && printsAsFraction(v / 16)) {
+    v /= 16;
+    u = 'cup';
+  }
   return amountLabel(v) + ' ' + u + ' ' + item.name;
+}
+/**
+ * Grams per teaspoon for the two common US kosher salts. They differ by
+ * nearly a factor of two because of crystal shape, which is exactly why the
+ * app weighs salt instead of spooning it.
+ */
+const KOSHER_SALT_G_PER_TSP = { Morton: 4.8, 'Diamond Crystal': 2.84 };
+/**
+ * Walks a teaspoon count up into tablespoons and cups where that helps, and
+ * snaps to what a measuring set can actually hit. An unrounded "0.94 tsp" is
+ * no use to somebody who reached for spoons because they have no scale.
+ */
+export function spoonLabel(tsp: number) {
+  const quarters = Math.round(tsp * 4);
+  if (quarters < 1) return 'a pinch';
+  if (quarters < 12) return amountLabel(quarters / 4) + ' tsp';
+  const tbsp = quarters / 12;
+  if (tbsp < 8) return amountLabel(Math.round(tbsp * 4) / 4) + ' tbsp';
+  // An eighth of a cup is 2 tbsp, which is still a real measure.
+  return amountLabel(Math.round((tbsp / 16) * 8) / 8) + ' cup';
+}
+/**
+ * A volume equivalent for a weighed salt amount, for when there is no scale
+ * at the grill. Both brands are given because quoting one number would be
+ * wrong by about 70% for whoever owns the other box. The grams stay the
+ * authoritative figure; this is the fallback, and it says so.
+ */
+export function saltVolumes(grams: number) {
+  return Object.entries(KOSHER_SALT_G_PER_TSP)
+    .map(([brand, perTsp]) => spoonLabel(grams / perTsp) + ' ' + brand)
+    .join(' or ');
 }
 export function validateWeight(cut: Cut, value: number) {
   return (
@@ -414,24 +538,31 @@ export function buildRecipe(
   const scale = weightLb / cut.baseLb;
   const sizeLabel =
     numberLabel(fromLb(weightLb, weightUnit)) + ' ' + weightUnit;
-  const salt = numberLabel(weightLb * 453.59237 * 0.005) + ' g kosher salt';
+  const saltGrams = weightLb * 453.59237 * 0.005;
+  const salt = numberLabel(saltGrams) + ' g kosher salt';
+  // Only the shopping line carries the spoon equivalents; the step bodies
+  // interpolate `salt` and would turn unreadable with them inlined.
+  const saltLine =
+    salt +
+    ' (no scale? about ' +
+    saltVolumes(saltGrams) +
+    ') total for the meat — use once, not again in the rub';
   const group: SeasoningGroup =
-    f === 'shoulder'
-      ? 'shoulder'
-      : f === 'steak'
-        ? 'steak'
-        : f === 'chop' || f === 'tenderloin'
-          ? 'leanPork'
-          : f === 'fish'
-            ? 'fish'
-            : 'chicken';
+    f === 'tri-tip'
+      ? 'triTip'
+      : f === 'shoulder'
+        ? 'shoulder'
+        : f === 'steak'
+          ? 'steak'
+          : f === 'chop' || f === 'tenderloin'
+            ? 'leanPork'
+            : f === 'fish'
+              ? 'fish'
+              : 'chicken';
   const ingredients = [
     {
       title: 'Your meat & salt',
-      items: [
-        sizeLabel + ' ' + cut.name.toLowerCase(),
-        salt + ' total for the meat — use once, not again in the rub',
-      ],
+      items: [sizeLabel + ' ' + cut.name.toLowerCase(), saltLine],
     },
     ...seasonings[group].map((g) => ({
       title: g.title,
@@ -446,34 +577,45 @@ export function buildRecipe(
       : cut.protein === 'Fish'
         ? 'Fish must reach 145°F in its thickest part before it leaves the grill.'
         : cut.protein === 'Beef'
-          ? 'Whole beef steaks: at least 145°F before removal, followed by a 3-minute rest.'
+          ? 'Whole beef cuts — steaks, roasts and chops alike: at least 145°F before removal, followed by a 3-minute rest.'
           : 'Whole pork: at least 145°F before removal, followed by a 3-minute rest.';
   const finish =
-    f === 'shoulder'
-      ? 'Pull-apart target: 195–205°F. Probe several thick spots; finish when it slides in with almost no resistance.'
-      : f === 'thigh' || f === 'drumstick'
-        ? 'For tender dark meat, aim for 175–185°F. The poultry safety minimum is 165°F.'
-        : cut.protein === 'Poultry'
-          ? 'Reach 165°F in the thickest part of every breast.'
-          : cut.protein === 'Fish'
-            ? 'Reach 145°F at the center of the thickest part.'
-            : 'Reach 145°F before removing from heat, then rest at least 3 minutes.';
+    f === 'tri-tip'
+      ? 'Reach at least 145°F in the thickest part before it leaves the grill, then rest 10–15 minutes. Three minutes is the safety minimum; the rest of it is for the slicing.'
+      : f === 'shoulder'
+        ? 'Pull-apart target: 195–205°F. Probe several thick spots; finish when it slides in with almost no resistance.'
+        : f === 'thigh' || f === 'drumstick'
+          ? 'For tender dark meat, aim for 175–185°F. The poultry safety minimum is 165°F.'
+          : cut.protein === 'Poultry'
+            ? 'Reach 165°F in the thickest part of every breast.'
+            : cut.protein === 'Fish'
+              ? 'Reach 145°F at the center of the thickest part.'
+              : 'Reach 145°F before removing from heat, then rest at least 3 minutes.';
   const prepTime =
-    f === 'shoulder'
-      ? '12–24 hr ahead, optional'
-      : cut.protein === 'Poultry'
-        ? '2–12 hr ahead, optional'
-        : f === 'fish'
-          ? 'Just before cooking'
-          : '2–4 hr ahead, optional';
+    f === 'tri-tip'
+      ? '4–24 hr ahead, optional'
+      : f === 'shoulder'
+        ? '12–24 hr ahead, optional'
+        : cut.protein === 'Poultry'
+          ? '2–12 hr ahead, optional'
+          : f === 'fish'
+            ? 'Just before cooking'
+            : '2–4 hr ahead, optional';
   const steps: [Step, ...Step[]] = [
     {
-      title: f === 'fish' ? 'Season lightly' : 'Salt ahead. Mustard later.',
+      title:
+        f === 'fish'
+          ? 'Season lightly'
+          : f === 'tri-tip'
+            ? 'Map the grain. Salt once.'
+            : 'Salt ahead. Mustard later.',
       cue: prepTime,
       body:
         f === 'fish'
           ? `Pat the fish dry and remove pin bones. Use the listed ${salt} across the batch, then brush the flesh with Dijon and add the pepper, garlic, and zest. Keep it refrigerated until the grill is ready.`
-          : `Use the listed ${salt} once across the meat. Refrigerate on a rack ${f === 'shoulder' ? '12–24 hours' : cut.protein === 'Poultry' ? '2–12 hours' : '2–4 hours'} if time allows. Just before grilling, pat any wet patches dry, add a thin mustard coat, and apply the salt-free rub. If cooking immediately, apply the same measured salt just before the mustard and rub. For injected, enhanced, koshered, or already salted meat, skip the added dry-brine salt.`,
+          : f === 'tri-tip'
+            ? `Before anything goes on the meat, find where the grain changes direction and note it — the rub will hide it, and you need it again at the end. Trim silverskin and hard fat without cutting away good meat. Spread the listed ${salt} over the whole roast and refrigerate it uncovered on a rack for 4–24 hours if you have the time. That is the entire salt allowance for the meat, not an extra brine on top of the rub. Cooking now instead? Apply the same salt just before the mustard. For enhanced, injected, koshered, or already-salted beef, skip this added salt.`
+            : `Use the listed ${salt} once across the meat. Refrigerate on a rack ${f === 'shoulder' ? '12–24 hours' : cut.protein === 'Poultry' ? '2–12 hours' : '2–4 hours'} if time allows. Just before grilling, pat any wet patches dry, add a thin mustard coat, and apply the salt-free rub. If cooking immediately, apply the same measured salt just before the mustard and rub. For injected, enhanced, koshered, or already salted meat, skip the added dry-brine salt.`,
     },
   ];
   if (f === 'shoulder')
@@ -502,6 +644,39 @@ export function buildRecipe(
         title: 'Rest, pull, and season',
         cue: 'Rest 1–2 hr · hot hold at 140°F or above',
         body: 'Vent the wrap for about 10 minutes, then rewrap and rest in an insulated cooler or low oven. Check the meat stays at least 140°F while hot holding. Pull the pork, discard large fat pockets, and fold in defatted juices. Mix the listed sauce ingredients, then add to the meat a little at a time. Refrigerate leftovers within 2 hours after hot holding ends, or 1 hour if the air is above 90°F.',
+      },
+    );
+  else if (f === 'tri-tip')
+    steps.push(
+      {
+        title: 'Mustard, then the coffee rub',
+        cue: 'About 5 min · a thin coat is plenty',
+        body: 'Mix the coffee, brown sugar, ancho, cumin, and paprika in a clean bowl. Pat any wet patches on the roast dry, brush on the measured mustard, and press the rub over every surface. No further salt goes on the meat if you already used it. Use enough rub to cover without building a paste, and throw away whatever touched raw beef. Keep the roast in the refrigerator while the grill comes up to heat.',
+      },
+      {
+        title: 'Stir the sauce, then chill it',
+        cue: 'About 5 min · keep it cold until serving',
+        body: 'Whisk the yogurt or sour cream with the measured adobo sauce, garlic, lime juice, cumin, sauce salt, and pepper. Taste it with a clean spoon and adjust. If your scaled amount asks for part of a garlic clove, mince a whole one and use what looks right. Keep this well away from the raw beef and refrigerated until the roast is sliced.',
+      },
+      {
+        title: 'Set a hot zone and an unlit one',
+        cue: 'Grill ambient: 350–400°F · lid closed',
+        body: 'Follow your grill’s lighting sequence, preheat, and clean the grates. You choose which burners stay lit, but leave an unlit area big enough for the whole roast. Read the air beside the food with a grate-level thermometer and settle it at 350–400°F; burner knob positions are not temperatures. Plan to keep the thin tip of the roast over the gentler side.',
+      },
+      {
+        title: 'Set the crust over direct heat',
+        cue: 'About 8–10 min total · turn and watch it',
+        body: 'Brown the roast over the lit burners, turning about halfway through and more often if the rub darkens fast. Keep the lid closed between checks. Coffee and ancho are already dark and brown sugar scorches, so this rub looks done long before the meat is — you are after a set, aromatic crust, not a black one. Move it to the unlit side straight away if flames flare or the surface gets ahead of the center.',
+      },
+      {
+        title: 'Finish over the unlit burners',
+        cue: 'Ambient 350–400°F · internal at least 145°F',
+        body: 'Move the roast fully off the lit burners and close the lid, holding 350–400°F near the meat. Start probing after about 15 minutes of indirect cooking, then every few minutes as it closes in. Go in from the side, into the thickest part, and check more than one spot. Take it off only once it reads at least 145°F; resting is not a way to make up the difference. A 2–2½ lb roast usually takes 35–60 minutes in total, longer if it is thick. Never multiply that by the ingredient scale.',
+      },
+      {
+        title: 'Rest, rotate, and slice both grains',
+        cue: 'Rest 10–15 min · 3 minutes is the safety minimum',
+        body: 'Rest the roast on a clean board for 10–15 minutes, tented loosely if you like. Now use the note you made at the start: a tri-tip’s fibres run two different ways, so cut the roast apart where the grain turns, rotate each piece, and slice each one thinly across its own fibres. Slicing the whole triangle one way leaves half of it chewy. Serve the cold sauce beside the beef, not over it. Refrigerate leftovers within 2 hours, or within 1 hour if it is above 90°F outside.',
       },
     );
   else if (f === 'steak') {
@@ -622,23 +797,27 @@ export function buildRecipe(
       },
     );
   const title =
-    f === 'shoulder'
-      ? base.title
-      : f === 'steak'
-        ? 'Pepper & garlic ' + cut.name.toLowerCase()
-        : f === 'chop' || f === 'tenderloin'
-          ? 'Smoky Dijon ' + cut.name.toLowerCase()
-          : cut.protein === 'Poultry'
-            ? 'Smoky mustard ' + cut.name.toLowerCase()
-            : 'Dijon & lemon ' + cut.name.toLowerCase();
+    f === 'tri-tip'
+      ? 'Coffee–ancho tri-tip with chipotle-lime sauce'
+      : f === 'shoulder'
+        ? base.title
+        : f === 'steak'
+          ? 'Pepper & garlic ' + cut.name.toLowerCase()
+          : f === 'chop' || f === 'tenderloin'
+            ? 'Smoky Dijon ' + cut.name.toLowerCase()
+            : cut.protein === 'Poultry'
+              ? 'Smoky mustard ' + cut.name.toLowerCase()
+              : 'Dijon & lemon ' + cut.name.toLowerCase();
   const portionLb =
-    f === 'shoulder'
-      ? 0.6
-      : cut.protein === 'Poultry' && f !== 'breast'
-        ? 0.75
-        : cut.protein === 'Fish'
-          ? 0.375
-          : 0.5;
+    f === 'tri-tip'
+      ? 0.45
+      : f === 'shoulder'
+        ? 0.6
+        : cut.protein === 'Poultry' && f !== 'breast'
+          ? 0.75
+          : cut.protein === 'Fish'
+            ? 0.375
+            : 0.5;
   const photo = '/meals/' + cut.id + '.webp';
   const photoCaption = cut.name;
   return {
@@ -647,19 +826,23 @@ export function buildRecipe(
     protein: cut.protein,
     title,
     description:
-      f === 'shoulder'
-        ? base.description
-        : f === 'steak'
-          ? 'Pepper, garlic butter, and a crust worth waiting for. Seasoning scaled to your cut.'
-          : cut.protein === 'Pork'
-            ? 'A mustard binder, smoky seasoning, and a juicy finish for this lean cut.'
-            : base.description,
+      f === 'tri-tip'
+        ? 'Coffee, ancho, and a thin mustard coat, with a cold chipotle-lime sauce on the side. Dark crust, bright finish.'
+        : f === 'shoulder'
+          ? base.description
+          : f === 'steak'
+            ? 'Pepper, garlic butter, and a crust worth waiting for. Seasoning scaled to your cut.'
+            : cut.protein === 'Pork'
+              ? 'A mustard binder, smoky seasoning, and a juicy finish for this lean cut.'
+              : base.description,
     headline:
-      f === 'shoulder'
-        ? base.headline
-        : cut.protein === 'Pork'
-          ? ['Good crust.', 'Juicy center.']
-          : base.headline,
+      f === 'tri-tip'
+        ? ['Dark crust.', 'Bright finish.']
+        : f === 'shoulder'
+          ? base.headline
+          : cut.protein === 'Pork'
+            ? ['Good crust.', 'Juicy center.']
+            : base.headline,
     cut,
     weightLb,
     sizeLabel,
@@ -679,15 +862,20 @@ export function buildRecipe(
     safety,
     serves: String(Math.max(1, Math.round(weightLb / portionLb))),
     wood:
-      f === 'shoulder'
-        ? 'Apple + hickory'
-        : cut.protein === 'Poultry'
-          ? 'Apple, optional'
-          : 'No smoke needed',
+      f === 'tri-tip'
+        ? 'Coffee & ancho carry it · no wood needed'
+        : f === 'shoulder'
+          ? 'Apple + hickory'
+          : cut.protein === 'Poultry'
+            ? 'Apple, optional'
+            : 'No smoke needed',
     tip:
-      f === 'shoulder'
-        ? base.tip
-        : 'Ingredient amounts scale with total raw weight. Cooking time depends on individual thickness, airflow, and the actual heat near the food.',
+      f === 'tri-tip'
+        ? 'Find the grain before the rub hides it, keep the thin end away from the hottest burner, and serve the sauce cold and beside the meat.'
+        : f === 'shoulder'
+          ? base.tip
+          : 'Ingredient amounts scale with total raw weight. Cooking time depends on individual thickness, airflow, and the actual heat near the food.',
+    attribution: cut.attribution,
   };
 }
 
@@ -705,6 +893,13 @@ export const zoneScience: Science = {
     'Choose the burners that fit your grill. Measure beside the food instead of treating knob position as a temperature.',
 };
 export function cookingScience(cut: Cut): Science {
+  if (cut.family === 'tri-tip')
+    return {
+      title: 'This crust will lie to you about doneness',
+      body: 'Ground coffee and ancho are close to black before they meet any heat, and the brown sugar beside them starts caramelising long before the middle of a roast is warm. So this rub reaches the colour you are looking for earlier than almost anything else here, while the center is still cool. On most cuts a dark exterior is at least weak evidence of progress. On this one it is none.',
+      takeaway:
+        'Judge the crust by smell and by whether it has set, not by how dark it looks. Then move it to the unlit side and let the probe say when it is done.',
+    };
   if (cut.family === 'shoulder')
     return {
       title: 'The stall is evaporative cooling',
@@ -1191,6 +1386,146 @@ export const swapSets: SwapSet[] = [
         use: 'Jarred minced garlic',
         amount: 'Same amount',
         note: 'Milder. Pat it dry before it goes on.',
+      },
+    ],
+  },
+  {
+    match: 'coffee',
+    label: 'Ground coffee',
+    options: [
+      {
+        use: 'Any finely ground dark roast',
+        amount: 'Same amount',
+        note: 'Grind it fine. Coarse grounds sit on top of the crust and feel gritty.',
+      },
+      {
+        use: 'Instant espresso powder',
+        amount: 'About half as much',
+        note: 'Finer and far more concentrated, so matching the volume turns it bitter.',
+      },
+      {
+        use: 'Unsweetened cocoa powder',
+        amount: 'Same amount',
+        note: 'A different flavour doing the same job: it darkens the crust and cuts the sugar.',
+      },
+      {
+        use: 'Leave it out',
+        amount: '—',
+        note: 'The rub still works. It will taste sweeter and look a shade lighter.',
+      },
+    ],
+  },
+  {
+    match: 'ancho',
+    label: 'Ancho chile powder',
+    options: [
+      {
+        use: 'Pasilla or guajillo powder',
+        amount: 'Same amount',
+        note: 'The closest match. Both are mild and fruity in the same way ancho is.',
+      },
+      {
+        use: 'Regular chili powder',
+        amount: 'Same amount',
+        note: 'US chili powder is a blend that already contains cumin, so halve the cumin listed below.',
+      },
+      {
+        use: 'Sweet paprika, plus a pinch of cayenne',
+        amount: 'Same amount of paprika',
+        note: 'Ancho is mild. Go easy on the cayenne or you will overshoot the heat badly.',
+      },
+      {
+        use: 'Chipotle powder',
+        amount: 'About half as much',
+        note: 'Much hotter and smokier, and the sauce already brings chipotle to the plate.',
+      },
+    ],
+  },
+  {
+    match: 'cumin',
+    label: 'Ground cumin',
+    options: [
+      {
+        use: 'Whole cumin seed, toasted and ground',
+        amount: 'Same amount',
+        note: 'Better than pre-ground if you have a grinder or a mortar.',
+      },
+      {
+        use: 'Ground coriander',
+        amount: 'Same amount',
+        note: 'Lighter and more citrusy rather than earthy. Not the same, but it fills the hole.',
+      },
+      {
+        use: 'Taco or fajita seasoning',
+        amount: 'Same amount',
+        addsSalt: true,
+        note: 'Most blends are mostly salt and already contain cumin.',
+      },
+      { use: 'Leave it out', amount: '—' },
+    ],
+  },
+  {
+    match: 'adobo sauce',
+    label: 'Adobo sauce',
+    options: [
+      {
+        use: 'Minced chipotle pepper from the same tin',
+        amount: 'About half as much',
+        note: 'The peppers are a great deal hotter than the sauce around them. Start low and taste.',
+      },
+      {
+        use: 'Chipotle hot sauce',
+        amount: 'About half as much',
+        note: 'Thinner and more vinegary, so the sauce will loosen. Add it last.',
+      },
+      {
+        use: 'Smoked paprika with a splash of vinegar',
+        amount: 'About 1 tsp per tbsp',
+        note: 'Gets you the smoke and the colour without any of the heat.',
+      },
+      {
+        use: 'Leave it out',
+        amount: '—',
+        note: 'You lose the smoke and the heat, but a cold lime and garlic sauce still earns its place.',
+      },
+    ],
+  },
+  {
+    match: 'yogurt or sour cream',
+    label: 'Yogurt or sour cream',
+    options: [
+      { use: 'Mexican crema', amount: 'Same amount' },
+      {
+        use: 'Plain Greek yogurt, loosened with water',
+        amount: 'Same amount',
+        note: 'Thicker than this sauce wants. Thin it until it runs off a spoon.',
+      },
+      {
+        use: 'Mayonnaise, thinned with lime juice',
+        amount: 'Same amount',
+        note: 'Richer and much less tangy, so add extra lime to bring the sharpness back.',
+      },
+      { use: 'Buttermilk and mayonnaise, half each', amount: 'Same amount' },
+    ],
+  },
+  {
+    match: 'lime juice',
+    label: 'Lime juice',
+    options: [
+      {
+        use: 'Lemon juice',
+        amount: 'Same amount',
+        note: 'Sharper and less floral, but it does the same job here.',
+      },
+      {
+        use: 'Bottled lime juice',
+        amount: 'Same amount',
+        note: 'Flatter than fresh. Taste before you add the last of it.',
+      },
+      {
+        use: 'White wine vinegar',
+        amount: 'About ⅔ as much',
+        note: 'More acidic than citrus. Hold some back and taste as you go.',
       },
     ],
   },

@@ -524,6 +524,7 @@ export function GrillSetup({
           </div>
           <div
             className={`burner-diagram interactive-burners ${orientation}`}
+            data-count={count}
             style={{ '--burner-count': count } as CSSProperties}
           >
             {levels.map((level, i) => (

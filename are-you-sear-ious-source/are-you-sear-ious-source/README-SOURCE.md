@@ -13,7 +13,7 @@ have been added separately. No app code was changed for this handoff.
 - `components/ui/`, `hooks/`, `lib/`: original component library and utilities.
 - `app/globals.css` and `app/experience.css`: theme and app styling.
 - `package.json`, `package-lock.json`, TypeScript and Vite configuration.
-- `public/meals/`: all 12 optimized WebP meal illustrations.
+- `public/meals/`: all 13 optimized WebP meal illustrations.
 - `tests/` and `scripts/optimize-meal-images.mjs`.
 - `IMAGE-PROVENANCE.md`, `image-provenance.json` and `SOURCE-FILES.sha256`.
 
@@ -81,6 +81,6 @@ export. It is not an image license or a complete license inventory for every
 development dependency and unused scaffold component. Installed packages retain
 their own notices. This handoff does not assign a new open-source license to the app.
 
-All 12 food images were AI-generated, not stock or camera photography. See
+All 13 food images were AI-generated, not stock or camera photography. See
 `IMAGE-PROVENANCE.md` and the companion `are-you-sear-ious-image-originals.zip`
 for the preserved original files and the limits of the available evidence.

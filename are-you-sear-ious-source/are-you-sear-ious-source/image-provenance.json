@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "auditDate": "2026-09-07",
+  "auditDate": "2026-09-08",
   "recordType": "Unsigned retrospective audit; not a signed Content Credential or license grant",
   "sourceCommit": "f73e04a5293419e71a5cb84fbfd799f79d5a6651",
   "imageOrigin": "All 12 images generated in this task using OpenAI built-in image_gen; not stock or camera photography",
@@ -43,7 +43,7 @@
     }
   },
   "promptCoverage": {
-    "exactPromptsRecorded": 8,
+    "exactPromptsRecorded": 9,
     "earlierImagesWithoutExactPromptInSavedManifest": [
       "pepper-ribeye",
       "pork-shoulder",
@@ -579,6 +579,50 @@
       "actualPrompt": "Use case: photorealistic-natural.\nAsset: one standalone illustrative cooked-food recipe photograph for the Are You Sear-ious gas-grill app; not documentation of a specific real item.\nFormat: landscape 3:2, preferably 1536x1024 pixels.\nScene and style: dark charcoal serving board and background, warm side lighting, rustic editorial photorealism, natural food textures and appetizing browned grilled surfaces.\nSubject: Thick firm rectangular halibut fillets with opaque pearly white flakes, browned seared tops, Dijon, lemon and dill. No salmon orange flesh.\nComposition: place all food in the right two-thirds, leaving the left third as dark clean negative space for a future app overlay. Keep every piece of food fully contained with comfortable space from every image edge; enough depth of field for clear food identification.\nConstraints: food photograph only. No text, logo, watermark, UI, collage, utensils hiding food, or excessive garnish.",
       "promptRecordStatus": "Exact text from preserved generation manifest",
       "recordedVisualNote": "The fish fillets are fully contained; a lemon garnish slice reaches the right image edge. Original retained without edits or retries."
+    },
+    {
+      "id": "coffee-ancho-tri-tip",
+      "original": {
+        "pathInOriginalsArchive": "originals/coffee-ancho-tri-tip.png",
+        "sha256": "f523302b48a87f220d16c588314839b3ba115571937711a37c6f31465067521c",
+        "bytes": 2844718,
+        "width": 1536,
+        "height": 1024,
+        "format": "png",
+        "exifBytes": 0,
+        "xmpBytes": 0,
+        "iccBytes": 0,
+        "pngChunkTypes": ["IHDR", "caBX", "IDAT", "IEND"],
+        "c2pa": {
+          "container": "caBX",
+          "payloadBytes": 21844,
+          "observedStringMarkers": [
+            "c2pa",
+            "OpenAI",
+            "trainedAlgorithmicMedia"
+          ],
+          "signatureValidation": "not performed"
+        }
+      },
+      "delivered": {
+        "pathInSourceArchive": "public/meals/coffee-ancho-tri-tip.webp",
+        "pathInOfflineArchive": "images/coffee-ancho-tri-tip.webp",
+        "sha256": "81c9ac4de6b4496a0893562ddbf4c15e588ac75a3207a9cc11407bd8d2e47c54",
+        "bytes": 145256,
+        "width": 1200,
+        "height": 800,
+        "format": "webp",
+        "exifBytes": 0,
+        "xmpBytes": 0,
+        "iccBytes": 0,
+        "riffChunkTypes": ["VP8 "],
+        "c2paChunkPresent": false
+      },
+      "exactReencodeMatchesDeliveredBytes": true,
+      "projectAndOfflineWebpBytesMatch": false,
+      "actualPrompt": "Use case: photorealistic-natural\nAsset type: one standalone illustrative recipe photograph for an existing charcoal/ember gas-grilling app.\nPrimary request: Generate exactly ONE new landscape image, 3:2 aspect ratio, 1536x1024 pixels, depicting coffee-ancho tri-tip with chipotle-lime yogurt sauce. This is an AI-created recipe illustration, not evidence of an actual cooked meal.\nScene/backdrop: a dark charcoal serving board against a dark, understated rustic background.\nSubject: a recognizably triangular tri-tip beef roast, with its tapered triangular shape clearly readable and a dark coffee-ancho spice crust. Several slices beside the remaining roast show warm rosy interiors. Beside the beef, place one small bowl of creamy pale orange chipotle-lime yogurt sauce and one lime wedge.\nStyle/medium: photorealistic, natural editorial food photography with realistic meat grain, gently moist cut surfaces, textured spice crust, creamy sauce, and rustic serving-board texture.\nComposition/framing: landscape, gently elevated three-quarter food-photography view. Arrange the food mainly in the right two-thirds of the image, leaving the left third dark, quiet negative space for a title to be overlaid later. Keep the roast, every slice, sauce bowl, and lime wedge fully inside the frame with comfortable margins. Preserve the recognizable triangular roast silhouette. The left negative space should blend naturally into the same scene.\nLighting/mood: warm side lighting, appetizing natural highlights, deep charcoal shadows, rustic editorial styling consistent with a charcoal/ember gas-grilling app.\nConstraints: one continuous photograph-like image only; original composition; no recreation of any publisher's photograph.\nAvoid: text, lettering, logos, watermarks, UI, borders, collage, branded props, extra dishes, decorative clutter, cropped food, plastic-looking food, exaggerated saturation.",
+      "promptRecordStatus": "Exact prompt preserved from the generating session",
+      "recordedVisualNote": "Added 2026-09-07 with the tri-tip recipe. The offline index.html has not been regenerated, so no copy exists in images/ yet."
     }
   ]
 }

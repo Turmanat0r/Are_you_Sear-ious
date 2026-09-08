@@ -172,6 +172,15 @@ function RecipePrint({
           </li>
         ))}
       </ol>
+      {recipe.attribution && (
+        <p>
+          <strong>Adapted from:</strong> {recipe.attribution.label}
+          <br />
+          {recipe.attribution.url}
+          <br />
+          {recipe.attribution.note}
+        </p>
+      )}
       <p>
         <strong>Grill note:</strong> Ambient ranges are recipe settings measured
         near the food at grate level, with the lid closed. Knob positions vary
@@ -950,6 +959,22 @@ export default function Home() {
               </span>
             </p>
             <p className="timing-note">{recipe.timingNote}</p>
+            {recipe.attribution && (
+              <p className="attribution-note">
+                <span>
+                  Adapted from{' '}
+                  <a
+                    href={recipe.attribution.url}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                  >
+                    {recipe.attribution.label}
+                    <ArrowUpRight size={13} />
+                  </a>
+                  . {recipe.attribution.note}
+                </span>
+              </p>
+            )}
             <div className="recipe-columns">
               <aside className="ingredients">
                 <div className="ingredients-heading">

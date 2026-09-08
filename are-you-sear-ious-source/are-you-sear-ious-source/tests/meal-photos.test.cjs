@@ -33,7 +33,7 @@ test('every meal has a distinct, small, decodable WebP image', async () => {
     bytes += buffer.length;
   }
   assert.equal(hashes.size, cuts.length, 'no reused category photos');
-  assert.ok(bytes < 2_500_000, 'all twelve images should stay below 2.5 MB');
+  assert.ok(bytes < 2_500_000, 'every meal image together stays below 2.5 MB');
 });
 
 test('old large category PNGs are not shipped', () => {

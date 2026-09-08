@@ -1,13 +1,14 @@
 # Notices and attribution
 
-This project combines three categories of material with different terms. The
+This project combines four categories of material with different terms. The
 `LICENSE` file (MIT) covers the **first category only**.
 
 | Material | Terms |
 | --- | --- |
 | Application source and build output | MIT — see [`LICENSE`](LICENSE) |
 | Bundled third-party libraries and fonts | Their own licenses — see [`THIRD-PARTY-LICENSES.txt`](THIRD-PARTY-LICENSES.txt) |
-| The 12 meal images in `images/` | AI-generated — see below |
+| The meal images (12 in `images/`, 13 in `public/meals/`) | AI-generated — see below |
+| One recipe adapted from a published source | Credited — see below |
 
 ## Third-party software and fonts
 
@@ -36,11 +37,15 @@ compliance purposes, generate it from `package-lock.json` rather than from
 
 ## The meal images
 
-All 12 WebP images in `images/` (and `public/meals/` in the source project) were
-**generated with an AI image model**, not photographed and not obtained from a
-stock library. No stock license was purchased and no photographer attribution is
-owed. Full details, including the preserved prompts for 8 of the 12 images, are
-in `IMAGE-PROVENANCE.md` and `image-provenance.json` in the source archive.
+Every WebP meal image — 13 in `public/meals/` in the source project, and the 12
+in `images/` that the older offline build loads — was **generated with an AI
+image model**, not photographed and not obtained from a stock library. No stock
+license was purchased and no photographer attribution is owed. Full details,
+including the preserved prompts for 9 of the 13, are in `IMAGE-PROVENANCE.md`
+and `image-provenance.json` in the source archive.
+
+The counts differ because `images/` belongs to the stale offline `index.html`,
+which has not been regenerated since the tri-tip was added. See `TODO.md`.
 
 Two things follow from that, and both are deliberate:
 
@@ -63,6 +68,37 @@ If you want the disclosure to travel with the files, either re-run the optimizer
 with metadata retention enabled or keep this notice alongside any redistribution.
 The original PNGs with their manifests intact are preserved in the companion
 `are-you-sear-ious-image-originals` archive.
+
+## Recipes adapted from a published source
+
+Twelve of the thirteen recipes are this project's own work. One is not.
+
+**Coffee–ancho tri-tip with chipotle-lime sauce** is adapted from Jamie
+Purviance's tri-tip roast published by Weber, at
+<https://www.weber.com/US/en/recipes/red-meat/tri-tip-roast/weber-2071757.html>.
+The credit appears in the app beside the recipe and on the printed sheet, not
+only here.
+
+What was taken and what was not:
+
+- **Taken: the rub and sauce proportions.** A list of ingredients and their
+  quantities is a statement of fact. US courts have held that such a listing is
+  not protected by copyright — *Publications International v. Meredith Corp.*,
+  88 F.3d 473 (7th Cir. 1996).
+- **Not taken: the expressive text.** Copyright does subsist in the descriptive
+  and explanatory prose that surrounds a recipe. Every step, cue and note in
+  this app is written from scratch, for a gas grill rather than the original
+  setup.
+- **Deliberately changed: the finish temperature.** The source finishes below
+  USDA guidance for whole beef. This app takes the roast off at a minimum of
+  145°F with a 3-minute rest, and a regression test pins that so it cannot be
+  quietly reverted to the original's lower target.
+- **Not Weber's: the photograph.** That illustration is AI-generated like every
+  other image here, and is not their photography.
+
+No affiliation with, or endorsement by, Weber-Stephen Products LLC is claimed or
+implied. Removing the adaptation is a one-line change: delete the
+`coffee-ancho-tri-tip` entry from `cuts` in `app/cook-config.ts`.
 
 ## Food safety information
 

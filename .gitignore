@@ -51,6 +51,7 @@ yarn-error.log*
 /outputs/
 /work/
 
-# Note: .openai/hosting.json is intentionally NOT ignored. vite.config.ts
-# imports it at build time, so ignoring it breaks the build. It holds a Sites
-# project identifier, not a credential — see NOTICE.md.
+# Note: .openai/hosting.json used to be excluded from this list because the old
+# vite.config.ts imported it at build time. That config and that file were both
+# removed when the Cloudflare/vinext stack was dropped, so there is nothing to
+# keep unignored any more.

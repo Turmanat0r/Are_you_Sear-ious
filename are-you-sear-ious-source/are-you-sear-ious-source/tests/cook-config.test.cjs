@@ -24,13 +24,18 @@ const {
   swapSets,
   saltWarning,
   measuredPart,
+  spoonLabel,
 } = config;
 
-test('four proteins, twelve unique cuts, and matching defaults', () => {
-  assert.equal(cuts.length, 12);
-  assert.equal(new Set(cuts.map((c) => c.id)).size, 12);
+test('four proteins, thirteen unique cuts, and matching defaults', () => {
+  assert.equal(cuts.length, 13);
+  assert.equal(new Set(cuts.map((c) => c.id)).size, 13);
   for (const protein of ['Beef', 'Pork', 'Poultry', 'Fish']) {
-    assert.equal(cuts.filter((c) => c.protein === protein).length, 3);
+    // Beef carries the added tri-tip; the other three have three apiece.
+    assert.equal(
+      cuts.filter((c) => c.protein === protein).length,
+      protein === 'Beef' ? 4 : 3,
+    );
     assert.equal(
       cuts.find((c) => c.id === defaultCuts[protein]).protein,
       protein,
@@ -84,10 +89,18 @@ for (const cut of cuts) {
           .length,
         1,
       );
+      // The shopping line also carries spoon equivalents, which would make
+      // the step prose unreadable. Both must still quote the same weight.
+      const saltLine = recipe.ingredients[0].items[1];
+      const weighed = saltLine.split(' (')[0];
+      assert.ok(weighed.endsWith('g kosher salt'), weighed);
+      assert.ok(recipe.steps[0].body.includes(weighed));
+      // Naming one brand would be wrong by about 70% for the other box.
+      assert.ok(saltLine.includes('Morton'), saltLine);
+      assert.ok(saltLine.includes('Diamond Crystal'), saltLine);
       assert.ok(
-        recipe.steps[0].body.includes(
-          recipe.ingredients[0].items[1].split(' total')[0],
-        ),
+        !/\d\.\d/.test(saltLine.split('about ')[1].split(')')[0]),
+        'spoon equivalents must be fractions, not decimals: ' + saltLine,
       );
       const kg = fromLb(weight, 'kg');
       assert.ok(Math.abs(toLb(kg, 'kg') - weight) < 1e-10);
@@ -134,15 +147,36 @@ test('measurement formatting and smaller units scale correctly', () => {
     measured({ amount: 1, unit: 'tbsp', name: 'pepper' }, 0.25),
     '¾ tsp pepper',
   );
+  // Scaling up has to climb into larger units too, but only where the
+  // result still prints as a fraction. The second case is the guard: 4 tsp
+  // must not become the "1.33 tbsp" that a naive conversion produces.
+  assert.equal(measured(mustard, 3), '2 tbsp Dijon mustard');
+  assert.equal(measured(mustard, 2), '4 tsp Dijon mustard');
+  assert.equal(
+    measured({ amount: 12, unit: 'tbsp', name: 'butter' }, 1),
+    '¾ cup butter',
+  );
+  assert.equal(
+    measured({ amount: 4, unit: 'tbsp', name: 'paprika' }, 3),
+    '¾ cup paprika',
+  );
+  // Spoon equivalents round to what a measuring set can hit, and bottom out
+  // rather than printing a meaningless "0 tsp".
+  assert.equal(spoonLabel(0.02), 'a pinch');
+  assert.equal(spoonLabel(0.94), '1 tsp');
+  assert.equal(spoonLabel(5.67), '2 tbsp');
+  assert.equal(spoonLabel(36), '¾ cup');
   const small = buildRecipe('pork-shoulder', 4);
   const regular = buildRecipe('pork-shoulder', 8);
   assert.equal(
     small.ingredients[0].items[1],
-    '9.07 g kosher salt total for the meat — use once, not again in the rub',
+    '9.07 g kosher salt (no scale? about 2 tsp Morton or 1 tbsp Diamond ' +
+      'Crystal) total for the meat — use once, not again in the rub',
   );
   assert.equal(
     regular.ingredients[0].items[1],
-    '18.14 g kosher salt total for the meat — use once, not again in the rub',
+    '18.14 g kosher salt (no scale? about 1 ¼ tbsp Morton or 2 ¼ tbsp ' +
+      'Diamond Crystal) total for the meat — use once, not again in the rub',
   );
   assert.ok(
     small.steps
@@ -432,4 +466,99 @@ test('a swap changes the shopping line but never the safety targets', () => {
     buildRecipe('smoky-chicken', 3).ingredients,
     recipe.ingredients,
   );
+});
+
+test('the tri-tip keeps its attribution and the USDA finish, not the original one', () => {
+  const recipe = buildRecipe('coffee-ancho-tri-tip', 2.25);
+
+  // This is the only recipe adapted from someone else's published work.
+  // Ingredient proportions are not copyrightable, but the credit is the
+  // thing most likely to be dropped in a refactor, so pin it here.
+  const credit = recipe.attribution;
+  assert.ok(credit, 'the tri-tip must carry its attribution');
+  assert.match(credit.url, /^https:\/\/www\.weber\.com\//);
+  assert.match(credit.label, /Weber/);
+  assert.match(credit.note, /Adapted/);
+  assert.match(credit.note, /AI-generated/, 'the photo is not the source’s');
+
+  // The source recipe finishes lower than USDA guidance. Raising it was a
+  // deliberate decision and must not be quietly reverted.
+  assert.deepEqual(recipe.internal, [145]);
+  assert.match(recipe.finish, /at least 145/);
+  assert.match(recipe.safety, /145/);
+  assert.ok(!/13[0-9]\s*°?F/.test(recipe.finish + recipe.safety));
+
+  // The dry brine is measured once. A second salt line for the sauce is
+  // legitimate, but it has to say so, or someone salts the meat twice.
+  const saltLines = recipe.ingredients
+    .flatMap((g) => g.items)
+    .filter((i) => i.toLowerCase().includes('kosher salt'));
+  assert.equal(saltLines.length, 2, 'meat salt and sauce salt');
+  assert.match(saltLines[0], /use once, not again in the rub/);
+  assert.match(saltLines[1], /sauce only/);
+
+  // It borrows the ribeye entry for its base lookup and then replaces every
+  // field. Assert on what a cook actually reads, not on the internal id:
+  // drop any arm of those ladders and the ribeye's copy reappears here.
+  const rendered = JSON.stringify({
+    title: recipe.title,
+    description: recipe.description,
+    headline: recipe.headline,
+    tip: recipe.tip,
+    wood: recipe.wood,
+    ingredients: recipe.ingredients,
+    steps: recipe.steps,
+  });
+  assert.ok(!/ribeye/i.test(rendered), 'ribeye copy leaked into the tri-tip');
+  assert.ok(
+    !/garlic butter|reverse sear/i.test(rendered),
+    'the ribeye method leaked into the tri-tip',
+  );
+  assert.match(recipe.title, /tri-tip/i);
+
+  // The grain-direction guidance is the whole reason this cut is different.
+  const slicing = recipe.steps[recipe.steps.length - 1];
+  assert.match(slicing.body, /grain/i);
+  assert.match(recipe.steps[0].body, /grain/i, 'map the grain before the rub');
+});
+
+test('every tri-tip ingredient can be swapped when the cupboard is empty', () => {
+  const recipe = buildRecipe('coffee-ancho-tri-tip', 2.25);
+  const [meat, ...rest] = recipe.ingredients;
+  assert.equal(substitutionsFor(meat.items[0]), null, 'never swap the roast');
+
+  for (const group of rest)
+    for (const item of group.items) {
+      const set = substitutionsFor(item);
+      assert.ok(set, `no substitution offered for: ${item}`);
+      for (const option of set.options) {
+        const swapped = substitutedItem(item, set, option);
+        assert.ok(!/undefined|NaN|\[object/.test(swapped), swapped);
+        if (option.amount !== '—') assert.ok(swapped.includes(item));
+      }
+    }
+
+  // Longest-match resolution: these are the pairs that can shadow each other.
+  assert.equal(
+    substitutionsFor('2 tbsp adobo sauce from a tin').label,
+    'Adobo sauce',
+  );
+  assert.equal(substitutionsFor('1 tbsp fresh lime juice').label, 'Lime juice');
+  assert.equal(
+    substitutionsFor('1 tbsp fresh lemon juice').label,
+    'Lemon juice',
+  );
+});
+
+test('scaling the tri-tip moves the shopping list but never the clock', () => {
+  const base = buildRecipe('coffee-ancho-tri-tip', 2.25);
+  const big = buildRecipe('coffee-ancho-tri-tip', 9);
+
+  assert.equal(big.time, base.time, 'cook time is not multiplied by weight');
+  assert.deepEqual(big.internal, base.internal);
+  assert.notEqual(big.ingredients[3].items[0], base.ingredients[3].items[0]);
+  // 4x the weight, so the sauce should have climbed out of cups-per-quarter.
+  assert.match(big.ingredients[3].items[0], /cup/);
+  assert.ok(Number(big.serves) > Number(base.serves));
+  assert.ok(!/NaN|undefined|Infinity/.test(JSON.stringify(big)));
 });
