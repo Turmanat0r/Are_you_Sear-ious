@@ -49,6 +49,6 @@
   },
   "type": "module",
   "description": "Gas-grill recipe planner with cut-specific temperatures, ingredient scaling and a burner layout planner.",
-  "author": "Turmanator",
+  "author": "Turman",
   "license": "MIT"
 }
