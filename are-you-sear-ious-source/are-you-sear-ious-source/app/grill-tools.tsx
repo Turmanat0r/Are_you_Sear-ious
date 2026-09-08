@@ -4,7 +4,6 @@ import {
   Flame,
   ArrowUpRight,
   FlaskConical,
-  SlidersHorizontal,
   RotateCcw,
   Gauge,
 } from 'lucide-react';
@@ -419,7 +418,6 @@ export function GrillSetup({
           <p className="eyebrow">YOUR GRILL. YOUR CALL.</p>
           <h2>You pick the burners.</h2>
         </div>
-        <SlidersHorizontal className="muted" size={24} />
       </div>
       <div className="setup-grid">
         <div>
