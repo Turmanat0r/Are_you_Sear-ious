@@ -27,14 +27,15 @@ const {
   spoonLabel,
 } = config;
 
-test('four proteins, thirteen unique cuts, and matching defaults', () => {
-  assert.equal(cuts.length, 13);
-  assert.equal(new Set(cuts.map((c) => c.id)).size, 13);
+test('four proteins, fourteen unique cuts, and matching defaults', () => {
+  assert.equal(cuts.length, 14);
+  assert.equal(new Set(cuts.map((c) => c.id)).size, 14);
   for (const protein of ['Beef', 'Pork', 'Poultry', 'Fish']) {
-    // Beef carries the added tri-tip; the other three have three apiece.
+    // Beef gained the tri-tip and Fish the walleye; pork and poultry are
+    // still three apiece.
     assert.equal(
       cuts.filter((c) => c.protein === protein).length,
-      protein === 'Beef' ? 4 : 3,
+      protein === 'Beef' || protein === 'Fish' ? 4 : 3,
     );
     assert.equal(
       cuts.find((c) => c.id === defaultCuts[protein]).protein,
@@ -51,11 +52,15 @@ for (const cut of cuts) {
     assert.equal(base.scale, 1);
     assert.deepEqual(base.grill, cut.grill);
     assert.deepEqual(base.internal, cut.internal);
-    assert.ok(
-      base.ingredients
-        .flatMap((g) => g.items)
-        .some((item) => item.includes('mustard')),
-    );
+    const allItems = base.ingredients.flatMap((g) => g.items);
+    assert.ok(allItems.length >= 3, `${cut.id} needs a real ingredient list`);
+    // Every templated recipe binds its seasoning with mustard. The foil-boat
+    // walleye deliberately has no binder at all — that is the recipe.
+    if (cut.family !== 'foil-boat')
+      assert.ok(
+        allItems.some((item) => item.includes('mustard')),
+        `${cut.id} should carry its mustard binder`,
+      );
     assert.ok(base.steps.length >= 4);
     assert.equal(base.photo, '/meals/' + cut.id + '.webp');
     assert.equal(base.photoCaption, cut.name);
@@ -630,4 +635,59 @@ test('titles keep proper nouns capitalised', () => {
       `${cut.id}: title should carry "${expected}"`,
     );
   }
+});
+
+test('the walleye cooks in an open boat and never inherits the mustard recipe', () => {
+  const recipe = buildRecipe('lemon-pepper-walleye', 1);
+  const text = JSON.stringify(recipe);
+
+  // It shares the Fish protein with three cuts built from a different
+  // template. None of that template may leak in: no binder, no flipping.
+  assert.ok(!/dijon/i.test(text), 'no mustard binder belongs in a foil boat');
+  assert.ok(!/\bdill\b/i.test(text));
+  assert.ok(!/fish basket/i.test(text));
+  assert.match(recipe.title, /Butter & lemon-pepper/);
+  assert.match(recipe.method, /[Ff]oil boat/);
+
+  // Sealing the foil changes the cook, so the steps must say "open".
+  const steps = recipe.steps.map((s) => s.body).join(' ');
+  assert.match(steps, /open/i);
+  assert.match(steps, /sealed packet|seal/i);
+
+  // Thickness drives this one, not weight — the timings are per-fillet.
+  assert.match(recipe.timingNote, /[Tt]hickness/);
+  assert.deepEqual(recipe.internal, [145]);
+  assert.match(recipe.finish, /145/);
+  assert.match(recipe.finish, /[Ee]very fillet/);
+
+  // Fish needs no rest at 145°F. Claiming one would be wrong, not just noisy.
+  assert.ok(!/3-minute rest|rest at least 3/.test(recipe.finish));
+});
+
+test('the walleye warns about pre-salted lemon pepper', () => {
+  const recipe = buildRecipe('lemon-pepper-walleye', 1);
+
+  // The app measures a dry brine for every cut, but most supermarket
+  // lemon-pepper is salt-first. Salting twice ruins a thin fillet, so the
+  // first step has to say so before the cook reaches for the jar.
+  const first = recipe.steps[0].body;
+  assert.match(first, /label/i, 'must send the cook to the label');
+  assert.match(first, /salt/i);
+  assert.match(first, /salt-free/i, 'must name the case where salt is safe');
+
+  // And the swap list has to flag the salted jars it offers.
+  const line = recipe.ingredients
+    .flatMap((g) => g.items)
+    .find((i) => i.includes('lemon-pepper'));
+  assert.ok(line, 'lemon pepper must appear in the shopping list');
+  const set = substitutionsFor(line);
+  assert.equal(set.label, 'Lemon-pepper seasoning');
+  assert.ok(
+    set.options.some((o) => o.addsSalt),
+    'the salted blends must be flagged as pre-salted',
+  );
+  assert.ok(
+    set.options.some((o) => !o.addsSalt),
+    'a salt-free route must exist',
+  );
 });
