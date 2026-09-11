@@ -1,0 +1,18 @@
+{
+  "schemaVersion": 1,
+  "recipeId": "seariously-smothered-beef-ribs",
+  "adaptedOn": "2026-09-10",
+  "origin": "User-supplied seariously-smothered-beef-ribs-corrected.zip. Its record reports AI generation using image_gen. That historical generation was not independently authenticated during this repair.",
+  "changes": "Neither responsive WebP, the original PNG, nor the exact supplied prompt was changed. No image was generated or converted during this repair.",
+  "originalArchivePath": "provenance/original-seariously-smothered-beef-ribs.png",
+  "promptArchivePath": "provenance/generation-prompt.txt",
+  "historicalManifestArchivePath": "provenance/image-provenance.json",
+  "originalSha256": "1f627b811fb4cd51041e7bba56aefae70fd1b34aa982c76621a1efca593ad60c",
+  "promptSha256": "f96cd83ddf0208d8fad7066b57077de2ea68cd515f8dcd5bb159e5be8f981976",
+  "webAssets": [
+    { "path": "../images/seariously-smothered-beef-ribs.webp", "width": 1200, "height": 800, "bytes": 198768, "sha256": "7cd3cd6b124a009a7babdaa7f5ad8e4f281bfad0c23818d9d99168f4f45e8571" },
+    { "path": "../images/seariously-smothered-beef-ribs-small.webp", "width": 640, "height": 427, "bytes": 75358, "sha256": "4adf577c1d6de3687edf743feff66edb8887786b2f85577ce806624a42c16243" }
+  ],
+  "providedConversionRecord": "Pillow 12.3.0, libwebp 1.6.0, RGB, Lanczos resize, WebP quality 82, method 6. Preserved historical claims, not a conversion reproduced here.",
+  "rights": "No separate image license was supplied. No public-domain, model identity, EXIF, authorship, ownership, or cryptographic signature validation claim is made. Hashes identify files; they do not authenticate their origin."
+}

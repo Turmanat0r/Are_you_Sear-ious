@@ -1,0 +1,56 @@
+{
+  "recipeId": "seariously-smothered-beef-ribs",
+  "origin": "AI-generated for this recipe using the built-in image_gen tool.",
+  "use": "Illustrative food image, not a photograph of a kitchen-tested result.",
+  "original": {
+    "path": "provenance/original-seariously-smothered-beef-ribs.png",
+    "mimeType": "image/png",
+    "width": 1536,
+    "height": 1024,
+    "bytes": 2860339,
+    "sha256": "1f627b811fb4cd51041e7bba56aefae70fd1b34aa982c76621a1efca593ad60c",
+    "preservation": "Byte-for-byte copy of the tool output PNG."
+  },
+  "prompt": {
+    "path": "provenance/generation-prompt.txt",
+    "sha256": "f96cd83ddf0208d8fad7066b57077de2ea68cd515f8dcd5bb159e5be8f981976",
+    "storage": "Exact prompt submitted, UTF-8 with a terminal newline."
+  },
+  "webAssets": [
+    {
+      "path": "images/seariously-smothered-beef-ribs.webp",
+      "mimeType": "image/webp",
+      "width": 1200,
+      "height": 800,
+      "bytes": 198768,
+      "sha256": "7cd3cd6b124a009a7babdaa7f5ad8e4f281bfad0c23818d9d99168f4f45e8571",
+      "conversion": {
+        "tool": "Pillow",
+        "version": "12.3.0",
+        "libwebpVersion": "1.6.0",
+        "colorMode": "RGB",
+        "resize": "Lanczos, aspect ratio preserved; no crop",
+        "quality": 82,
+        "method": 6
+      }
+    },
+    {
+      "path": "images/seariously-smothered-beef-ribs-small.webp",
+      "mimeType": "image/webp",
+      "width": 640,
+      "height": 427,
+      "bytes": 75358,
+      "sha256": "4adf577c1d6de3687edf743feff66edb8887786b2f85577ce806624a42c16243",
+      "conversion": {
+        "tool": "Pillow",
+        "version": "12.3.0",
+        "libwebpVersion": "1.6.0",
+        "colorMode": "RGB",
+        "resize": "Lanczos, aspect ratio preserved; no crop",
+        "quality": 82,
+        "method": 6
+      }
+    }
+  ],
+  "claims": "No invented EXIF, model version, third-party photo license, or cryptographic signature validation. SHA-256 values identify these files; they do not establish authenticity or ownership."
+}

@@ -53,7 +53,8 @@ export type Cut = {
     | 'bbq-chicken'
     | 'burger'
     | 'lobster'
-    | 'mayo-chop';
+    | 'mayo-chop'
+    | 'beef-ribs';
   /** Set only on cuts adapted from a published recipe. */
   attribution?: Attribution;
 };
@@ -187,6 +188,33 @@ export const cuts: Cut[] = [
     description:
       'A hard-seared, pepper-forward patty with grated onion worked through it, smoked cheddar and charred onion rounds. Beef or bison, and bison gets oil because it has almost no fat of its own.',
     family: 'burger',
+  },
+  {
+    id: 'seariously-smothered-beef-ribs',
+    protein: 'Beef',
+    name: 'Bone-in beef short ribs',
+    midSentenceName: 'English-cut bone-in beef short ribs',
+    baseId: 'pepper-ribeye',
+    baseLb: 4,
+    minLb: 2,
+    maxLb: 12,
+    method: 'Indirect low heat',
+    grill: [275, 300],
+    internal: [200, 205],
+    time: '4\u20138 hr + rest',
+    rest: '15\u201320 minutes',
+    timing:
+      'Thickness decides this, not batch weight. Ribs carrying 2\u20133 inches of meat above the bone usually run 4\u20136 hours; 3\u20134 inch ribs take 5\u20138. Reckon on 1\u00bd\u20133 hours building the crust, then 2\u20134 hours covered, with the first probe 90 minutes after the foil goes on. English-cut only, not flanken or back ribs.',
+    headline: ['Low and covered.', 'Sauce at the table.'],
+    description:
+      'A peppery mustard-bound rub, a shallow covered braise over the unlit side, then thin coats of brown sugar and Worcestershire brushed on once the meat is already tender. Half the sauce never meets the brush.',
+    family: 'beef-ribs',
+    attribution: {
+      label:
+        'Weber\u2019s braised and smoked short-rib methods, by Jamie Purviance and the Weber Grill Academy',
+      url: 'https://www.weber.com/US/en/recipes/red-meat/beer-braised-and-mesquite-smoked-short-ribs/weber-7841.html',
+      note: 'Not affiliated with, endorsed by, or sponsored by Weber-Stephen Products LLC. Consulted rather than adapted: those two published methods informed the shape of this one \u2014 a long indirect cook, a covered stage, then a glaze at the end \u2014 while the rub, the brown sugar and Worcestershire sauce and the shallow gas-grill pan are this project\u2019s own. No beer braise, bourbon glaze or charcoal setup is carried across. The illustration is AI-generated and is not Weber\u2019s photograph.',
+    },
   },
   {
     id: 'pork-shoulder',
@@ -547,7 +575,8 @@ type SeasoningGroup =
   | 'bbqChicken'
   | 'burger'
   | 'lobster'
-  | 'mayoChop';
+  | 'mayoChop'
+  | 'beefRibs';
 const seasonings: Record<SeasoningGroup, Group[]> = {
   shoulder: [
     {
@@ -856,6 +885,42 @@ const seasonings: Record<SeasoningGroup, Group[]> = {
       items: [m(1, 'tbsp', 'fresh lemon juice')],
     },
   ],
+  beefRibs: [
+    {
+      title: 'Mustard binder & peppery rub \u00b7 salt already counted above',
+      items: [
+        m(2, 'tbsp', 'yellow mustard, for a thin binder coat'),
+        m(1, 'tbsp', 'coarse black pepper'),
+        m(2, 'tsp', 'garlic powder'),
+        m(1, 'tsp', 'onion powder'),
+        m(2, 'tsp', 'smoked paprika'),
+      ],
+    },
+    {
+      title: 'Shallow braise \u00b7 the pan sets the depth, not the recipe',
+      items: [
+        m(0.75, 'cup', 'unsalted beef stock'),
+        m(1, 'tbsp', 'apple cider vinegar, for the pan'),
+        'Hot water as needed to hold about \u00bc inch of liquid under the ribs',
+      ],
+    },
+    {
+      title: 'Brown sugar sauce \u00b7 half of it is reserved clean',
+      items: [
+        m(1.5, 'cup', 'ketchup'),
+        m(0.25, 'cup', 'dark brown sugar, packed'),
+        m(2, 'tbsp', 'unsulphured molasses'),
+        m(3, 'tbsp', 'Worcestershire sauce'),
+        m(3, 'tbsp', 'apple cider vinegar, for the sauce'),
+        m(0.25, 'cup', 'water, plus a splash to loosen it'),
+        m(1, 'tsp', 'garlic powder, in the sauce as well as the rub'),
+        m(1, 'tsp', 'smoked paprika, in the sauce as well as the rub'),
+        m(1, 'tsp', 'black pepper'),
+        m(0.125, 'tsp', 'cayenne, optional'),
+        m(2, 'tbsp', 'unsalted butter, whisked in off the heat'),
+      ],
+    },
+  ],
   mayoChop: [
     {
       title: 'Garlic-herb mayonnaise binder · salt already counted above',
@@ -1015,19 +1080,21 @@ export function buildRecipe(
   const saltUse =
     f === 'burger'
       ? 'mixed in at the grill, not ahead — salting ground meat early turns it springy'
-      : f === 'mayo-chop'
-        ? 'use once on the chops ahead of time, not again in the binder'
-        : f === 'lobster'
-          ? 'split between the meat and the bath'
-          : f === 'foil-boat'
-            ? 'use once, and only if your lemon pepper is salt-free'
-            : f === 'shrimp'
-              ? 'stirred into the chimichurri, not sprinkled on separately'
-              : f === 'prime-rib'
-                ? 'use once, on the roast the night before, not again in the crust'
-                : f === 'jerk-turkey'
-                  ? 'use once, mixed into the paste'
-                  : 'use once, not again in the rub';
+      : f === 'beef-ribs'
+        ? 'use once on the ribs, not again in the rub and not in the sauce'
+        : f === 'mayo-chop'
+          ? 'use once on the chops ahead of time, not again in the binder'
+          : f === 'lobster'
+            ? 'split between the meat and the bath'
+            : f === 'foil-boat'
+              ? 'use once, and only if your lemon pepper is salt-free'
+              : f === 'shrimp'
+                ? 'stirred into the chimichurri, not sprinkled on separately'
+                : f === 'prime-rib'
+                  ? 'use once, on the roast the night before, not again in the crust'
+                  : f === 'jerk-turkey'
+                    ? 'use once, mixed into the paste'
+                    : 'use once, not again in the rub';
   const saltLine =
     salt +
     ' (no scale? about ' +
@@ -1037,35 +1104,37 @@ export function buildRecipe(
     ' — ' +
     saltUse;
   const group: SeasoningGroup =
-    f === 'mayo-chop'
-      ? 'mayoChop'
-      : f === 'burger'
-        ? 'burger'
-        : f === 'lobster'
-          ? 'lobster'
-          : f === 'achiote'
-            ? 'achiote'
-            : f === 'bbq-chicken'
-              ? 'bbqChicken'
-              : f === 'prime-rib'
-                ? 'primeRib'
-                : f === 'jerk-turkey'
-                  ? 'jerkTurkey'
-                  : f === 'shrimp'
-                    ? 'shrimp'
-                    : f === 'foil-boat'
-                      ? 'foilBoat'
-                      : f === 'tri-tip'
-                        ? 'triTip'
-                        : f === 'shoulder'
-                          ? 'shoulder'
-                          : f === 'steak'
-                            ? 'steak'
-                            : f === 'chop' || f === 'tenderloin'
-                              ? 'leanPork'
-                              : f === 'fish'
-                                ? 'fish'
-                                : 'chicken';
+    f === 'beef-ribs'
+      ? 'beefRibs'
+      : f === 'mayo-chop'
+        ? 'mayoChop'
+        : f === 'burger'
+          ? 'burger'
+          : f === 'lobster'
+            ? 'lobster'
+            : f === 'achiote'
+              ? 'achiote'
+              : f === 'bbq-chicken'
+                ? 'bbqChicken'
+                : f === 'prime-rib'
+                  ? 'primeRib'
+                  : f === 'jerk-turkey'
+                    ? 'jerkTurkey'
+                    : f === 'shrimp'
+                      ? 'shrimp'
+                      : f === 'foil-boat'
+                        ? 'foilBoat'
+                        : f === 'tri-tip'
+                          ? 'triTip'
+                          : f === 'shoulder'
+                            ? 'shoulder'
+                            : f === 'steak'
+                              ? 'steak'
+                              : f === 'chop' || f === 'tenderloin'
+                                ? 'leanPork'
+                                : f === 'fish'
+                                  ? 'fish'
+                                  : 'chicken';
   const ingredients = [
     {
       title: 'Your ' + saltNoun + ' & salt',
@@ -1079,71 +1148,77 @@ export function buildRecipe(
     })),
   ];
   const safety =
-    f === 'burger'
-      ? 'Ground beef and ground bison: 160°F, measured in the centre of every patty. Grinding spreads surface bacteria right through the meat, which is why this is higher than the 145°F used for whole cuts of beef.'
-      : cut.protein === 'Poultry'
-        ? 'Chicken must reach 165°F in every piece. Thighs and drumsticks can go higher for tenderness.'
-        : cut.protein === 'Seafood'
-          ? 'Fish and shellfish must reach 145°F in the thickest part before leaving the grill.'
-          : cut.protein === 'Beef'
-            ? 'Whole beef cuts — steaks, roasts and chops alike: at least 145°F before removal, followed by a 3-minute rest.'
-            : 'Whole pork: at least 145°F before removal, followed by a 3-minute rest.';
+    f === 'beef-ribs'
+      ? 'Whole beef cuts reach their safety minimum at 145\u00b0F with a 3-minute rest. Short ribs go far past that, and not for safety \u2014 the long covered cook is what softens the connective tissue. Reheat leftovers to 165\u00b0F.'
+      : f === 'burger'
+        ? 'Ground beef and ground bison: 160°F, measured in the centre of every patty. Grinding spreads surface bacteria right through the meat, which is why this is higher than the 145°F used for whole cuts of beef.'
+        : cut.protein === 'Poultry'
+          ? 'Chicken must reach 165°F in every piece. Thighs and drumsticks can go higher for tenderness.'
+          : cut.protein === 'Seafood'
+            ? 'Fish and shellfish must reach 145°F in the thickest part before leaving the grill.'
+            : cut.protein === 'Beef'
+              ? 'Whole beef cuts — steaks, roasts and chops alike: at least 145°F before removal, followed by a 3-minute rest.'
+              : 'Whole pork: at least 145°F before removal, followed by a 3-minute rest.';
   const finish =
-    f === 'mayo-chop'
-      ? 'At least 145°F in the thickest part of every chop, then a 3-minute rest. The binder is fat, so the crust browns early and the colour arrives well before the centre does.'
-      : f === 'burger'
-        ? 'Every patty reaches 160°F in its centre before it leaves the grill, then rests 3 minutes. A safe burger can still be pink; colour is not a doneness test.'
-        : f === 'lobster'
-          ? 'Each tail comes out at 145°F in the thickest meat. Pearly and opaque is the clue, the probe is the decision, and the shell and pan both read hotter than the lobster.'
-          : f === 'achiote'
-            ? 'Every thigh reaches 165°F in its thickest part before it comes off. Colour and clear juices prove nothing, least of all under a red marinade.'
-            : f === 'bbq-chicken'
-              ? 'Every thigh reaches 165°F in its thickest part before it comes off. Probe under the glaze; sauce colour is not a doneness reading.'
-              : f === 'prime-rib'
-                ? 'At least 145°F in the centre before it is carved and served, then rest. Three minutes is the safety minimum; 20–30 is what a roast this size actually wants. The sear does not count toward the endpoint.'
-                : f === 'jerk-turkey'
-                  ? 'Every part of the tenderloin reaches 165°F before it comes off. That is the poultry endpoint, not the 145°F used for whole cuts of beef and pork.'
-                  : f === 'shrimp'
-                    ? 'Take them off at 145°F in the thickest shrimp. Opaque flesh is a clue, not a reading, and no rest is needed.'
-                    : f === 'foil-boat'
-                      ? 'Every fillet reaches 145°F in its thickest part before it leaves the boat. Flaking is a clue, not a reading, and fish needs no rest at this target.'
-                      : f === 'tri-tip'
-                        ? 'Reach at least 145°F in the thickest part before it leaves the grill, then rest 10–15 minutes. Three minutes is the safety minimum; the rest of it is for the slicing.'
-                        : f === 'shoulder'
-                          ? 'Pull-apart target: 195–205°F. Probe several thick spots; finish when it slides in with almost no resistance.'
-                          : f === 'thigh' || f === 'drumstick'
-                            ? 'For tender dark meat, aim for 175–185°F. The poultry safety minimum is 165°F.'
-                            : cut.protein === 'Poultry'
-                              ? 'Reach 165°F in the thickest part of every breast.'
-                              : cut.protein === 'Seafood'
-                                ? 'Reach 145°F at the center of the thickest part.'
-                                : 'Reach 145°F before removing from heat, then rest at least 3 minutes.';
-  const prepTime =
-    f === 'mayo-chop'
-      ? '30 min ahead, or overnight'
-      : f === 'burger'
-        ? 'Season at the grill, not ahead'
-        : f === 'lobster'
-          ? '10 min prep'
-          : f === 'achiote'
-            ? '20–30 min marinade, no longer'
-            : f === 'bbq-chicken'
-              ? '15–30 min'
-              : f === 'shrimp'
-                ? '15 min in the marinade, no longer'
+    f === 'beef-ribs'
+      ? 'Probe several meaty spots away from the bone and stop when it glides in with almost no resistance, usually around 200\u2013205\u00b0F. That is a tenderness reading rather than the safety number, and a rib that still feels tight is not finished whatever the probe says.'
+      : f === 'mayo-chop'
+        ? 'At least 145°F in the thickest part of every chop, then a 3-minute rest. The binder is fat, so the crust browns early and the colour arrives well before the centre does.'
+        : f === 'burger'
+          ? 'Every patty reaches 160°F in its centre before it leaves the grill, then rests 3 minutes. A safe burger can still be pink; colour is not a doneness test.'
+          : f === 'lobster'
+            ? 'Each tail comes out at 145°F in the thickest meat. Pearly and opaque is the clue, the probe is the decision, and the shell and pan both read hotter than the lobster.'
+            : f === 'achiote'
+              ? 'Every thigh reaches 165°F in its thickest part before it comes off. Colour and clear juices prove nothing, least of all under a red marinade.'
+              : f === 'bbq-chicken'
+                ? 'Every thigh reaches 165°F in its thickest part before it comes off. Probe under the glaze; sauce colour is not a doneness reading.'
                 : f === 'prime-rib'
-                  ? '12–24 hr ahead'
+                  ? 'At least 145°F in the centre before it is carved and served, then rest. Three minutes is the safety minimum; 20–30 is what a roast this size actually wants. The sear does not count toward the endpoint.'
                   : f === 'jerk-turkey'
-                    ? 'Just before cooking'
-                    : f === 'tri-tip'
-                      ? '4–24 hr ahead, optional'
-                      : f === 'shoulder'
-                        ? '12–24 hr ahead, optional'
-                        : cut.protein === 'Poultry'
-                          ? '2–12 hr ahead, optional'
-                          : f === 'fish' || f === 'foil-boat'
-                            ? 'Just before cooking'
-                            : '2–4 hr ahead, optional';
+                    ? 'Every part of the tenderloin reaches 165°F before it comes off. That is the poultry endpoint, not the 145°F used for whole cuts of beef and pork.'
+                    : f === 'shrimp'
+                      ? 'Take them off at 145°F in the thickest shrimp. Opaque flesh is a clue, not a reading, and no rest is needed.'
+                      : f === 'foil-boat'
+                        ? 'Every fillet reaches 145°F in its thickest part before it leaves the boat. Flaking is a clue, not a reading, and fish needs no rest at this target.'
+                        : f === 'tri-tip'
+                          ? 'Reach at least 145°F in the thickest part before it leaves the grill, then rest 10–15 minutes. Three minutes is the safety minimum; the rest of it is for the slicing.'
+                          : f === 'shoulder'
+                            ? 'Pull-apart target: 195–205°F. Probe several thick spots; finish when it slides in with almost no resistance.'
+                            : f === 'thigh' || f === 'drumstick'
+                              ? 'For tender dark meat, aim for 175–185°F. The poultry safety minimum is 165°F.'
+                              : cut.protein === 'Poultry'
+                                ? 'Reach 165°F in the thickest part of every breast.'
+                                : cut.protein === 'Seafood'
+                                  ? 'Reach 145°F at the center of the thickest part.'
+                                  : 'Reach 145°F before removing from heat, then rest at least 3 minutes.';
+  const prepTime =
+    f === 'beef-ribs'
+      ? '15 min prep \u00b7 4\u201324 hr ahead, optional'
+      : f === 'mayo-chop'
+        ? '30 min ahead, or overnight'
+        : f === 'burger'
+          ? 'Season at the grill, not ahead'
+          : f === 'lobster'
+            ? '10 min prep'
+            : f === 'achiote'
+              ? '20–30 min marinade, no longer'
+              : f === 'bbq-chicken'
+                ? '15–30 min'
+                : f === 'shrimp'
+                  ? '15 min in the marinade, no longer'
+                  : f === 'prime-rib'
+                    ? '12–24 hr ahead'
+                    : f === 'jerk-turkey'
+                      ? 'Just before cooking'
+                      : f === 'tri-tip'
+                        ? '4–24 hr ahead, optional'
+                        : f === 'shoulder'
+                          ? '12–24 hr ahead, optional'
+                          : cut.protein === 'Poultry'
+                            ? '2–12 hr ahead, optional'
+                            : f === 'fish' || f === 'foil-boat'
+                              ? 'Just before cooking'
+                              : '2–4 hr ahead, optional';
   // Each family opens differently, so the opener is picked as a whole Step.
   // Title and body used to be two parallel ladders that had to be kept in
   // step with each other by hand.
@@ -1192,6 +1267,11 @@ export function buildRecipe(
       title: 'Season, then split the sauce',
       cue: prepTime,
       body: `Mix the smoked paprika, garlic powder, onion powder, black pepper, cayenne and the listed ${salt}, and season the thighs all over with it. Then stir the sauce together: ketchup, molasses, vinegar, brown sugar, Worcestershire, the second smaller measure of smoked paprika, and the hot sauce. Now divide that sauce in two before any of it goes near raw chicken. Half into a clean bowl for the table, half for brushing during the cook. Use a separate brush for each, and never carry the brushing half back to the table at the end.`,
+    },
+    'beef-ribs': {
+      title: 'Mustard, pepper, and a little patience',
+      cue: prepTime,
+      body: `Thaw the ribs in the refrigerator. Pat them dry and trim hard surface fat and any silverskin you can reach, keeping the meat attached to each bone. Brush on a thin film of the measured mustard, mix the pepper, garlic powder, onion powder and smoked paprika with the listed ${salt}, and season every meaty side. Cook now, or refrigerate them uncovered for 4\u201324 hours \u2014 if you season ahead, that is the whole salt allowance and none goes on again later. For enhanced or already-brined beef, skip the added salt.`,
     },
     'mayo-chop': {
       title: 'Salt the chops, keep the surface dry',
@@ -1441,6 +1521,34 @@ export function buildRecipe(
         body: 'Slide the probe sideways into the thickest shrimp and take them off at 145°F. Opaque flesh is a clue; the thermometer is the decision. Toss them with the half of the chimichurri you set aside at the start — the half that never touched raw shrimp — and squeeze the charred orange over the top. Never reuse the marinade half as a sauce. Refrigerate leftovers within 2 hours, or within 1 hour if it is above 90°F out.',
       },
     );
+  else if (f === 'beef-ribs')
+    steps.push(
+      {
+        title: 'Build the peppery crust, uncovered',
+        cue: 'Grill ambient: 275\u2013300\u00b0F \u00b7 1\u00bd\u20133 hr',
+        body: 'Follow your grill\u2019s lighting sequence and your own burner plan, and settle the air beside the food at 275\u2013300\u00b0F measured at grate level. Set the ribs bone-side down over the unlit burners with space between them and close the lid. Rotate them if one end of the grill colours faster. You are waiting for a deep brown crust that no longer wipes off under a finger, not for a number \u2014 the meat will read somewhere around 160\u2013175\u00b0F when that happens. The sauce stays off entirely at this stage; its sugar would burn long before the meat is ready.',
+      },
+      {
+        title: 'Cover it, and wait for the probe to glide',
+        cue: 'About 300\u00b0F \u00b7 2\u20134 hr covered',
+        body: 'Arrange the ribs bone-side down in a snug metal pan in a single layer. Pour the measured stock and the pan vinegar around them, leaving the tops exposed, and aim for roughly a quarter inch of liquid underneath. The pan decides that depth, not the recipe, so top it up with hot water. Seal tightly with foil and put it back over the unlit burners. Start checking 90 minutes in, then every 20\u201330 minutes, opening the foil away from your face. Probe several thick spots clear of the bone, and keep cooking any rib that still resists.',
+      },
+      {
+        title: 'Make the sauce, then split it',
+        cue: 'During the last 30\u201345 min under foil',
+        body: 'Whisk everything for the sauce except the butter together in a saucepan: ketchup, brown sugar, molasses, Worcestershire, the sauce vinegar, water, garlic powder, smoked paprika, black pepper and the cayenne if you want it. Simmer gently for 8\u201312 minutes, stirring, until it coats a spoon but still pours \u2014 consistency decides this, not a multiplied timer, so use a wider pan for a big batch. Off the heat, whisk in the butter. Now divide it in two before any of it goes near the grill: half for brushing, half covered and kept clean for the table.',
+      },
+      {
+        title: 'Paint on the sticky layers',
+        cue: '275\u2013300\u00b0F indirect \u00b7 15\u201325 min',
+        body: 'Lift the ribs carefully onto a clean, lightly oiled rack over a shallow tray, or straight onto clean grates if they will hold together, and leave the braising liquid behind. Keep everything over the unlit burners. Brush a thin coat of the brushing half over the tops and sides, close the lid for five to eight minutes until it turns tacky, and repeat for about three coats. Stop sooner if the edges are darkening fast. This stage is only setting a glaze; the ribs are already tender and direct flame has nothing to add.',
+      },
+      {
+        title: 'Rest, smother, bring napkins',
+        cue: 'Rest 15\u201320 min',
+        body: 'Rest the ribs loosely tented for 15\u201320 minutes. Warm the clean half of the sauce gently and spoon it generously over each rib, passing the rest at the table. Use clean utensils, and never tip the brushing half back in with the serving half. Refrigerate leftovers in shallow containers within 2 hours, or within 1 hour if it is above 90\u00b0F outside, and reheat them to 165\u00b0F.',
+      },
+    );
   else if (f === 'mayo-chop')
     steps.push(
       {
@@ -1587,59 +1695,63 @@ export function buildRecipe(
       },
     );
   const title =
-    f === 'mayo-chop'
-      ? 'Garlic-herb mayonnaise pork chops'
-      : f === 'burger'
-        ? 'Steakhouse burgers, beef or bison'
-        : f === 'lobster'
-          ? 'Champagne–garlic butter-bath ' + midName
-          : f === 'achiote'
-            ? 'Achiote-lime grilled chicken thighs'
-            : f === 'bbq-chicken'
-              ? 'Sauce-heavy BBQ chicken thighs'
-              : f === 'prime-rib'
-                ? 'Rosemary & juniper prime rib'
-                : f === 'jerk-turkey'
-                  ? 'Jerk-spiced ' + midName
-                  : f === 'shrimp'
-                    ? 'Chimichurri-orange ' + midName
-                    : f === 'foil-boat'
-                      ? 'Butter & lemon-pepper ' + midName
-                      : f === 'tri-tip'
-                        ? 'Coffee–ancho tri-tip with chipotle-lime sauce'
-                        : f === 'shoulder'
-                          ? base.title
-                          : f === 'steak'
-                            ? 'Pepper & garlic ' + midName
-                            : f === 'chop' || f === 'tenderloin'
-                              ? 'Smoky Dijon ' + midName
-                              : cut.protein === 'Poultry'
-                                ? 'Smoky mustard ' + midName
-                                : 'Dijon & lemon ' + midName;
+    f === 'beef-ribs'
+      ? 'Sear-iously smothered beef ribs'
+      : f === 'mayo-chop'
+        ? 'Garlic-herb mayonnaise pork chops'
+        : f === 'burger'
+          ? 'Steakhouse burgers, beef or bison'
+          : f === 'lobster'
+            ? 'Champagne–garlic butter-bath ' + midName
+            : f === 'achiote'
+              ? 'Achiote-lime grilled chicken thighs'
+              : f === 'bbq-chicken'
+                ? 'Sauce-heavy BBQ chicken thighs'
+                : f === 'prime-rib'
+                  ? 'Rosemary & juniper prime rib'
+                  : f === 'jerk-turkey'
+                    ? 'Jerk-spiced ' + midName
+                    : f === 'shrimp'
+                      ? 'Chimichurri-orange ' + midName
+                      : f === 'foil-boat'
+                        ? 'Butter & lemon-pepper ' + midName
+                        : f === 'tri-tip'
+                          ? 'Coffee–ancho tri-tip with chipotle-lime sauce'
+                          : f === 'shoulder'
+                            ? base.title
+                            : f === 'steak'
+                              ? 'Pepper & garlic ' + midName
+                              : f === 'chop' || f === 'tenderloin'
+                                ? 'Smoky Dijon ' + midName
+                                : cut.protein === 'Poultry'
+                                  ? 'Smoky mustard ' + midName
+                                  : 'Dijon & lemon ' + midName;
   const portionLb =
-    f === 'mayo-chop'
-      ? 0.625
-      : f === 'burger'
-        ? 0.375
-        : f === 'lobster'
-          ? 0.5
-          : f === 'achiote' || f === 'bbq-chicken'
+    f === 'beef-ribs'
+      ? 1
+      : f === 'mayo-chop'
+        ? 0.625
+        : f === 'burger'
+          ? 0.375
+          : f === 'lobster'
             ? 0.5
-            : f === 'prime-rib'
-              ? 1
-              : f === 'jerk-turkey'
-                ? 0.4
-                : f === 'shrimp' || f === 'foil-boat'
-                  ? 0.5
-                  : f === 'tri-tip'
-                    ? 0.45
-                    : f === 'shoulder'
-                      ? 0.6
-                      : cut.protein === 'Poultry' && f !== 'breast'
-                        ? 0.75
-                        : cut.protein === 'Seafood'
-                          ? 0.375
-                          : 0.5;
+            : f === 'achiote' || f === 'bbq-chicken'
+              ? 0.5
+              : f === 'prime-rib'
+                ? 1
+                : f === 'jerk-turkey'
+                  ? 0.4
+                  : f === 'shrimp' || f === 'foil-boat'
+                    ? 0.5
+                    : f === 'tri-tip'
+                      ? 0.45
+                      : f === 'shoulder'
+                        ? 0.6
+                        : cut.protein === 'Poultry' && f !== 'breast'
+                          ? 0.75
+                          : cut.protein === 'Seafood'
+                            ? 0.375
+                            : 0.5;
   const photo = '/meals/' + cut.id + '.webp';
   const photoCaption = cut.name;
   return {
@@ -1668,49 +1780,53 @@ export function buildRecipe(
     safety,
     serves: String(Math.max(1, Math.round(weightLb / portionLb))),
     wood:
-      f === 'burger'
-        ? 'No smoke needed · this one is all sear'
-        : f === 'lobster'
-          ? 'None · the bath is the flavour'
-          : f === 'achiote'
-            ? 'The paste carries it · no wood needed'
-            : f === 'bbq-chicken'
-              ? 'Hickory, optional'
-              : f === 'jerk-turkey'
-                ? 'Pimento wood if you can get it · otherwise none'
-                : f === 'prime-rib'
-                  ? 'Rosemary & juniper carry it · no wood needed'
-                  : f === 'tri-tip'
-                    ? 'Coffee & ancho carry it · no wood needed'
-                    : f === 'shoulder'
-                      ? 'Apple + hickory'
-                      : cut.protein === 'Poultry'
-                        ? 'Apple, optional'
-                        : 'No smoke needed',
-    tip:
-      f === 'mayo-chop'
-        ? 'Spread the binder thin, sear over the lit side, then finish over the unlit one and probe every chop clear of the bone. A flare-up is the binder doing its job, not a fault.'
+      f === 'beef-ribs'
+        ? 'Pepper & paprika carry it \u00b7 no wood needed'
         : f === 'burger'
-          ? 'Mix it cold, handle it as little as you can, and salt at the grill rather than ahead. Do not press the patties, and probe every one: 160°F here, not 145°F.'
+          ? 'No smoke needed · this one is all sear'
           : f === 'lobster'
-            ? 'Keep the pan over an unlit burner, never flip the tails, and warm a clean portion of butter for the table rather than serving the one you basted with.'
+            ? 'None · the bath is the flavour'
             : f === 'achiote'
-              ? 'Twenty to thirty minutes in the marinade and no longer. Achiote and honey both darken well before the centre is done, so keep a cooler edge free.'
+              ? 'The paste carries it · no wood needed'
               : f === 'bbq-chicken'
-                ? 'Grill it clean first and sauce it last, in thin coats. Keep the serving half of the sauce away from the brush that touched raw chicken.'
-                : f === 'prime-rib'
-                  ? 'Salt it the night before, keep the probe out of bone and fat seams, and give it the full rest. The sear builds the crust; the probe decides doneness.'
-                  : f === 'jerk-turkey'
-                    ? 'Keep the paste thin so it browns rather than steams, cook it indirect, and use the 165°F poultry endpoint. Pineapple carries sugar and will flare.'
-                    : f === 'shrimp'
-                      ? 'Split the chimichurri before any of it touches raw shrimp. Fifteen minutes is the marinade limit, and four to six minutes is the entire cook.'
-                      : f === 'foil-boat'
-                        ? 'Check the lemon-pepper label before you salt, keep the boat open rather than sealed, and probe every fillet. Thickness sets the time here, not weight.'
-                        : f === 'tri-tip'
-                          ? 'Find the grain before the rub hides it, keep the thin end away from the hottest burner, and serve the sauce cold and beside the meat.'
-                          : f === 'shoulder'
-                            ? base.tip
-                            : 'Ingredient amounts scale with total raw weight. Cooking time depends on individual thickness, airflow, and the actual heat near the food.',
+                ? 'Hickory, optional'
+                : f === 'jerk-turkey'
+                  ? 'Pimento wood if you can get it · otherwise none'
+                  : f === 'prime-rib'
+                    ? 'Rosemary & juniper carry it · no wood needed'
+                    : f === 'tri-tip'
+                      ? 'Coffee & ancho carry it · no wood needed'
+                      : f === 'shoulder'
+                        ? 'Apple + hickory'
+                        : cut.protein === 'Poultry'
+                          ? 'Apple, optional'
+                          : 'No smoke needed',
+    tip:
+      f === 'beef-ribs'
+        ? 'Keep half the sauce clean and away from the brush, leave the sugar off until the meat is already tender, and let the probe rather than the clock decide when that is.'
+        : f === 'mayo-chop'
+          ? 'Spread the binder thin, sear over the lit side, then finish over the unlit one and probe every chop clear of the bone. A flare-up is the binder doing its job, not a fault.'
+          : f === 'burger'
+            ? 'Mix it cold, handle it as little as you can, and salt at the grill rather than ahead. Do not press the patties, and probe every one: 160°F here, not 145°F.'
+            : f === 'lobster'
+              ? 'Keep the pan over an unlit burner, never flip the tails, and warm a clean portion of butter for the table rather than serving the one you basted with.'
+              : f === 'achiote'
+                ? 'Twenty to thirty minutes in the marinade and no longer. Achiote and honey both darken well before the centre is done, so keep a cooler edge free.'
+                : f === 'bbq-chicken'
+                  ? 'Grill it clean first and sauce it last, in thin coats. Keep the serving half of the sauce away from the brush that touched raw chicken.'
+                  : f === 'prime-rib'
+                    ? 'Salt it the night before, keep the probe out of bone and fat seams, and give it the full rest. The sear builds the crust; the probe decides doneness.'
+                    : f === 'jerk-turkey'
+                      ? 'Keep the paste thin so it browns rather than steams, cook it indirect, and use the 165°F poultry endpoint. Pineapple carries sugar and will flare.'
+                      : f === 'shrimp'
+                        ? 'Split the chimichurri before any of it touches raw shrimp. Fifteen minutes is the marinade limit, and four to six minutes is the entire cook.'
+                        : f === 'foil-boat'
+                          ? 'Check the lemon-pepper label before you salt, keep the boat open rather than sealed, and probe every fillet. Thickness sets the time here, not weight.'
+                          : f === 'tri-tip'
+                            ? 'Find the grain before the rub hides it, keep the thin end away from the hottest burner, and serve the sauce cold and beside the meat.'
+                            : f === 'shoulder'
+                              ? base.tip
+                              : 'Ingredient amounts scale with total raw weight. Cooking time depends on individual thickness, airflow, and the actual heat near the food.',
     attribution: cut.attribution,
   };
 }
@@ -1735,6 +1851,13 @@ export function cookingScience(cut: Cut): Science {
       body: 'On a whole steak, essentially everything that matters lives on the outside, and searing the outside deals with it — which is why a rare centre is a defensible choice there. Grinding takes that surface and mixes it all the way through, so the middle of a patty now contains what used to be the outside of the meat. There is no longer an inside that was never exposed.',
       takeaway:
         'The higher number is not caution about a different animal, it is the same caution applied to meat that no longer has a protected centre. Probe every patty, and ignore the colour.',
+    };
+  if (cut.family === 'beef-ribs')
+    return {
+      title: 'Safe and tender are two different numbers',
+      body: 'Whole-cut beef is safe at 145\u00b0F with a short rest, and a short rib hits that in the first hour or so. It is still inedible. What makes a rib worth eating is collagen turning to gelatin, and that is a slow conversion that only really gets going well above the safety figure and keeps going for hours. Covering the pan is what makes the wait bearable for the meat: it cuts the evaporation that would otherwise dry the outside while the inside is still converting.',
+      takeaway:
+        'Stop reading the thermometer as a doneness test here. Around 200\u2013205\u00b0F is where the probe usually glides, but the resistance is the actual signal.',
     };
   if (cut.family === 'mayo-chop')
     return {
@@ -2970,6 +3093,28 @@ export const swapSets: SwapSet[] = [
         use: 'Fresh dill',
         amount: 'Same amount',
         note: 'A different direction entirely, and a good one with shellfish and butter.',
+      },
+    ],
+  },
+  {
+    match: 'beef stock',
+    label: 'Unsalted beef stock',
+    options: [
+      {
+        use: 'Unsalted chicken stock',
+        amount: 'Same amount',
+        note: 'Lighter, and it lets the pepper and the sauce carry more of the flavour.',
+      },
+      {
+        use: 'Water with a splash of Worcestershire',
+        amount: 'Same amount',
+        note: 'The braise is shallow and mostly there to stop the pan drying out, so this works.',
+      },
+      {
+        use: 'Salted stock or a bouillon cube',
+        amount: 'Same amount',
+        note: 'Then cut the measured kosher salt back, because the braise reduces around the ribs.',
+        addsSalt: true,
       },
     ],
   },

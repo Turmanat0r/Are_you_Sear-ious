@@ -5,10 +5,10 @@ actually bites you first, not by how hard it is. `AUDIT.md` has the full
 review record; this is the shorter list of what is still open.
 
 Current state: lint 0 errors · strict typecheck passes (**including the
-type-aware pass, which now runs locally**) · 58 tests pass · build passes · 0
+type-aware pass, which now runs locally**) · 59 tests pass · build passes · 0
 npm advisories · client CSS 197.7 KB, of which 119.5 KB is the five
 base64-inlined font faces and 78.2 KB is actual stylesheet. Meal photos are
-2.85 MB across 22 files, but only one is ever loaded.
+3.03 MB across 23 files, but only one is ever loaded.
 
 The repository moved out of iCloud Drive to `C:\Users\Danie\repos` on
 2026-09-11. Do not move it back; see `CLAUDE.md`.
@@ -25,7 +25,7 @@ The packaging step now exists: `scripts/build-offline.mjs`, run by
 cut and holds no absolute asset paths, so skipping the step fails the gate
 instead of shipping a stale file.
 
-Went from 12 recipes and 1.63 MB to 22 recipes and 709 KB — smaller with ten
+Went from 12 recipes and 1.63 MB to 23 recipes and 719 KB — smaller with eleven
 more recipes, because the old file bundled 1,767 lucide icons where the build
 emits 26.
 
@@ -103,13 +103,13 @@ every query in `experience.css` matches it. What it did not cover:
 
 ### 8. The meal photos have no `srcset`
 
-**This one has got sharper.** There are now 22 photos averaging 133 KB, and a
+**This one has got sharper.** There are now 23 photos averaging 135 KB, and a
 360px phone still downloads the full 1200×800 for whichever cut it shows.
 
 Every device downloads the same 1200×800 WebP, roughly 133 KB. A 360px phone
 needs about a quarter of that. Generating 480/800/1200 variants in
 `scripts/optimize-meal-images.mjs` and adding `srcset`/`sizes` would cut the
-mobile payload substantially — the photos are 2.85 MB of the 3.7 MB deploy, so
+mobile payload substantially — the photos are 3.03 MB of the 3.8 MB deploy, so
 this is the largest remaining weight win now that the CSS is fixed. (The 1.28 MB
 figure this item used to quote was left over from the twelve-recipe build.)
 

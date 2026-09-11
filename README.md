@@ -26,7 +26,7 @@ self-contained offline build of it.
 
 ```
 index.html                  Offline build — one 1.6 MB file, opens with no server
-images/                     All 22 meal photos, kept in step by `npm run build`
+images/                     All 23 meal photos, kept in step by `npm run build`
 README.txt                  End-user instructions for the offline build
 THIRD-PARTY-LICENSES.txt    Full license text for every bundled library and font
 LICENSE                     MIT — covers the application code
@@ -81,7 +81,7 @@ There is no `tailwind.config.*` — Tailwind 4 is configured from CSS in
 | --- | --- |
 | `app/page.tsx` | Main page, cook mode, print view, saved-recipe dialog |
 | `app/grill-tools.tsx` | Weight and cut controls, temperature table, burner planner |
-| `app/cook-config.ts` | The 22 cuts, ingredient scaling, per-cut recipe assembly |
+| `app/cook-config.ts` | The 23 cuts, ingredient scaling, per-cut recipe assembly |
 | `app/recipes.ts` | Base recipe data, temperature formatting and F→C conversion |
 | `app/globals.css`, `app/experience.css` | Theme tokens and application styling |
 | `components/ui/` | The 8 shadcn components the app actually uses |

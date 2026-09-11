@@ -1,0 +1,12 @@
+node_modules/
+dist/
+package-lock.json
+src/components/ui/
+src/globals.css
+src/experience.css
+src/fonts.css
+src/shadcn-variants.css
+provenance/
+public/provenance/
+licenses/
+THIRD-PARTY-NOTICES.txt

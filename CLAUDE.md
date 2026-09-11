@@ -1,6 +1,6 @@
 # Are You Sear-ious
 
-A grilling app: 22 cuts across beef, pork, poultry and seafood. Pick a cut and a
+A grilling app: 23 cuts across beef, pork, poultry and seafood. Pick a cut and a
 weight, it scales the seasoning, plans your burner zones, estimates cook time
 and walks you through it. Static site, no backend, no network calls at all.
 
@@ -16,7 +16,7 @@ are-you-sear-ious-source/are-you-sear-ious-source/     <- run npm here
 
 | File | What lives in it |
 | --- | --- |
-| `app/cook-config.ts` | The 22 cuts, ingredient scaling, recipe assembly, burner heat model, substitutions. The big one. |
+| `app/cook-config.ts` | The 23 cuts, ingredient scaling, recipe assembly, burner heat model, substitutions. The big one. |
 | `app/recipes.ts` | Four base recipes, type definitions, °F→°C conversion |
 | `app/page.tsx` | Page, cook mode, print sheet, saved recipes |
 | `app/grill-tools.tsx` | Weight/cut controls, temperature table, burner planner |
@@ -33,7 +33,7 @@ Run from the source folder above.
 
 ```
 npm run dev         # plain Vite dev server
-npm test            # 58 tests, node:test
+npm test            # 59 tests, node:test
 npm run typecheck   # tsc --noEmit, strict + noUncheckedIndexedAccess
 npm run lint        # oxlint
 npm run format      # oxfmt
