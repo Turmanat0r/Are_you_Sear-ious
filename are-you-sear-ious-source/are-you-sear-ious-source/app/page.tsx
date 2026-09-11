@@ -7,6 +7,7 @@ import {
   Beef,
   Ham,
   Drumstick,
+  Salad,
   Fish,
   ArrowUpRight,
   ArrowRight,
@@ -78,6 +79,7 @@ const proteins = [
   { name: 'Pork', icon: Ham, note: 'Take your time' },
   { name: 'Poultry', icon: Drumstick, note: 'Keep it juicy' },
   { name: 'Seafood', icon: Fish, note: 'Go easy' },
+  { name: 'Vegetarian', icon: Salad, note: 'Fill them up' },
 ];
 const validProteins = proteins.map((p) => p.name);
 function readLocal<T>(key: string, fallback: T): T {

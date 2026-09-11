@@ -1,6 +1,7 @@
 # Are You Sear-ious
 
-A grilling app: 23 cuts across beef, pork, poultry and seafood. Pick a cut and a
+A grilling app: 24 cuts across beef, pork, poultry, seafood and one
+vegetarian category. Pick a cut and a
 weight, it scales the seasoning, plans your burner zones, estimates cook time
 and walks you through it. Static site, no backend, no network calls at all.
 
@@ -16,7 +17,7 @@ are-you-sear-ious-source/are-you-sear-ious-source/     <- run npm here
 
 | File | What lives in it |
 | --- | --- |
-| `app/cook-config.ts` | The 23 cuts, ingredient scaling, recipe assembly, burner heat model, substitutions. The big one. |
+| `app/cook-config.ts` | The 24 cuts, ingredient scaling, recipe assembly, burner heat model, substitutions. The big one. |
 | `app/recipes.ts` | Four base recipes, type definitions, °F→°C conversion |
 | `app/page.tsx` | Page, cook mode, print sheet, saved recipes |
 | `app/grill-tools.tsx` | Weight/cut controls, temperature table, burner planner |
@@ -33,7 +34,7 @@ Run from the source folder above.
 
 ```
 npm run dev         # plain Vite dev server
-npm test            # 60 tests, node:test
+npm test            # 63 tests, node:test
 npm run typecheck   # tsc --noEmit, strict + noUncheckedIndexedAccess
 npm run lint        # oxlint
 npm run format      # oxfmt
@@ -67,10 +68,20 @@ This is the usual request. In `app/cook-config.ts` unless stated:
    `midSentenceName`. `headline` and `description` must be **unique to that
    cut** — a test enforces it, because copy used to be shared per protein and
    all three fish read identically.
-   The four proteins are `Beef`, `Pork`, `Poultry` and **`Seafood`** — the
-   last covers fish and shellfish together, the way the USDA chart does.
+   The categories are `Beef`, `Pork`, `Poultry`, **`Seafood`** — which covers
+   fish and shellfish together, the way the USDA chart does — and
+   **`Vegetarian`**, which is not a protein at all. It exists because the
+   picker is grouped by what you go to the counter and buy, and a stuffed
+   pepper belongs behind none of the other four even when its filling has meat
+   in it. Adding a sixth means a `defaultCuts` entry, a tab in `page.tsx`, and
+   a change to the Web MCP tool's `protein` enum, which is a published contract.
    If two recipes share a cut, `name` is what tells them apart in the picker
    and `midSentenceName` is what the shopping line says you should buy.
+
+   Cuts you buy by the item rather than by weight set `countOf` (`'pepper'`)
+   and `saltBasisLb`. The stored number is then a count, the pound/kilo toggle
+   is hidden, and the dry brine is 0.5% of the salt-bearing part rather than of
+   the whole thing — see `isCounted` and the three helpers beside it.
 2. `baseId` points at one of the four recipes in `recipes.ts` purely for the
    base lookup. Every field gets overridden, so pick any sensible one.
 3. Needs its own ingredients? Add a `SeasoningGroup` key and an entry in

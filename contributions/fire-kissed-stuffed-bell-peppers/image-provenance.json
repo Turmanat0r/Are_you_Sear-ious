@@ -1,0 +1,26 @@
+{
+  "recipeId": "fire-kissed-stuffed-bell-peppers",
+  "createdOn": "2026-09-10",
+  "generator": "OpenAI built-in image generation tool",
+  "generatorModel": "Not exposed; no model-version claim is made",
+  "original": {
+    "path": "original-fire-kissed-stuffed-bell-peppers.png",
+    "mimeType": "image/png",
+    "width": 1536,
+    "height": 1024,
+    "sha256": "ed35df0d17cbf81bd2d9193c00ee116632223ce8f5a3894c1592b243cafc7def"
+  },
+  "webAsset": {
+    "path": "../images/fire-kissed-stuffed-bell-peppers.webp",
+    "mimeType": "image/webp",
+    "width": 1120,
+    "height": 747,
+    "sha256": "a7852ae56d1bc36752b3b06c5e2151f815737530ddfee175ddf111928c1cc324",
+    "conversion": "sharp 0.34.5; cover resize from 1536x1024 to 1120x747 with Lanczos3; WebP quality 80; effort 6"
+  },
+  "prompt": {
+    "path": "generation-prompt.txt",
+    "verbatim": true
+  },
+  "verification": "Hashes, dimensions, file format and decoding are verified. No EXIF, C2PA, signature, authorship, exclusivity or transferable-rights claim is made."
+}

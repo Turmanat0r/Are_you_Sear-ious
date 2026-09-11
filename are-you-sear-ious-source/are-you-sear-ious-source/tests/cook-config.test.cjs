@@ -13,6 +13,10 @@ const {
   toLb,
   burnerMessage,
   cookingScience,
+  isCounted,
+  displayAmount,
+  storeAmount,
+  amountSuffix,
   burnerLevels,
   heatFraction,
   estimatedAmbient,
@@ -27,16 +31,22 @@ const {
   spoonLabel,
 } = config;
 
-const CUTS_PER_PROTEIN = { Beef: 7, Pork: 4, Poultry: 6, Seafood: 6 };
+const CUTS_PER_PROTEIN = {
+  Beef: 7,
+  Pork: 4,
+  Poultry: 6,
+  Seafood: 6,
+  Vegetarian: 1,
+};
 
-test('four proteins, twenty-three unique cuts, and matching defaults', () => {
-  assert.equal(cuts.length, 23);
-  assert.equal(new Set(cuts.map((c) => c.id)).size, 23);
+test('five categories, twenty-four unique cuts, and matching defaults', () => {
+  assert.equal(cuts.length, 24);
+  assert.equal(new Set(cuts.map((c) => c.id)).size, 24);
   assert.equal(
     Object.values(CUTS_PER_PROTEIN).reduce((a, b) => a + b, 0),
     cuts.length,
   );
-  for (const protein of ['Beef', 'Pork', 'Poultry', 'Seafood']) {
+  for (const protein of ['Beef', 'Pork', 'Poultry', 'Seafood', 'Vegetarian']) {
     assert.equal(
       cuts.filter((c) => c.protein === protein).length,
       CUTS_PER_PROTEIN[protein],
@@ -73,6 +83,7 @@ for (const cut of cuts) {
         'burger',
         'lobster',
         'mayo-chop',
+        'stuffed-pepper',
       ].includes(cut.family)
     )
       assert.ok(
@@ -658,6 +669,7 @@ test('titles keep proper nouns capitalised', () => {
         'lobster',
         'mayo-chop',
         'beef-ribs',
+        'stuffed-pepper',
       ].includes(cut.family)
     )
       continue;
@@ -796,6 +808,73 @@ test('the prime rib reaches 145F before serving, sear notwithstanding', () => {
   // which lands anywhere from 0.63% to 1.06% depending on the brand.
   const grams = Number(recipe.ingredients[0].items[1].match(/^([\d.]+) g/)[1]);
   assert.ok(Math.abs(grams - 4 * 453.59237 * 0.005) < 0.01, String(grams));
+});
+
+test('the stuffed peppers cover every filling with one number', () => {
+  const recipe = buildRecipe('fire-kissed-stuffed-bell-peppers', 4);
+
+  // The package offers meatless, ground beef and ground chicken fillings,
+  // which want 165F, 160F and 165F. Taking the highest gives one target that
+  // is correct for all three, so the cut never claims 160F and the burger
+  // stays the only recipe in the app that does.
+  assert.deepEqual(recipe.internal, [165]);
+  assert.ok(
+    !cuts.some(
+      (c) =>
+        c.family === 'stuffed-pepper' &&
+        buildRecipe(c.id, c.baseLb).internal.includes(160),
+    ),
+    'the peppers must not take the ground-meat number as their target',
+  );
+  assert.match(recipe.safety, /165°F/);
+  assert.match(recipe.safety, /160°F/, 'it should say why 165 covers beef too');
+
+  // Cross-contamination is the real hazard in the split batch, so the advice
+  // to divide before raw meat goes in has to survive a copy edit.
+  const steps = recipe.steps.map((step) => step.body).join(' ');
+  assert.match(steps, /before\*{0,2} any raw meat/i);
+  assert.match(recipe.finish, /one of each/i);
+
+  // It is counted, not weighed, so the shopping line says peppers.
+  assert.match(recipe.sizeLabel, /^4 peppers$/);
+  assert.match(recipe.ingredients[0].items[0], /peppers/);
+  assert.equal(recipe.serves, '4');
+
+  // Salt is 0.5% of the filling, not of the vegetable, but there is still
+  // exactly one weighed salt line like every other cut.
+  const saltLine = recipe.ingredients[0].items[1];
+  assert.match(saltLine, /g kosher salt/);
+  assert.match(saltLine, /filling/);
+  assert.ok(
+    Number(saltLine.split(' g kosher salt')[0]) < 8,
+    'salting 4 lb of whole peppers would be roughly double this',
+  );
+
+  // A pepper is not meat, and the category exists so the picker can say so.
+  assert.equal(recipe.protein, 'Vegetarian');
+  assert.equal(defaultCuts.Vegetarian, 'fire-kissed-stuffed-bell-peppers');
+});
+
+test('counted cuts keep the pound and kilo conversion away from a count', () => {
+  const peppers = cuts.find((c) => c.id === 'fire-kissed-stuffed-bell-peppers');
+  const ribeye = cuts.find((c) => c.id === 'pepper-ribeye');
+
+  // Six peppers are six peppers whichever way the weight toggle is set. The
+  // stored number shares a field with every other cut's pounds, so this is
+  // the guard that stops it being silently converted.
+  for (const unit of ['lb', 'kg']) {
+    assert.equal(displayAmount(peppers, 6, unit), 6);
+    assert.equal(storeAmount(peppers, 6, unit), 6);
+  }
+  assert.equal(amountSuffix(peppers, 6, 'lb'), 'peppers');
+  assert.equal(amountSuffix(peppers, 1, 'kg'), 'pepper');
+
+  // Weighed cuts are untouched by any of it.
+  assert.equal(displayAmount(ribeye, 1, 'lb'), 1);
+  assert.ok(Math.abs(displayAmount(ribeye, 1, 'kg') - 0.45359237) < 1e-9);
+  assert.equal(amountSuffix(ribeye, 2, 'kg'), 'kg');
+  assert.equal(isCounted(ribeye), false);
+  assert.equal(isCounted(peppers), true);
 });
 
 test('the crisp-skin note says baking powder, and never soda', () => {

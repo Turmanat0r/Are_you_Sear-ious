@@ -1,0 +1,452 @@
+/* Native controls composed with the unchanged charcoal / Geist reference theme. */
+.recipe-controls-extra {
+  grid-template-columns: minmax(230px, 1.5fr) 1fr 1fr;
+}
+button,
+input,
+select {
+  font: inherit;
+}
+button,
+select {
+  min-height: 44px;
+}
+select,
+input {
+  color: var(--foreground);
+  border: 1px solid var(--border);
+  border-radius: 6px;
+}
+select {
+  padding: 8px 12px;
+  background: #242720;
+  max-width: 100%;
+}
+select:focus-visible,
+summary:focus-visible {
+  outline: 2px solid var(--primary);
+  outline-offset: 5px;
+}
+.skip {
+  position: absolute;
+  left: -9999px;
+}
+.skip:focus {
+  left: 20px;
+  top: 15px;
+  padding: 10px;
+  background: var(--card);
+  z-index: 10;
+}
+.recipe-controls-extra .weight-input input {
+  width: 100%;
+  min-width: 0;
+  padding: 10px 43px 10px 12px;
+}
+.recipe-controls-extra .scale-status {
+  grid-column: 1 / -1;
+  border: 0;
+  padding: 0;
+}
+.weight-error:empty {
+  display: none;
+}
+.recipe-app .feature-card h2 {
+  max-width: 410px;
+}
+.recipe-app .photo-caption {
+  max-width: 45%;
+}
+.recipe-app .source-note a,
+.source-links a {
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
+.recipe-app .source-note a {
+  display: inline;
+}
+.recipe-app .temp-card strong {
+  font-size: 30px;
+}
+.recipe-app .temp-card > p:not(.eyebrow) {
+  margin-top: 16px;
+}
+.recipe-app .ingredient {
+  font-size: 16px;
+}
+.ingredient input {
+  accent-color: var(--primary);
+  flex: 0 0 18px;
+  width: 18px;
+  height: 18px;
+  margin-top: 5px;
+}
+.ingredient .amount {
+  flex: 0 0 74px;
+  color: var(--primary);
+  font-variant-numeric: tabular-nums;
+  overflow-wrap: anywhere;
+}
+.ingredients h4 {
+  margin: 22px 0 8px;
+  text-transform: uppercase;
+  font-size: 14px;
+  letter-spacing: 0.06em;
+  color: #b2bba3;
+}
+.ingredients .note {
+  margin-top: 12px;
+}
+.checklist-tools {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  flex-wrap: wrap;
+  font-size: 14px;
+  color: var(--muted-foreground);
+}
+.checklist-tools .text-button {
+  padding-top: 0;
+}
+.equipment {
+  margin-top: 22px;
+}
+.equipment .recipe-equipment {
+  margin: 16px 0;
+}
+.note {
+  font-size: 14px;
+  color: var(--muted-foreground);
+  line-height: 1.7;
+}
+.finish-selector {
+  max-width: 420px;
+  margin: 20px 0;
+}
+.finish-selector label {
+  display: block;
+  margin-bottom: 8px;
+  font-size: 14px;
+  color: #bdc5b1;
+}
+.table-scroll {
+  overflow-x: auto;
+}
+.temperature-table {
+  width: 100%;
+  border-collapse: collapse;
+  text-align: left;
+}
+.temperature-table th,
+.temperature-table td {
+  border-bottom: 1px solid var(--border);
+}
+.temperature-table tbody th {
+  font-size: 14px;
+  text-transform: none;
+  letter-spacing: normal;
+}
+.source-links {
+  padding-left: 20px;
+  list-style: disc;
+  margin: 18px 0;
+  color: var(--muted-foreground);
+  font-size: 14px;
+}
+.source-links li + li {
+  margin-top: 8px;
+}
+.planner {
+  padding: 48px 0;
+  border-bottom: 1px solid var(--border);
+}
+.planner h3 {
+  font-size: 29px;
+  font-weight: 580;
+  margin-bottom: 16px;
+  letter-spacing: -0.8px;
+}
+.planner > p {
+  color: var(--muted-foreground);
+  max-width: 760px;
+  margin: 16px 0;
+}
+.planner-controls {
+  display: flex;
+  gap: 18px;
+  margin: 22px 0;
+  flex-wrap: wrap;
+}
+.planner-controls label {
+  display: flex;
+  gap: 12px;
+  align-items: center;
+  font-size: 14px;
+}
+.seg {
+  display: flex;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+.seg button {
+  border: 1px solid #494d43;
+  padding: 10px 18px;
+  border-radius: 6px;
+  background: var(--card);
+  color: var(--foreground);
+}
+.seg button.active {
+  background: #30251f;
+  border-color: #a35d3c;
+  color: var(--primary);
+}
+.burners {
+  display: grid;
+  gap: 7px;
+  border: 2px solid #4b5045;
+  border-radius: 12px;
+  padding: 7px;
+  margin: 20px 0;
+  max-width: 640px;
+  background: var(--card);
+}
+.burners button {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 13px;
+  min-width: 0;
+  min-height: 180px;
+  border-radius: 5px;
+  border: 1px solid #48523a;
+  background: #293022;
+  color: #b4c497;
+}
+.burners button.on {
+  background: #3c2920;
+  border-color: #90583a;
+  color: #f39866;
+}
+.burners button:hover {
+  border-color: #c3cba9;
+}
+.burners button span {
+  font-size: 16px;
+  font-weight: 600;
+}
+.burners.vertical button {
+  min-height: 64px;
+  flex-direction: row;
+}
+.planner small {
+  display: block;
+  color: var(--muted-foreground);
+  font-size: 14px;
+}
+.primary,
+.secondary {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 44px;
+  gap: 10px;
+  padding: 11px 20px;
+  border-radius: 6px;
+  font-size: 14px;
+  font-weight: 650;
+  border: 1px solid transparent;
+  background: var(--primary);
+  color: #17130f;
+}
+.secondary {
+  background: transparent;
+  color: var(--foreground);
+  border-color: #494d43;
+}
+.cook-dialog {
+  width: min(760px, calc(100vw - 32px));
+  max-height: 90dvh;
+  padding: 30px;
+  margin: auto;
+  overflow-y: auto;
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  background: var(--card);
+  color: var(--foreground);
+}
+.cook-dialog::backdrop {
+  background: #000b;
+}
+.dialog-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 15px;
+}
+.dialog-header h2 {
+  font-size: 23px;
+  font-weight: 550;
+}
+.cook-dialog p {
+  margin: 14px 0;
+}
+.cook-dialog h3 {
+  font-family: var(--font-geist-sans);
+  font-size: 26px;
+  font-weight: 550;
+  margin: 15px 0;
+}
+.cook-dialog .cook-targets {
+  display: block;
+}
+.cook-dialog progress {
+  display: block;
+  width: 100%;
+  height: 8px;
+  accent-color: var(--primary);
+  margin: 20px 0;
+}
+.cook-dialog .cue {
+  font-size: 14px;
+  color: #c98b66;
+}
+.cook-dialog .science {
+  background: #1e2825;
+  border-left: 3px solid #8ba89b;
+  padding: 18px;
+  color: #bacdc2;
+}
+.cook-dialog details {
+  margin: 22px 0;
+}
+.cook-dialog summary {
+  min-height: 44px;
+  cursor: pointer;
+}
+.timer {
+  display: block;
+  font-family: var(--font-geist-mono);
+  font-size: 36px;
+  font-variant-numeric: tabular-nums;
+  margin: 18px 0;
+}
+.timer-buttons {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+.print-only {
+  display: none;
+}
+@media (max-width: 760px) {
+  .recipe-app .feature-card h2 {
+    font-size: 34px;
+  }
+  .recipe-app .photo-caption {
+    font-size: 12px;
+  }
+  .recipe-controls-extra {
+    grid-template-columns: 1fr 1fr;
+  }
+  .cook-dialog {
+    padding: 22px 18px;
+  }
+  .planner {
+    padding: 32px 0;
+  }
+  .burners.horizontal {
+    gap: 4px;
+    padding: 5px;
+  }
+  .burners button {
+    min-height: 140px;
+  }
+}
+@media (max-width: 440px) {
+  .recipe-controls-extra {
+    grid-template-columns: 1fr;
+  }
+  .recipe-app .feature-card h2 {
+    font-size: 30px;
+  }
+  .recipe-app .feature-copy {
+    width: 77%;
+  }
+  .recipe-app .temp-card {
+    grid-template-columns: 1fr;
+  }
+  .recipe-app .temp-card > * {
+    grid-column: 1 !important;
+  }
+  .planner-controls label {
+    flex-wrap: wrap;
+  }
+  .cook-navigation {
+    gap: 10px;
+    flex-wrap: wrap;
+  }
+  .ingredient .amount {
+    flex-basis: 65px;
+  }
+}
+@media print {
+  html,
+  body {
+    font-family: var(--font-geist-sans), Arial, sans-serif !important;
+  }
+  .screen-app,
+  .cook-dialog {
+    display: none !important;
+  }
+  .print-only {
+    display: block !important;
+    color: black !important;
+    font-size: 11pt;
+  }
+  .print-only h1 {
+    font:
+      650 23pt/1.2 var(--font-geist-sans),
+      Arial,
+      sans-serif;
+    margin: 8pt 0 12pt;
+  }
+  .print-only h2 {
+    font-size: 16pt;
+    margin: 16pt 0 8pt;
+  }
+  .print-only h3,
+  .print-only h4 {
+    font-size: 12pt;
+    margin: 10pt 0 5pt;
+    break-after: avoid;
+  }
+  .print-only p {
+    margin: 7pt 0;
+  }
+  .print-only .ingredient {
+    padding: 3px 0;
+    color: black;
+    font-size: 11pt;
+    break-inside: avoid;
+  }
+  .print-only .amount {
+    color: black;
+    flex-basis: 90px;
+  }
+  .print-only .note {
+    color: black;
+    font-size: 10pt;
+  }
+  .print-only a {
+    overflow-wrap: anywhere;
+  }
+  .print-only ul {
+    list-style: disc;
+    padding-left: 18pt;
+  }
+  .print-step {
+    break-inside: avoid;
+  }
+}

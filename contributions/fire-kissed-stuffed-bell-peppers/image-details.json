@@ -1,0 +1,30 @@
+{
+  "checkedOn": "2026-09-10",
+  "origin": "Generated for this recipe with the OpenAI built-in image generation tool; exact prompt is preserved in provenance/generation-prompt.txt.",
+  "images": [
+    {
+      "path": "provenance/original-fire-kissed-stuffed-bell-peppers.png",
+      "sha256": "ed35df0d17cbf81bd2d9193c00ee116632223ce8f5a3894c1592b243cafc7def",
+      "bytes": 2332069,
+      "format": "png",
+      "width": 1536,
+      "height": 1024
+    },
+    {
+      "path": "images/fire-kissed-stuffed-bell-peppers.webp",
+      "sha256": "a7852ae56d1bc36752b3b06c5e2151f815737530ddfee175ddf111928c1cc324",
+      "bytes": 101116,
+      "format": "webp",
+      "width": 1120,
+      "height": 747
+    }
+  ],
+  "prompt": {
+    "path": "provenance/generation-prompt.txt",
+    "sha256": "e64ae172eec9286c4c5a45713ad7a36c961b2cee1eb33b78035e50b599b600f9",
+    "verbatim": true
+  },
+  "conversion": "sharp 0.34.5; cover resize from 1536x1024 to 1120x747 with Lanczos3; WebP quality 80; effort 6",
+  "verificationScope": "File identity, dimensions, format and successful decoding. No EXIF, signature/C2PA, authorship or image-license authentication.",
+  "rights": "No separate image license is assigned. No public-domain, exclusivity or transferable-rights claim."
+}
