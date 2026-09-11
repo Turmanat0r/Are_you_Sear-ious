@@ -1,0 +1,8 @@
+{
+  "recipeId": "jerk-spiced-grilled-turkey-tenderloin",
+  "origin": "Generated for this recipe with the built-in image generation tool.",
+  "original": {"path":"original-jerk-spiced-grilled-turkey-tenderloin.png","mimeType":"image/png","sha256":"c6d7f146efd77a7ed6f80f1545205f78a26ce7c84943e2c294a8f240c593ac78"},
+  "webAsset": {"path":"../images/jerk-spiced-grilled-turkey-tenderloin.webp","mimeType":"image/webp","sha256":"0e0fbf869c4f7fe3dcd505d088c43fb7a4af1cae615a1a30e6671f02be07c237","conversion":"Pillow 12.3.0; RGB; resized from 1536x1024 to 1200x800 with Lanczos; WebP quality 86; method 6"},
+  "promptFile":"generation-prompt.txt",
+  "claims":"No EXIF or signature validation claims are made."
+}

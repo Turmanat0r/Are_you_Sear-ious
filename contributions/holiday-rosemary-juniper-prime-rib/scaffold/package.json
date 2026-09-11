@@ -1,0 +1,1 @@
+{"name":"are-you-sear-ious-holiday-prime-rib","private":true,"version":"1.0.0","type":"module","scripts":{"check":"node tests/smoke-test.mjs"},"engines":{"node":">=20"}}

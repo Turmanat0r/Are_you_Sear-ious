@@ -1,0 +1,42 @@
+{
+  "schemaVersion": 1,
+  "asset": "lemon-pepper-walleye",
+  "description": "AI-generated recipe illustration, not a photograph of an actual cooked meal.",
+  "generation": {
+    "provider": "OpenAI",
+    "tool": "image_gen",
+    "model": "Not exposed by the generation tool",
+    "recordedAt": "2026-09-08T02:57:10.977Z",
+    "referenceImages": [],
+    "prompt": "Use case: photorealistic-natural.\nAsset type: one standalone food recipe illustration, with no text overlay. This is a generated illustration, not documentation of an actual meal.\nCanvas: 1536 x 1024 pixels, landscape, 3:2 aspect ratio. Generate exactly one image.\n\nScene/backdrop: clean gas-grill grates against a dark charcoal grill background.\nSubject: a small open-topped handmade double-layer aluminum foil boat holding exactly two slender cooked walleye fillets. The fish is opaque white with realistic, delicate flaky texture, fine lemon-pepper flecks, and glossy melted butter pooled around it. Place one modest fresh lemon wedge beside the fish inside the boat. A tiny scattering of chopped parsley is optional.\nMaterials: thin handmade aluminum foil with realistic soft metallic reflections and neatly crimped upward edges; show the doubled foil at the folded rim. The foil boat is completely open on top, with no upper foil sheet or lid.\nComposition/framing: elevated three-quarter food-photography view that clearly shows both fillets and the open interior. Center the entire boat in the frame. Keep every edge of the boat, both complete fillets, and the lemon wedge fully visible. Leave generous clear grill-background margins of at least 12% of the canvas on all four sides (about 185 pixels left and right, 123 pixels top and bottom). Do not crop any part of the boat or food. Do not push the boat toward an edge.\nStyle/medium: photorealistic, natural premium rustic editorial food imagery. Appetizing but believable delicate fish texture, subtle real foil wrinkles, natural color.\nLighting/mood: warm natural side light, restrained golden butter highlights, dark charcoal surroundings with warm ember-toned accents, matching the Are You Sear-ious dark charcoal/ember recipe brand through mood only. Keep the food clearly visible.\nConstraints/avoid: no sealed packet, no upper foil lid, no whole fish or fish heads, no salmon or pink flesh, no breading, no heavy black grill marks on the fish because it is protected by foil, no flames touching food, no extra food or props, no text, no logos, no UI, no visible watermarks, no collage, no split panels. One centered food scene."
+  },
+  "source": {
+    "file": "provenance/lemon-pepper-walleye-original.png",
+    "format": "PNG",
+    "width": 1536,
+    "height": 1024,
+    "bytes": 2410459,
+    "sha256": "f72c238fa0459ce8028337749a33c82a54fae8f5bb36b31db34f884d1c1213ca",
+    "preservedUnchanged": true
+  },
+  "webAsset": {
+    "file": "public/images/lemon-pepper-walleye.webp",
+    "deployedUrl": "./images/lemon-pepper-walleye.webp",
+    "format": "webp",
+    "width": 1200,
+    "height": 800,
+    "bytes": 116780,
+    "sha256": "f1480cbe0d427784b7fae002d83de3e0a4fd87505271fcb9345dbbe106db2e39"
+  },
+  "transformation": {
+    "tool": "sharp",
+    "version": "0.34.5",
+    "resize": "1200 x 800, fit inside, no enlargement",
+    "encoder": "WebP",
+    "quality": 80,
+    "effort": 6,
+    "originalMetadataCopied": false
+  },
+  "authenticityNotes": "The original PNG bytes were retained. Embedded C2PA data, if present, is therefore retained in that original. Its signature/certificate chain has not been independently validated. The optimized WebP is a recompressed derivative and is not presented as carrying the original signed manifest. SHA-256 links this record to both files; this sidecar is not itself a signed authenticity credential. No camera EXIF or photographer provenance is asserted.",
+  "rightsNotes": "Generated for this project using OpenAI image generation; not taken from a recipe publisher, stock photo library, or search result. Use remains subject to applicable provider terms. No guarantee of exclusive copyright or trademark clearance is made. See ASSET-NOTICES.md."
+}

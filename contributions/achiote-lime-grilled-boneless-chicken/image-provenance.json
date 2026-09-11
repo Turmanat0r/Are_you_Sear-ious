@@ -1,0 +1,8 @@
+{
+  "recipeId": "achiote-lime-grilled-boneless-chicken",
+  "origin": "Generated for this recipe with the built-in image generation tool.",
+  "original": {"path":"original-achiote-lime-grilled-boneless-chicken.png","mimeType":"image/png","sha256":"1be519d0df70a47cdbe676b9946f0e2900a99246ce88cb5a98e212868c4ad522"},
+  "webAsset": {"path":"../images/achiote-lime-grilled-boneless-chicken.webp","mimeType":"image/webp","sha256":"78c5316f0b96fbb427ddb341177fbd14602d30930db3f5d033e80e40ae48a486","conversion":"Pillow 12.3.0; RGB; resized from 1536x1024 to 1120x747 with Lanczos; WebP quality 80; method 6"},
+  "promptFile":"generation-prompt.txt",
+  "claims":"No EXIF or signature validation claims are made."
+}

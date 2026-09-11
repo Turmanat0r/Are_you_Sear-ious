@@ -63,3 +63,13 @@ yarn-error.log*
 
 # iCloud creates byte-identical "name (2).ext" copies while syncing.
 * (2).*
+
+# Contribution packages. The text, prompts, sources and provenance JSON are
+# tracked because they are the record of where each recipe came from. The
+# heavy parts are not: original PNGs belong in the image-originals archive,
+# and a package's own build output and font binaries are rebuildable noise.
+contributions/**/original.png
+contributions/_originals-first-twelve/
+contributions/coffee-ancho-tri-tip/package/
+contributions/**/scaffold/dist/
+contributions/**/scaffold/assets/fonts/

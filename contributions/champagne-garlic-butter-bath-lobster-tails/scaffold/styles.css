@@ -1,0 +1,2 @@
+/* Source styling is inlined into index.html so the page runs from a local file. */
+:root { color-scheme: dark; --bg:#141514; --panel:#1d201e; --panel-2:#232724; --line:#343936; --text:#f1f2ed; --muted:#a1aaa1; --orange:#f47b45; --green:#2f6647; --gold:#e2b35b; }

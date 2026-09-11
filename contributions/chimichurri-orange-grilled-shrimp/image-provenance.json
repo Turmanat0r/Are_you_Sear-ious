@@ -1,0 +1,8 @@
+{
+  "recipeId": "chimichurri-orange-grilled-shrimp",
+  "origin": "Generated for this recipe with the built-in image generation tool.",
+  "original": {"path":"original-chimichurri-orange-grilled-shrimp.png","mimeType":"image/png","sha256":"273312f2652ca77d86e887ffca46e117aabaf2bfa1d2883371eb7d258cddad87"},
+  "webAsset": {"path":"../images/chimichurri-orange-grilled-shrimp.webp","mimeType":"image/webp","sha256":"6440fa935b532b9c1e67cbb2904d2498c7cb0a25106b5bdc48c4cc38d5058664","conversion":"Pillow 12.3.0; RGB; resized from 1536x1024 to 1120x747 with Lanczos; WebP quality 80; method 6"},
+  "promptFile":"generation-prompt.txt",
+  "claims":"No EXIF or signature validation claims are made."
+}

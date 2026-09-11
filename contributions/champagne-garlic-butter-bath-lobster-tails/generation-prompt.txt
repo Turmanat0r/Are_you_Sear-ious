@@ -1,0 +1,12 @@
+Use case: photorealistic-natural
+Asset type: recipe website hero image
+Primary request: a luxurious editorial food photograph of champagne-garlic butter-bath lobster tails cooked on a gas grill
+Scene/backdrop: dark gas grill and elegant outdoor dinner table, brushed metal butter pan, subtle evening atmosphere
+Subject: split lobster tails with pearly opaque meat, vivid red shells, sitting in a shallow golden butter bath with garlic, lemon wheels, tarragon, chives, and a tiny pinch of smoked paprika
+Style/medium: high-end natural-light food photography, realistic seafood texture, elegant and appetizing
+Composition/framing: landscape 3:2, slightly overhead three-quarter angle, lobster tails and butter pan centered, no people
+Lighting/mood: warm directional light, rich shadows, special-occasion mood
+Color palette: lobster red, butter gold, lemon yellow, herb green, charcoal
+Materials/textures: glossy melted butter, lightly charred shell edges, brushed metal pan, wood grain
+Constraints: recipe-specific image; no logos, labels, readable text, or watermark
+Avoid: raw translucent lobster meat, excessive smoke, extra seafood, plastic packaging, messy anatomy

@@ -1,0 +1,47 @@
+IMAGE SOURCE AND PROVENANCE
+
+The image was generated for this recipe using OpenAI's image_gen tool.
+It was not copied from Fishing Addiction Gear, Lake of the Woods, another
+recipe publisher, a stock library, or an image-search result.
+
+It is an AI-generated illustration, not a camera photograph or evidence
+that this recipe was cooked and tested. No photographer or camera EXIF
+is asserted. The exact model identifier was not exposed by the tool.
+
+ORIGINAL
+provenance/lemon-pepper-walleye-original.png
+1536 x 1024 PNG; 2,410,459 bytes; preserved unchanged.
+SHA-256:
+f72c238fa0459ce8028337749a33c82a54fae8f5bb36b31db34f884d1c1213ca
+
+WEB IMAGE
+images/lemon-pepper-walleye.webp
+1200 x 800 WebP; 116,780 bytes.
+Converted with Sharp 0.34.5, fit inside, no enlargement, quality 80,
+effort 6. Original metadata was not copied into the compressed derivative.
+Its SHA-256 is recorded in provenance/image-provenance.json and SHA256SUMS.txt.
+
+AUTHENTICITY LIMITS
+The original PNG was retained byte-for-byte, preserving its embedded
+metadata. Any embedded C2PA signature or certificate chain has not been
+independently validated. The recompressed WebP is not claimed to retain
+the original signed manifest. The JSON sidecar and hash list document
+origin and integrity; they are not independently signed credentials.
+
+PATH MAPPING
+The unchanged provenance JSON was first generated for the app's folder
+layout. These are the equivalent locations in this text-only ZIP:
+  public/images/lemon-pepper-walleye.webp
+    -> images/lemon-pepper-walleye.webp
+  public/provenance/image-provenance.json
+    -> provenance/image-provenance.json
+  provenance/lemon-pepper-walleye-original.png
+    -> unchanged
+
+RIGHTS NOTES
+No third-party stock-photo license is asserted or needed for a copied
+publisher photograph, because none was used. Generated-image use remains
+subject to applicable provider terms. This package does not assert public-
+domain status, an exclusive copyright, or independent legal clearance.
+The third-party recipe links are research credits, not licenses to reuse
+those publishers' images or wording. No publisher images are included.
