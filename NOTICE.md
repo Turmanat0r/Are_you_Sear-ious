@@ -7,7 +7,7 @@ This project combines four categories of material with different terms. The
 | --- | --- |
 | Application source and build output | MIT — see [`LICENSE`](LICENSE) |
 | Bundled third-party libraries and fonts | Their own licenses — see [`THIRD-PARTY-LICENSES.txt`](THIRD-PARTY-LICENSES.txt) |
-| The meal images (22 each in `images/` and `public/meals/`) | AI-generated — see below |
+| The meal images (23 each in `images/` and `public/meals/`) | AI-generated — see below |
 | Recipes drawn from published sources | Credited — see below |
 
 ## Third-party software and fonts
@@ -37,15 +37,15 @@ compliance purposes, generate it from `package-lock.json` rather than from
 
 ## The meal images
 
-Every WebP meal image — 22 in `public/meals/` in the source project, and the
-same 22 in `images/` that the offline build loads — was **generated with an AI
+Every WebP meal image — 23 in `public/meals/` in the source project, and the
+same 23 in `images/` that the offline build loads — was **generated with an AI
 image model**, not photographed and not obtained from a stock library. No stock
 license was purchased and no photographer attribution is owed. Full details are
 in `IMAGE-PROVENANCE.md` and `image-provenance.json` in the source archive, and
 each recipe's exact prompt is preserved in
 `contributions/<recipe-id>/generation-prompt.txt`.
 
-Both folders hold the same 22 files: `npm run build` regenerates the offline
+Both folders hold the same 23 files: `npm run build` regenerates the offline
 `index.html` and syncs `images/` from `public/meals/`, and a test fails if they
 fall out of step.
 
@@ -73,9 +73,9 @@ The original PNGs with their manifests intact are preserved in the companion
 
 ## Recipes drawn from published sources
 
-Twenty of the twenty-two recipes are this project's own work, owing nothing to
-anyone. Two have a relationship with published material, and the two are not the
-same kind of relationship. The prime rib, the jerk turkey tenderloin, the
+Twenty of the twenty-three recipes are this project's own work, owing nothing to
+anyone. Three have a relationship with published material, and no two of them are
+the same kind of relationship. The prime rib, the jerk turkey tenderloin, the
 chimichurri shrimp, both boneless-thigh chicken recipes, the burgers, the
 lobster tails and the garlic-herb mayonnaise pork chops are all original, citing
 only USDA guidance for their temperatures. Each recipe's own source list is kept beside it in
@@ -130,6 +130,31 @@ licence to reuse those publishers' photographs or text.
 As with the tri-tip, the finish temperature follows current USDA/FDA guidance
 (145°F in every fillet) rather than the lower figure in the older texture
 research that informed the "why it works" note.
+
+### Consulted for technique only: the beef short ribs
+
+**Sear-iously smothered beef ribs** takes its shape — a long indirect cook, a
+covered stage, then a glaze brushed on at the end — from two published Weber
+methods, and credits them in the app and on the printed sheet for that reason:
+
+- *Jamie Purviance*, "Beer-Braised and Mesquite-Smoked Short Ribs", published by
+  Weber — the braise-then-sauce structure. This app uses neither its beer braise
+  nor its chilling workflow.
+- *Weber Grill Academy*, "Smoked Beef Short Ribs with Sticky Bourbon Glaze" —
+  slow indirect cooking to a probe-tender finish. This app uses a gas grill and a
+  shallow covered pan, not that recipe's charcoal setup, and none of its glaze.
+
+This sits between the other two. Unlike the tri-tip, **no ingredient
+proportions were taken**: the peppery rub and the brown sugar and Worcestershire
+sauce are this project's own. Unlike the walleye, the *method* genuinely does
+follow the published shape, which is why the credit is here rather than only in
+the source notes. No affiliation with or endorsement by Weber-Stephen Products
+LLC is claimed or implied, and neither link licenses their photographs or text.
+
+The tenderness target (about 200–205°F, judged by probe resistance) is a
+cooking decision, not a safety one. The 145°F whole-beef safety minimum with a
+3-minute rest is stated separately in the app, and a test asserts the ribs keep
+both numbers distinct.
 
 ## Food safety information
 

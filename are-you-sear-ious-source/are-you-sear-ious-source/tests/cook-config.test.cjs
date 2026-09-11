@@ -27,11 +27,11 @@ const {
   spoonLabel,
 } = config;
 
-const CUTS_PER_PROTEIN = { Beef: 6, Pork: 4, Poultry: 6, Seafood: 6 };
+const CUTS_PER_PROTEIN = { Beef: 7, Pork: 4, Poultry: 6, Seafood: 6 };
 
-test('four proteins, twenty-two unique cuts, and matching defaults', () => {
-  assert.equal(cuts.length, 22);
-  assert.equal(new Set(cuts.map((c) => c.id)).size, 22);
+test('four proteins, twenty-three unique cuts, and matching defaults', () => {
+  assert.equal(cuts.length, 23);
+  assert.equal(new Set(cuts.map((c) => c.id)).size, 23);
   assert.equal(
     Object.values(CUTS_PER_PROTEIN).reduce((a, b) => a + b, 0),
     cuts.length,
@@ -657,6 +657,7 @@ test('titles keep proper nouns capitalised', () => {
         'burger',
         'lobster',
         'mayo-chop',
+        'beef-ribs',
       ].includes(cut.family)
     )
       continue;
@@ -797,6 +798,37 @@ test('the prime rib reaches 145F before serving, sear notwithstanding', () => {
   assert.ok(Math.abs(grams - 4 * 453.59237 * 0.005) < 0.01, String(grams));
 });
 
+test('the crisp-skin note says baking powder, and never soda', () => {
+  const scienceText = (id) => {
+    const science = cookingScience(cuts.find((c) => c.id === id));
+    return science.body + ' ' + science.takeaway;
+  };
+
+  // Bicarbonate of soda on its own is a raw alkali and tastes of it. Powder
+  // buffers the same bicarbonate with acid salts, which is why it is the one
+  // that works on skin. This is exactly the detail a well-meaning edit
+  // "corrects" in the wrong direction, so both halves are pinned.
+  for (const id of ['smoky-chicken', 'chicken-drumsticks']) {
+    const text = scienceText(id);
+    assert.match(text, /baking powder/i, id);
+    assert.match(text, /not soda/i, `${id} must say which one`);
+    assert.match(text, /aluminum-free/i, `${id} should warn about aluminum`);
+  }
+
+  // Nothing skinless should be telling anyone to crisp skin it does not have.
+  for (const id of [
+    'chicken-breast',
+    'achiote-lime-grilled-boneless-chicken',
+    'sauce-heavy-bbq-boneless-chicken',
+    'jerk-spiced-grilled-turkey-tenderloin',
+  ]) {
+    assert.ok(
+      !/baking powder/i.test(scienceText(id)),
+      `${id} has no skin to crisp`,
+    );
+  }
+});
+
 test('the two boneless-thigh recipes stay tellable apart', () => {
   const achiote = buildRecipe('achiote-lime-grilled-boneless-chicken', 2);
   const bbq = buildRecipe('sauce-heavy-bbq-boneless-chicken', 2);
@@ -867,10 +899,24 @@ test('the burger is the only 160F cut, and every other beef cut is 145F', () => 
     sixties.map((c) => c.id),
     ['steakhouse-beef-bison-burgers'],
   );
+  // Every other beef cut finishes at the 145F whole-cut figure, except the
+  // short ribs, which are taken past it for tenderness rather than safety --
+  // the same split pork shoulder already has. Their safety line still has to
+  // state the 145F minimum, so the exemption cannot hide a wrong number.
   for (const cut of cuts.filter(
-    (c) => c.protein === 'Beef' && c.family !== 'burger',
+    (c) =>
+      c.protein === 'Beef' && c.family !== 'burger' && c.family !== 'beef-ribs',
   ))
     assert.deepEqual(buildRecipe(cut.id, cut.baseLb).internal, [145], cut.id);
+
+  const ribs = buildRecipe('seariously-smothered-beef-ribs', 4);
+  assert.deepEqual(ribs.internal, [200, 205]);
+  assert.match(ribs.safety, /145°F/);
+  assert.match(ribs.safety, /3-minute rest/);
+  assert.ok(
+    !/160/.test(ribs.internal.join()),
+    'the ribs must not drift onto the ground-meat number',
+  );
 
   assert.match(burger.safety, /160/);
   assert.match(burger.safety, /[Gg]rinding/);

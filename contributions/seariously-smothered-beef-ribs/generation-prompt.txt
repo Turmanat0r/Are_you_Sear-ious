@@ -1,0 +1,9 @@
+Use case: photorealistic-natural
+Asset type: landscape food photograph for the Are You Sear-ious gas-grill recipe page, 1536 by 1024 composition.
+Primary request: mouthwatering, thick, individual English-cut bone-in beef short ribs smothered with glossy brown sugar-Worcestershire barbecue sauce.
+Scene/backdrop: a cream ceramic serving platter on a warm, subtly weathered outdoor wooden table; a small ceramic bowl of extra sauce nearby, with a backyard gas grill softly out of focus.
+Subject: four individual meaty beef short ribs, each a thick rectangular portion with a single short flat rib bone visible at its lower edge; realistic beef anatomy, deeply browned pepper-and-garlic crust beneath a generous sticky dark mahogany-red glaze, extra warm sauce pooling slightly on the platter.
+Style/medium: photorealistic editorial food photography, natural appetizing food texture, warm daylight, controlled glossy highlights, shallow depth of field.
+Composition/framing: three-quarter close view, the ribs dominate the frame, all key meat and bones within the central crop so a 3:2 responsive hero and smaller thumbnail remain clear.
+Materials/textures: soft tender beef with natural fibers at one edge, coarse black pepper, thick glossy sauce, subtle browned edges without heavy burning.
+Constraints: beef short ribs, not pork ribs or thin flanken slices; no side dishes, garnish piles, people, hands, text, labels, logos, watermark, flames, charcoal, or exaggerated smoke. This is a finished plated recipe illustration.

@@ -1,0 +1,32 @@
+SEAR-IOUSLY SMOTHERED BEEF RIBS — IMAGE ORIGIN
+
+Both runtime WebPs were supplied by the user in
+seariously-smothered-beef-ribs-corrected.zip and are reused byte-for-byte:
+public/images/seariously-smothered-beef-ribs.webp (1200x800, 198768 bytes)
+public/images/seariously-smothered-beef-ribs-small.webp (640x427, 75358 bytes)
+At the standalone ZIP root these files are in images/.
+
+The supplied historical record reports AI generation using image_gen. No new
+generation or conversion was performed during this repair. The illustration
+is not a photograph of a tested cook. The original PNG and exact supplied
+prompt are preserved in provenance/, together with the unchanged manifest.
+
+Original PNG SHA-256:
+1f627b811fb4cd51041e7bba56aefae70fd1b34aa982c76621a1efca593ad60c
+Large WebP SHA-256:
+7cd3cd6b124a009a7babdaa7f5ad8e4f281bfad0c23818d9d99168f4f45e8571
+Small WebP SHA-256:
+4adf577c1d6de3687edf743feff66edb8887786b2f85577ce806624a42c16243
+Prompt SHA-256:
+f96cd83ddf0208d8fad7066b57077de2ea68cd515f8dcd5bb159e5be8f981976
+
+The provided conversion record specifies Pillow 12.3.0, libwebp 1.6.0, RGB,
+Lanczos resize, quality 82, method 6. These are preserved historical details,
+not a newly reproduced conversion. provenance/image-provenance.json retains
+its original input-package paths; source-project runtime images now live in
+public/images/. public/provenance/image-details.json is the current audit.
+
+No separate image license was supplied. Hash matching verifies bytes only;
+no independent generation, authorship, ownership, EXIF or signature/C2PA
+validation is claimed. No public-domain or guaranteed commercial-clearance
+claim is made. Software and font license notices do not license the image.

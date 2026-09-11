@@ -1,0 +1,34 @@
+{
+  "checkedOn": "2026-09-10",
+  "suppliedArchive": "seariously-smothered-beef-ribs-corrected.zip",
+  "inputArchiveSha256": "0e87c1d44ce2962b8e39a01c1501985170412b466ebbb3bf8de5e38117343b25",
+  "originalAndPromptUnchanged": true,
+  "originalManifestUnchanged": true,
+  "images": [
+    {
+      "path": "provenance/original-seariously-smothered-beef-ribs.png",
+      "sha256": "1f627b811fb4cd51041e7bba56aefae70fd1b34aa982c76621a1efca593ad60c",
+      "width": 1536,
+      "height": 1024,
+      "bytes": 2860339,
+      "format": "png"
+    },
+    {
+      "path": "images/seariously-smothered-beef-ribs.webp",
+      "sha256": "7cd3cd6b124a009a7babdaa7f5ad8e4f281bfad0c23818d9d99168f4f45e8571",
+      "width": 1200,
+      "height": 800,
+      "bytes": 198768,
+      "format": "webp"
+    },
+    {
+      "path": "images/seariously-smothered-beef-ribs-small.webp",
+      "sha256": "4adf577c1d6de3687edf743feff66edb8887786b2f85577ce806624a42c16243",
+      "width": 640,
+      "height": 427,
+      "bytes": 75358,
+      "format": "webp"
+    }
+  ],
+  "note": "Actual dimensions, formats, decoding and hashes checked; no generation, authorship, image-license, or signature authentication."
+}
