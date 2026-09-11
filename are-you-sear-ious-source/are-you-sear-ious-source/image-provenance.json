@@ -1063,6 +1063,50 @@
       "actualPrompt": null,
       "promptRecordStatus": "Prompt preserved in contributions/seariously-smothered-beef-ribs/generation-prompt.txt",
       "recordedVisualNote": "Added 2026-09-11. This is the first supplied WebP to arrive at the required 1200x800 (198768 bytes, sha 7cd3cd6b124a). It was still re-derived, because the package documents a Pillow quality-82 conversion rather than this project’s Sharp pipeline, so the supplied file was not reproducible from the original here. The re-derived file is 15 KB smaller and does reproduce. The supplied 640x427 companion WebP is kept with the package and is not shipped, since the app has no srcset yet."
+    },
+    {
+      "id": "fire-kissed-stuffed-bell-peppers",
+      "original": {
+        "pathInOriginalsArchive": "originals/fire-kissed-stuffed-bell-peppers.png",
+        "sha256": "ed35df0d17cbf81bd2d9193c00ee116632223ce8f5a3894c1592b243cafc7def",
+        "bytes": 2332069,
+        "width": 1536,
+        "height": 1024,
+        "format": "png",
+        "exifBytes": 0,
+        "xmpBytes": 0,
+        "iccBytes": 0,
+        "pngChunkTypes": ["IHDR", "caBX", "IDAT", "IEND"],
+        "c2pa": {
+          "container": "caBX",
+          "payloadBytes": 23617,
+          "observedStringMarkers": [
+            "c2pa",
+            "OpenAI",
+            "trainedAlgorithmicMedia"
+          ],
+          "signatureValidation": "not performed"
+        }
+      },
+      "delivered": {
+        "pathInSourceArchive": "public/meals/fire-kissed-stuffed-bell-peppers.webp",
+        "pathInOfflineArchive": "images/fire-kissed-stuffed-bell-peppers.webp",
+        "sha256": "2d18b0e36d9a6e2690e4da17307ee231503801987d3b2cbeeffd531fa85d3141",
+        "bytes": 111324,
+        "width": 1200,
+        "height": 800,
+        "format": "webp",
+        "exifBytes": 0,
+        "xmpBytes": 0,
+        "iccBytes": 0,
+        "riffChunkTypes": ["VP8 "],
+        "c2paChunkPresent": false
+      },
+      "exactReencodeMatchesDeliveredBytes": true,
+      "projectAndOfflineWebpBytesMatch": true,
+      "actualPrompt": null,
+      "promptRecordStatus": "Prompt preserved in contributions/fire-kissed-stuffed-bell-peppers/generation-prompt.txt",
+      "recordedVisualNote": "Added 2026-09-11. Supplied WebP (a7852ae56d1b) arrived at 1120x747 and was re-derived from the verified original with this project’s Sharp pipeline to meet the 1200x800 requirement. The first image here for a recipe that is not a cut of meat."
     }
   ]
 }

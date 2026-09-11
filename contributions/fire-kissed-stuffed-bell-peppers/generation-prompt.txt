@@ -1,0 +1,10 @@
+Use case: photorealistic-natural
+Asset type: wide hero photograph for a dark gas-grill recipe page
+Primary request: appetizing stuffed bell peppers cooked on a gas grill, visibly representing both a vegetarian filling and a seasoned ground-meat filling
+Scene/backdrop: open black gas grill at an outdoor backyard cooking station, dark unobtrusive background
+Subject: several halved red, yellow, and orange bell peppers with lightly blistered edges; some filled with rice, black beans, corn, tomato, herbs, and melted cheese; others filled with seasoned ground beef, rice, tomato, herbs, and melted cheese
+Style/medium: photorealistic editorial food photography with natural food texture and realistic grill marks
+Composition/framing: wide 3:2 horizontal composition, close three-quarter angle, finished peppers concentrated toward the right and center with some dark negative space on the left for page blending; no people
+Lighting/mood: warm late-afternoon side light, subtle grill glow, rich but natural color, charcoal-toned surroundings
+Constraints: food must look fully cooked and safe; vegetarian and meat peppers should be visually distinguishable by filling; no raw meat; no text, logo, packaging, brand marks, utensils crossing the food, or watermark
+Avoid: excessive smoke, flames touching food, plastic-looking cheese, impossible grill geometry, side dishes, drinks, hands, duplicate malformed peppers

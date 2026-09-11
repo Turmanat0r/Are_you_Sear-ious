@@ -77,7 +77,7 @@ test('photo changes are tied to the selected cut, not just its protein', () => {
 
   // The regression this guards: cuts that share a protein once shared one
   // photo. Assert siblings differ rather than trusting the id-to-path shape.
-  for (const protein of ['Beef', 'Pork', 'Poultry', 'Seafood']) {
+  for (const protein of ['Beef', 'Pork', 'Poultry', 'Seafood', 'Vegetarian']) {
     const siblings = cuts
       .filter((c) => c.protein === protein)
       .map((c) => buildRecipe(c.id, c.baseLb).photo);

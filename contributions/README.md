@@ -39,5 +39,5 @@ requirement it was re-derived here from the verified original, and
 `are-you-sear-ious-source/.../image-provenance.json` records which ones and what
 the superseded file hashed to.
 
-Five of the last seven supplied images arrived at 1120x747, and a sixth was the
+Six of the last eight supplied images arrived at 1120x747, and a seventh was the
 right size but built with a different encoder. Check both before copying.

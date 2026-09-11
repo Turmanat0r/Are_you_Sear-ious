@@ -26,8 +26,10 @@ import {
 import { temp, unitText, safetySource, type Unit } from './recipes';
 import {
   cuts,
-  toLb,
-  fromLb,
+  isCounted,
+  displayAmount,
+  storeAmount,
+  amountSuffix,
   numberLabel,
   validateWeight,
   burnerMessage,
@@ -72,8 +74,9 @@ function WeightField({
   onWeight: (value: number) => void;
   onValidity: (valid: boolean) => void;
 }) {
+  const counted = isCounted(cut);
   const displayWeight = (value: number) =>
-    Number(fromLb(value, weightUnit).toFixed(4)).toString();
+    Number(displayAmount(cut, value, weightUnit).toFixed(4)).toString();
   const [draft, setDraft] = useState(displayWeight(weightLb));
   useEffect(() => {
     // Re-syncs the input draft when the weight changes from outside this
@@ -82,25 +85,30 @@ function WeightField({
     // oxlint-disable-next-line react/react-compiler
     setDraft((current) =>
       current.trim() !== '' &&
-      Math.abs(toLb(Number(current), weightUnit) - weightLb) < 1e-6
+      Math.abs(storeAmount(cut, Number(current), weightUnit) - weightLb) < 1e-6
         ? current
-        : Number(fromLb(weightLb, weightUnit).toFixed(4)).toString(),
+        : Number(
+            displayAmount(cut, weightLb, weightUnit).toFixed(4),
+          ).toString(),
     );
-  }, [weightLb, weightUnit]);
+  }, [cut, weightLb, weightUnit]);
   const numeric = Number(draft),
     valid =
-      draft.trim() !== '' && validateWeight(cut, toLb(numeric, weightUnit));
+      draft.trim() !== '' &&
+      validateWeight(cut, storeAmount(cut, numeric, weightUnit));
   const min = displayWeight(cut.minLb),
     max = displayWeight(cut.maxLb);
   return (
     <div className="weight-field">
-      <label htmlFor="meat-weight">Total raw weight</label>
+      <label htmlFor="meat-weight">
+        {counted ? 'How many' : 'Total raw weight'}
+      </label>
       <div className="weight-input">
         <Input
           id="meat-weight"
           type="number"
           inputMode="decimal"
-          step="any"
+          step={counted ? '1' : 'any'}
           value={draft}
           min={min}
           max={max}
@@ -109,18 +117,18 @@ function WeightField({
           onChange={(event) => {
             const value = event.target.value;
             setDraft(value);
-            const lb = toLb(Number(value), weightUnit);
+            const lb = storeAmount(cut, Number(value), weightUnit);
             const ok = value.trim() !== '' && validateWeight(cut, lb);
             onValidity(ok);
             if (ok) onWeight(lb);
           }}
         />
-        <span>{weightUnit}</span>
+        <span>{amountSuffix(cut, numeric, weightUnit)}</span>
       </div>
       <p id="weight-help" className={valid ? 'micro' : 'weight-error'}>
         {valid
-          ? `${min}–${max} ${weightUnit} supported`
-          : `Enter ${min}–${max} ${weightUnit}. Ingredients keep the last valid weight.`}
+          ? `${min}–${max} ${amountSuffix(cut, cut.maxLb, weightUnit)} supported`
+          : `Enter ${min}–${max} ${amountSuffix(cut, cut.maxLb, weightUnit)}. Ingredients keep the last valid ${counted ? 'count' : 'weight'}.`}
       </p>
     </div>
   );
@@ -178,7 +186,11 @@ export function RecipeControls({
         onWeight={onWeight}
         onValidity={onValidity}
       />
-      <div className="weight-unit-field">
+      <div
+        className="weight-unit-field"
+        hidden={isCounted(recipe.cut)}
+        aria-hidden={isCounted(recipe.cut)}
+      >
         <span className="field-label" id="weight-unit-label">
           Weight unit
         </span>
@@ -207,7 +219,11 @@ export function RecipeControls({
       </div>
       <div className="scale-status" role="status">
         <strong>{numberLabel(recipe.scale)}× ingredients</strong>
-        <span>For {recipe.sizeLabel} of this cut</span>
+        <span>
+          {isCounted(recipe.cut)
+            ? `For ${recipe.sizeLabel}`
+            : `For ${recipe.sizeLabel} of this cut`}
+        </span>
       </div>
       <p className="scaling-note">
         Seasonings and sauce scale with weight. Cook times are estimates for the

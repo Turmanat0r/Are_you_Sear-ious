@@ -3,7 +3,17 @@
  * rather than 'Fish' because shrimp is a crustacean, and the chart's own
  * row reads "Fish & Shellfish" at a shared 145°F.
  */
-export type Protein = 'Beef' | 'Pork' | 'Poultry' | 'Seafood';
+export type Protein =
+  | 'Beef'
+  | 'Pork'
+  | 'Poultry'
+  | 'Seafood'
+  /**
+   * Not a protein, and the odd one out on purpose. The picker is grouped by
+   * what you walk to the counter and buy, and a stuffed pepper does not
+   * belong behind any of the four above even when its filling contains meat.
+   */
+  | 'Vegetarian';
 export type Unit = 'F' | 'C';
 /** A temperature range that always has at least a low bound. */
 export type Temperatures = [number, ...number[]];

@@ -1,0 +1,13 @@
+Runtime image: images/fire-kissed-stuffed-bell-peppers.webp
+Original: provenance/original-fire-kissed-stuffed-bell-peppers.png
+Prompt: provenance/generation-prompt.txt
+Manifest: provenance/image-provenance.json
+
+The original PNG was generated for this recipe with the OpenAI built-in image
+generation tool. The exact submitted prompt is preserved. A local derivative was
+made with sharp 0.34.5: cover resize from 1536x1024 to 1120x747 using Lanczos3,
+WebP quality 80, effort 6. The original was not overwritten.
+
+Hashes establish file identity only. No EXIF, C2PA, signature, authorship,
+exclusivity, public-domain or transferable-rights claim is made. Geist and Geist
+Mono are bundled under the SIL Open Font License 1.1.

@@ -7,7 +7,7 @@ This project combines four categories of material with different terms. The
 | --- | --- |
 | Application source and build output | MIT — see [`LICENSE`](LICENSE) |
 | Bundled third-party libraries and fonts | Their own licenses — see [`THIRD-PARTY-LICENSES.txt`](THIRD-PARTY-LICENSES.txt) |
-| The meal images (23 each in `images/` and `public/meals/`) | AI-generated — see below |
+| The meal images (24 each in `images/` and `public/meals/`) | AI-generated — see below |
 | Recipes drawn from published sources | Credited — see below |
 
 ## Third-party software and fonts
@@ -37,15 +37,15 @@ compliance purposes, generate it from `package-lock.json` rather than from
 
 ## The meal images
 
-Every WebP meal image — 23 in `public/meals/` in the source project, and the
-same 23 in `images/` that the offline build loads — was **generated with an AI
+Every WebP meal image — 24 in `public/meals/` in the source project, and the
+same 24 in `images/` that the offline build loads — was **generated with an AI
 image model**, not photographed and not obtained from a stock library. No stock
 license was purchased and no photographer attribution is owed. Full details are
 in `IMAGE-PROVENANCE.md` and `image-provenance.json` in the source archive, and
 each recipe's exact prompt is preserved in
 `contributions/<recipe-id>/generation-prompt.txt`.
 
-Both folders hold the same 23 files: `npm run build` regenerates the offline
+Both folders hold the same 24 files: `npm run build` regenerates the offline
 `index.html` and syncs `images/` from `public/meals/`, and a test fails if they
 fall out of step.
 
@@ -73,12 +73,12 @@ The original PNGs with their manifests intact are preserved in the companion
 
 ## Recipes drawn from published sources
 
-Twenty of the twenty-three recipes are this project's own work, owing nothing to
-anyone. Three have a relationship with published material, and no two of them are
-the same kind of relationship. The prime rib, the jerk turkey tenderloin, the
+Twenty-one of the twenty-four recipes are this project's own work, owing nothing
+to anyone. Three have a relationship with published material, and no two of them
+are the same kind of relationship. The prime rib, the jerk turkey tenderloin, the
 chimichurri shrimp, both boneless-thigh chicken recipes, the burgers, the
-lobster tails and the garlic-herb mayonnaise pork chops are all original, citing
-only USDA guidance for their temperatures. Each recipe's own source list is kept beside it in
+lobster tails, the garlic-herb mayonnaise pork chops and the stuffed bell
+peppers are all original, citing only USDA guidance for their temperatures. Each recipe's own source list is kept beside it in
 `contributions/<recipe-id>/SOURCES.md`.
 
 ### Adapted: the tri-tip
