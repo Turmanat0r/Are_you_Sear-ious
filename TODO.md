@@ -1,12 +1,13 @@
 # Needs attention
 
-Live backlog as of 2026-09-08, after the prime rib, jerk turkey and shrimp. Ordered by what
+Live backlog as of 2026-09-11, after the two boneless-thigh chicken recipes. Ordered by what
 actually bites you first, not by how hard it is. `AUDIT.md` has the full
 review record; this is the shorter list of what is still open.
 
-Current state: lint 0 errors · strict typecheck passes · 46 tests pass · build
-passes · 0 npm advisories · client CSS 197.6 KB, of which 119.5 KB is the five
-base64-inlined font faces and 78.1 KB is actual stylesheet.
+Current state: lint 0 errors · strict typecheck passes · 51 tests pass · build
+passes · 0 npm advisories · client CSS 197.7 KB, of which 119.5 KB is the five
+base64-inlined font faces and 78.2 KB is actual stylesheet. Meal photos are
+2.59 MB across 19 files, but only one is ever loaded.
 
 ---
 
@@ -99,6 +100,9 @@ The breakpoint pass is done — the scale is declared once in `globals.css` and
 every query in `experience.css` matches it. What it did not cover:
 
 ### 8. The meal photos have no `srcset`
+
+**This one has got sharper.** There are now 19 photos averaging 136 KB, and a
+360px phone still downloads the full 1200×800 for whichever cut it shows.
 
 Every device downloads the same 1200×800 WebP, roughly 110 KB. A 360px phone
 needs about a quarter of that. Generating 480/800/1200 variants in

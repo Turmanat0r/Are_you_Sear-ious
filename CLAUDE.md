@@ -1,6 +1,6 @@
 # Are You Sear-ious
 
-A grilling app: 17 cuts across beef, pork, poultry and seafood. Pick a cut and a
+A grilling app: 19 cuts across beef, pork, poultry and seafood. Pick a cut and a
 weight, it scales the seasoning, plans your burner zones, estimates cook time
 and walks you through it. Static site, no backend, no network calls at all.
 
@@ -16,7 +16,7 @@ are-you-sear-ious-source/are-you-sear-ious-source/     <- run npm here
 
 | File | What lives in it |
 | --- | --- |
-| `app/cook-config.ts` | The 17 cuts, ingredient scaling, recipe assembly, burner heat model, substitutions. The big one. |
+| `app/cook-config.ts` | The 19 cuts, ingredient scaling, recipe assembly, burner heat model, substitutions. The big one. |
 | `app/recipes.ts` | Four base recipes, type definitions, °F→°C conversion |
 | `app/page.tsx` | Page, cook mode, print sheet, saved recipes |
 | `app/grill-tools.tsx` | Weight/cut controls, temperature table, burner planner |
@@ -33,7 +33,7 @@ Run from the source folder above.
 
 ```
 npm run dev         # plain Vite dev server
-npm test            # 46 tests, node:test
+npm test            # 51 tests, node:test
 npm run typecheck   # tsc --noEmit, strict + noUncheckedIndexedAccess
 npm run lint        # oxlint
 npm run format      # oxfmt
@@ -62,6 +62,8 @@ This is the usual request. In `app/cook-config.ts` unless stated:
    all three fish read identically.
    The four proteins are `Beef`, `Pork`, `Poultry` and **`Seafood`** — the
    last covers fish and shellfish together, the way the USDA chart does.
+   If two recipes share a cut, `name` is what tells them apart in the picker
+   and `midSentenceName` is what the shopping line says you should buy.
 2. `baseId` points at one of the four recipes in `recipes.ts` purely for the
    base lookup. Every field gets overridden, so pick any sensible one.
 3. Needs its own ingredients? Add a `SeasoningGroup` key and an entry in
@@ -70,7 +72,9 @@ This is the usual request. In `app/cook-config.ts` unless stated:
    and it is reserved for the meat/salt line.
 4. Needs its own steps? Add a branch in `buildRecipe`'s step chain.
 5. Drop the photo at `public/meals/<id>.webp`, **exactly 1200×800, under
-   250 KB**, and add its hashes to `image-provenance.json`.
+   250 KB**, and add its hashes to `image-provenance.json`. Contributed
+   packages have twice arrived at 1120×747 — check before you copy, and
+   re-derive from the original PNG with Sharp if it is wrong.
 6. Add substitutions to `swapSets` for any genuinely new ingredient. Matching
    is longest-substring-wins, so check it doesn't shadow an existing set.
 7. Bump the cut count in `tests/cook-config.test.cjs` (two places, plus the

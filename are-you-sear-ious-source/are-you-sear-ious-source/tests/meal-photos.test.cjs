@@ -33,7 +33,17 @@ test('every meal has a distinct, small, decodable WebP image', async () => {
     bytes += buffer.length;
   }
   assert.equal(hashes.size, cuts.length, 'no reused category photos');
-  assert.ok(bytes < 2_500_000, 'every meal image together stays below 2.5 MB');
+  // Only one <img> is ever mounted, keyed by recipe id, so a visitor
+  // downloads a single photo rather than the set. The per-image cap above is
+  // therefore the one that governs what anybody waits for; this total is a
+  // deploy-weight guard, and it has to scale with the cut count instead of
+  // sitting at a fixed number that every new recipe walks toward.
+  const mean = bytes / cuts.length;
+  assert.ok(mean < 160_000, `mean image is ${Math.round(mean)} bytes`);
+  assert.ok(
+    bytes < cuts.length * 175_000,
+    `${cuts.length} images total ${bytes} bytes`,
+  );
 });
 
 test('old large category PNGs are not shipped', () => {

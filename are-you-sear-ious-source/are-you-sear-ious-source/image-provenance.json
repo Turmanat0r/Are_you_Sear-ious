@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "auditDate": "2026-09-08",
+  "auditDate": "2026-09-11",
   "recordType": "Unsigned retrospective audit; not a signed Content Credential or license grant",
   "sourceCommit": "f73e04a5293419e71a5cb84fbfd799f79d5a6651",
   "imageOrigin": "All 12 images generated in this task using OpenAI built-in image_gen; not stock or camera photography",
@@ -799,6 +799,94 @@
       "actualPrompt": null,
       "promptRecordStatus": "Prompt supplied in the contribution package; not copied into this audit",
       "recordedVisualNote": "Added 2026-09-08. The supplied WebP (1200x800, sha 0e0fbf869c4f…) was REGENERATED: it did not meet the project's 1200x800 requirement, so the delivered file here was re-derived from the verified original with this project's Sharp pipeline."
+    },
+    {
+      "id": "achiote-lime-grilled-boneless-chicken",
+      "original": {
+        "pathInOriginalsArchive": "originals/achiote-lime-grilled-boneless-chicken.png",
+        "sha256": "1be519d0df70a47cdbe676b9946f0e2900a99246ce88cb5a98e212868c4ad522",
+        "bytes": 3050338,
+        "width": 1536,
+        "height": 1024,
+        "format": "png",
+        "exifBytes": 0,
+        "xmpBytes": 0,
+        "iccBytes": 0,
+        "pngChunkTypes": ["IHDR", "caBX", "IDAT", "IEND"],
+        "c2pa": {
+          "container": "caBX",
+          "payloadBytes": 23617,
+          "observedStringMarkers": [
+            "c2pa",
+            "OpenAI",
+            "trainedAlgorithmicMedia"
+          ],
+          "signatureValidation": "not performed"
+        }
+      },
+      "delivered": {
+        "pathInSourceArchive": "public/meals/achiote-lime-grilled-boneless-chicken.webp",
+        "pathInOfflineArchive": "images/achiote-lime-grilled-boneless-chicken.webp",
+        "sha256": "079d0eac9a8d57fc6b9fb9d1c5fe6e92e4180e73c184b6a0b9a3195a3afafb2a",
+        "bytes": 213276,
+        "width": 1200,
+        "height": 800,
+        "format": "webp",
+        "exifBytes": 0,
+        "xmpBytes": 0,
+        "iccBytes": 0,
+        "riffChunkTypes": ["VP8 "],
+        "c2paChunkPresent": false
+      },
+      "exactReencodeMatchesDeliveredBytes": true,
+      "projectAndOfflineWebpBytesMatch": true,
+      "actualPrompt": null,
+      "promptRecordStatus": "Prompt supplied in the contribution package; not copied into this audit",
+      "recordedVisualNote": "Added 2026-09-11. The supplied WebP (1120x747, sha 78c5316f0b96) did not meet the 1200x800 requirement, so the delivered file was re-derived from the verified original with this project's Sharp pipeline."
+    },
+    {
+      "id": "sauce-heavy-bbq-boneless-chicken",
+      "original": {
+        "pathInOriginalsArchive": "originals/sauce-heavy-bbq-boneless-chicken.png",
+        "sha256": "fff7ba43dbf759d68aa8e0311eaad37283e7e7b908f24b2f4c5cc30e20aaf456",
+        "bytes": 2990648,
+        "width": 1536,
+        "height": 1024,
+        "format": "png",
+        "exifBytes": 0,
+        "xmpBytes": 0,
+        "iccBytes": 0,
+        "pngChunkTypes": ["IHDR", "caBX", "IDAT", "IEND"],
+        "c2pa": {
+          "container": "caBX",
+          "payloadBytes": 21844,
+          "observedStringMarkers": [
+            "c2pa",
+            "OpenAI",
+            "trainedAlgorithmicMedia"
+          ],
+          "signatureValidation": "not performed"
+        }
+      },
+      "delivered": {
+        "pathInSourceArchive": "public/meals/sauce-heavy-bbq-boneless-chicken.webp",
+        "pathInOfflineArchive": "images/sauce-heavy-bbq-boneless-chicken.webp",
+        "sha256": "8f930d6c2ee4f3f0fb5dbab9fde7c5eb2d2fd997703bdd6083ada0705ac4c585",
+        "bytes": 191968,
+        "width": 1200,
+        "height": 800,
+        "format": "webp",
+        "exifBytes": 0,
+        "xmpBytes": 0,
+        "iccBytes": 0,
+        "riffChunkTypes": ["VP8 "],
+        "c2paChunkPresent": false
+      },
+      "exactReencodeMatchesDeliveredBytes": true,
+      "projectAndOfflineWebpBytesMatch": true,
+      "actualPrompt": null,
+      "promptRecordStatus": "Prompt supplied in the contribution package; not copied into this audit",
+      "recordedVisualNote": "Added 2026-09-11. The supplied WebP (1120x747, sha d1a4b2871180) did not meet the 1200x800 requirement, so the delivered file was re-derived from the verified original with this project's Sharp pipeline."
     }
   ]
 }

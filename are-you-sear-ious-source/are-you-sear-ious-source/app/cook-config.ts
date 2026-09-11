@@ -48,7 +48,9 @@ export type Cut = {
     | 'foil-boat'
     | 'prime-rib'
     | 'jerk-turkey'
-    | 'shrimp';
+    | 'shrimp'
+    | 'achiote'
+    | 'bbq-chicken';
   /** Set only on cuts adapted from a published recipe. */
   attribution?: Attribution;
 };
@@ -302,6 +304,48 @@ export const cuts: Cut[] = [
     family: 'jerk-turkey',
   },
   {
+    id: 'achiote-lime-grilled-boneless-chicken',
+    protein: 'Poultry',
+    name: 'Achiote-lime boneless thighs',
+    midSentenceName: 'boneless, skinless chicken thighs',
+    baseId: 'smoky-chicken',
+    baseLb: 2,
+    minLb: 0.5,
+    maxLb: 12,
+    method: 'Direct heat, turn once',
+    grill: [425, 450],
+    internal: [165],
+    time: '10–16 min + rest',
+    rest: '5 minutes',
+    timing:
+      'For boneless, skinless thighs of roughly even thickness. Five to eight minutes on the first side, then turn once and let the probe finish it. The marinade is 20–30 minutes and no longer.',
+    headline: ['Red paste.', 'Sharp lime.'],
+    description:
+      'Achiote paste, lime and a little honey on boneless thighs over straight direct heat. A short marinade only: leave it in overnight and the lime goes to work on the surface without you.',
+    family: 'achiote',
+  },
+  {
+    id: 'sauce-heavy-bbq-boneless-chicken',
+    protein: 'Poultry',
+    name: 'BBQ boneless thighs',
+    midSentenceName: 'boneless, skinless chicken thighs',
+    baseId: 'smoky-chicken',
+    baseLb: 2,
+    minLb: 0.5,
+    maxLb: 12,
+    method: 'Direct, then sauced indirect',
+    grill: [400, 425],
+    internal: [165],
+    time: '14–22 min + rest',
+    rest: '5 minutes',
+    timing:
+      'Sear three to four minutes a side, move to the unlit zone until the thickest piece is around 150–155°F, then four to six minutes of saucing. The sauce only goes on at the end, because sugar burns.',
+    headline: ['Thin coats.', 'Real lacquer.'],
+    description:
+      'Boneless thighs grilled clean first, then painted with a sticky sauce in thin coats right at the end. Half the sauce never touches raw chicken and goes on at the table.',
+    family: 'bbq-chicken',
+  },
+  {
     id: 'lemon-salmon',
     protein: 'Seafood',
     name: 'Skin-on salmon fillets',
@@ -432,7 +476,9 @@ type SeasoningGroup =
   | 'foilBoat'
   | 'primeRib'
   | 'jerkTurkey'
-  | 'shrimp';
+  | 'shrimp'
+  | 'achiote'
+  | 'bbqChicken';
 const seasonings: Record<SeasoningGroup, Group[]> = {
   shoulder: [
     {
@@ -661,6 +707,46 @@ const seasonings: Record<SeasoningGroup, Group[]> = {
       ],
     },
   ],
+  achiote: [
+    {
+      title: 'Achiote marinade · salt already counted above',
+      items: [
+        m(3, 'tbsp', 'achiote paste'),
+        m(3, 'tbsp', 'fresh lime juice'),
+        m(1, 'tsp', 'lime zest'),
+        m(2, 'tbsp', 'neutral oil'),
+        m(1, 'tbsp', 'honey'),
+        m(1, 'tsp', 'ground cumin'),
+        m(1, 'tsp', 'Mexican oregano'),
+        m(3, 'clove(s)', 'fresh garlic, grated'),
+        m(0.5, 'tsp', 'black pepper'),
+      ],
+    },
+  ],
+  bbqChicken: [
+    {
+      title: 'Dry rub · salt already counted above',
+      items: [
+        m(2, 'tsp', 'smoked paprika'),
+        m(1, 'tsp', 'garlic powder'),
+        m(1, 'tsp', 'onion powder'),
+        m(1, 'tsp', 'black pepper'),
+        m(0.25, 'tsp', 'cayenne'),
+      ],
+    },
+    {
+      title: 'BBQ sauce · half of it is reserved clean',
+      items: [
+        m(0.75, 'cup', 'ketchup'),
+        m(3, 'tbsp', 'molasses'),
+        m(2, 'tbsp', 'apple cider vinegar'),
+        m(2, 'tbsp', 'brown sugar'),
+        m(1, 'tbsp', 'Worcestershire sauce'),
+        m(1, 'tsp', 'smoked paprika, in the sauce as well as the rub'),
+        m(1, 'tbsp', 'hot sauce'),
+      ],
+    },
+  ],
 };
 export function fromLb(lb: number, unit: WeightUnit) {
   return unit === 'lb' ? lb : lb * 0.45359237;
@@ -809,25 +895,29 @@ export function buildRecipe(
     ' — ' +
     saltUse;
   const group: SeasoningGroup =
-    f === 'prime-rib'
-      ? 'primeRib'
-      : f === 'jerk-turkey'
-        ? 'jerkTurkey'
-        : f === 'shrimp'
-          ? 'shrimp'
-          : f === 'foil-boat'
-            ? 'foilBoat'
-            : f === 'tri-tip'
-              ? 'triTip'
-              : f === 'shoulder'
-                ? 'shoulder'
-                : f === 'steak'
-                  ? 'steak'
-                  : f === 'chop' || f === 'tenderloin'
-                    ? 'leanPork'
-                    : f === 'fish'
-                      ? 'fish'
-                      : 'chicken';
+    f === 'achiote'
+      ? 'achiote'
+      : f === 'bbq-chicken'
+        ? 'bbqChicken'
+        : f === 'prime-rib'
+          ? 'primeRib'
+          : f === 'jerk-turkey'
+            ? 'jerkTurkey'
+            : f === 'shrimp'
+              ? 'shrimp'
+              : f === 'foil-boat'
+                ? 'foilBoat'
+                : f === 'tri-tip'
+                  ? 'triTip'
+                  : f === 'shoulder'
+                    ? 'shoulder'
+                    : f === 'steak'
+                      ? 'steak'
+                      : f === 'chop' || f === 'tenderloin'
+                        ? 'leanPork'
+                        : f === 'fish'
+                          ? 'fish'
+                          : 'chicken';
   const ingredients = [
     {
       title: 'Your ' + saltNoun + ' & salt',
@@ -849,41 +939,49 @@ export function buildRecipe(
           ? 'Whole beef cuts — steaks, roasts and chops alike: at least 145°F before removal, followed by a 3-minute rest.'
           : 'Whole pork: at least 145°F before removal, followed by a 3-minute rest.';
   const finish =
-    f === 'prime-rib'
-      ? 'At least 145°F in the centre before it is carved and served, then rest. Three minutes is the safety minimum; 20–30 is what a roast this size actually wants. The sear does not count toward the endpoint.'
-      : f === 'jerk-turkey'
-        ? 'Every part of the tenderloin reaches 165°F before it comes off. That is the poultry endpoint, not the 145°F used for whole cuts of beef and pork.'
-        : f === 'shrimp'
-          ? 'Take them off at 145°F in the thickest shrimp. Opaque flesh is a clue, not a reading, and no rest is needed.'
-          : f === 'foil-boat'
-            ? 'Every fillet reaches 145°F in its thickest part before it leaves the boat. Flaking is a clue, not a reading, and fish needs no rest at this target.'
-            : f === 'tri-tip'
-              ? 'Reach at least 145°F in the thickest part before it leaves the grill, then rest 10–15 minutes. Three minutes is the safety minimum; the rest of it is for the slicing.'
-              : f === 'shoulder'
-                ? 'Pull-apart target: 195–205°F. Probe several thick spots; finish when it slides in with almost no resistance.'
-                : f === 'thigh' || f === 'drumstick'
-                  ? 'For tender dark meat, aim for 175–185°F. The poultry safety minimum is 165°F.'
-                  : cut.protein === 'Poultry'
-                    ? 'Reach 165°F in the thickest part of every breast.'
-                    : cut.protein === 'Seafood'
-                      ? 'Reach 145°F at the center of the thickest part.'
-                      : 'Reach 145°F before removing from heat, then rest at least 3 minutes.';
+    f === 'achiote'
+      ? 'Every thigh reaches 165°F in its thickest part before it comes off. Colour and clear juices prove nothing, least of all under a red marinade.'
+      : f === 'bbq-chicken'
+        ? 'Every thigh reaches 165°F in its thickest part before it comes off. Probe under the glaze; sauce colour is not a doneness reading.'
+        : f === 'prime-rib'
+          ? 'At least 145°F in the centre before it is carved and served, then rest. Three minutes is the safety minimum; 20–30 is what a roast this size actually wants. The sear does not count toward the endpoint.'
+          : f === 'jerk-turkey'
+            ? 'Every part of the tenderloin reaches 165°F before it comes off. That is the poultry endpoint, not the 145°F used for whole cuts of beef and pork.'
+            : f === 'shrimp'
+              ? 'Take them off at 145°F in the thickest shrimp. Opaque flesh is a clue, not a reading, and no rest is needed.'
+              : f === 'foil-boat'
+                ? 'Every fillet reaches 145°F in its thickest part before it leaves the boat. Flaking is a clue, not a reading, and fish needs no rest at this target.'
+                : f === 'tri-tip'
+                  ? 'Reach at least 145°F in the thickest part before it leaves the grill, then rest 10–15 minutes. Three minutes is the safety minimum; the rest of it is for the slicing.'
+                  : f === 'shoulder'
+                    ? 'Pull-apart target: 195–205°F. Probe several thick spots; finish when it slides in with almost no resistance.'
+                    : f === 'thigh' || f === 'drumstick'
+                      ? 'For tender dark meat, aim for 175–185°F. The poultry safety minimum is 165°F.'
+                      : cut.protein === 'Poultry'
+                        ? 'Reach 165°F in the thickest part of every breast.'
+                        : cut.protein === 'Seafood'
+                          ? 'Reach 145°F at the center of the thickest part.'
+                          : 'Reach 145°F before removing from heat, then rest at least 3 minutes.';
   const prepTime =
-    f === 'shrimp'
-      ? '15 min in the marinade, no longer'
-      : f === 'prime-rib'
-        ? '12–24 hr ahead'
-        : f === 'jerk-turkey'
-          ? 'Just before cooking'
-          : f === 'tri-tip'
-            ? '4–24 hr ahead, optional'
-            : f === 'shoulder'
-              ? '12–24 hr ahead, optional'
-              : cut.protein === 'Poultry'
-                ? '2–12 hr ahead, optional'
-                : f === 'fish' || f === 'foil-boat'
-                  ? 'Just before cooking'
-                  : '2–4 hr ahead, optional';
+    f === 'achiote'
+      ? '20–30 min marinade, no longer'
+      : f === 'bbq-chicken'
+        ? '15–30 min'
+        : f === 'shrimp'
+          ? '15 min in the marinade, no longer'
+          : f === 'prime-rib'
+            ? '12–24 hr ahead'
+            : f === 'jerk-turkey'
+              ? 'Just before cooking'
+              : f === 'tri-tip'
+                ? '4–24 hr ahead, optional'
+                : f === 'shoulder'
+                  ? '12–24 hr ahead, optional'
+                  : cut.protein === 'Poultry'
+                    ? '2–12 hr ahead, optional'
+                    : f === 'fish' || f === 'foil-boat'
+                      ? 'Just before cooking'
+                      : '2–4 hr ahead, optional';
   // Each family opens differently, so the opener is picked as a whole Step.
   // Title and body used to be two parallel ladders that had to be kept in
   // step with each other by hand.
@@ -912,6 +1010,16 @@ export function buildRecipe(
       title: 'Mix the paste, keep it thin',
       cue: prepTime,
       body: `Stir the lime juice, oil, allspice, thyme, paprika, cinnamon and pepper together with the listed ${salt} into a loose paste, and rub it over the tenderloin. Keep it thin: a wet coating steams rather than browns, and this cut gets only about half a minute a side of direct heat at the end to fix that. Toss the pineapple, red onion and scallion together separately with a pinch of salt — keep that bowl well away from the raw turkey and its paste. Chill the turkey while the grill comes up.`,
+    },
+    achiote: {
+      title: 'Marinate, but not for long',
+      cue: prepTime,
+      body: `Whisk the achiote paste, lime juice and zest, oil, honey, cumin, oregano, garlic, black pepper and the listed ${salt} into a loose marinade, then coat the thighs and refrigerate them while the grill heats. Twenty to thirty minutes, and no more. This is a lime-heavy mixture: left overnight the acid tightens the outside of the meat while the centre stays exactly as it was, so you end up with a firm surface and no more flavour than half an hour would have given you. Open out any thighs that are folded over on themselves, or the thick fold will still be behind when the rest is done.`,
+    },
+    'bbq-chicken': {
+      title: 'Season, then split the sauce',
+      cue: prepTime,
+      body: `Mix the smoked paprika, garlic powder, onion powder, black pepper, cayenne and the listed ${salt}, and season the thighs all over with it. Then stir the sauce together: ketchup, molasses, vinegar, brown sugar, Worcestershire, the second smaller measure of smoked paprika, and the hot sauce. Now divide that sauce in two before any of it goes near raw chicken. Half into a clean bowl for the table, half for brushing during the cook. Use a separate brush for each, and never carry the brushing half back to the table at the end.`,
     },
     shrimp: {
       title: 'Chimichurri, then a short marinade',
@@ -1013,6 +1121,42 @@ export function buildRecipe(
         title: 'Probe every fillet, then serve',
         cue: 'Internal: 145°F in each one',
         body: 'Slide the probe in sideways through the thickest part of each fillet, keeping it clear of the foil, which will read hot. Every fillet needs 145°F before it comes off — easy flaking is a hint, not a measurement. Support the boat underneath with a wide spatula and slide the whole thing onto a rimmed tray; use gloves and mind the hot butter. Lift the fish onto plates, spoon the butter over, and add the lemon juice now. Fish needs no resting time at this target. Refrigerate leftovers within 2 hours, or within 1 hour if it is above 90°F out.',
+      },
+    );
+  else if (f === 'achiote')
+    steps.push(
+      {
+        title: 'Grill hot and clean',
+        cue: 'Grill ambient: 425–450°F',
+        body: 'Follow your grill’s lighting sequence, get the direct zone to 425–450°F at grate level, then clean the grates and oil them lightly. Leave one cooler edge or unlit patch free — you will want it. Lift each thigh out of the marinade and let the excess run off before it goes on: a wet coating steams and then scorches instead of browning, and the marinade left in the dish is not a sauce.',
+      },
+      {
+        title: 'Turn once and watch the colour',
+        cue: 'About 5–8 minutes on the first side',
+        body: 'Lay the thighs down smooth side first and close the lid. Give them five to eight minutes, turn once, and leave them alone. Achiote is deep red before it meets any heat and there is honey in the marinade, so this will look further along than it is — that is exactly the trap. If it is darkening faster than the centre is cooking, move it to the cooler edge and keep the lid closed.',
+      },
+      {
+        title: 'Probe, rest, and build the tacos',
+        cue: 'Internal 165°F · rest 5 min',
+        body: 'Probe sideways into the thickest thigh and take it off only at 165°F. Colour and clear juices prove nothing here, least of all under a red marinade. Move it to a clean tray, rest five minutes, then slice across the grain. Serve it with warm tortillas, charred lime, cilantro, pickled onion and avocado, and use a clean board and knife rather than the ones the raw chicken touched.',
+      },
+    );
+  else if (f === 'bbq-chicken')
+    steps.push(
+      {
+        title: 'Grill it clean before any sauce',
+        cue: 'Sear 3–4 minutes a side · 400–425°F',
+        body: 'Follow your grill’s lighting sequence, hold 400–425°F at grate level and clean the grates. Sear the thighs over direct heat for three to four minutes a side to get colour on them, then move them over the unlit zone and close the lid. Keep going there until the thickest piece is around 150–155°F. No sauce yet — none of it goes on while the chicken still has this much cooking left.',
+      },
+      {
+        title: 'Paint, turn, paint again',
+        cue: 'Final 4–6 minutes',
+        body: 'Brush a thin layer of the brushing half over the chicken, close the lid for a minute or two, turn, and brush again. Repeat once or twice over the unlit zone. Thin coats are the whole technique: each one sets and dries before the next goes on, and that is what builds a lacquer. One thick coat does the opposite — the outside burns while the inside of the layer is still wet. If you want a little more tack and char at the very end, a short spell over direct heat will do it, but stand there and watch it, because this sauce is mostly sugar.',
+      },
+      {
+        title: 'Probe, rest, and use the clean half',
+        cue: 'Internal 165°F · rest 5 min',
+        body: 'Probe the thickest thigh sideways, under the glaze rather than through it, and remove only at 165°F. Sauce colour tells you nothing about the centre. Rest five minutes on a clean tray, then spoon or brush over the half of the sauce you set aside at the start — the half that never met the raw-chicken brush. Pickles, toasted buns or slaw, and refrigerate leftovers within 2 hours.',
       },
     );
   else if (f === 'prime-rib')
@@ -1197,41 +1341,47 @@ export function buildRecipe(
       },
     );
   const title =
-    f === 'prime-rib'
-      ? 'Rosemary & juniper prime rib'
-      : f === 'jerk-turkey'
-        ? 'Jerk-spiced ' + midName
-        : f === 'shrimp'
-          ? 'Chimichurri-orange ' + midName
-          : f === 'foil-boat'
-            ? 'Butter & lemon-pepper ' + midName
-            : f === 'tri-tip'
-              ? 'Coffee–ancho tri-tip with chipotle-lime sauce'
-              : f === 'shoulder'
-                ? base.title
-                : f === 'steak'
-                  ? 'Pepper & garlic ' + midName
-                  : f === 'chop' || f === 'tenderloin'
-                    ? 'Smoky Dijon ' + midName
-                    : cut.protein === 'Poultry'
-                      ? 'Smoky mustard ' + midName
-                      : 'Dijon & lemon ' + midName;
+    f === 'achiote'
+      ? 'Achiote-lime grilled chicken thighs'
+      : f === 'bbq-chicken'
+        ? 'Sauce-heavy BBQ chicken thighs'
+        : f === 'prime-rib'
+          ? 'Rosemary & juniper prime rib'
+          : f === 'jerk-turkey'
+            ? 'Jerk-spiced ' + midName
+            : f === 'shrimp'
+              ? 'Chimichurri-orange ' + midName
+              : f === 'foil-boat'
+                ? 'Butter & lemon-pepper ' + midName
+                : f === 'tri-tip'
+                  ? 'Coffee–ancho tri-tip with chipotle-lime sauce'
+                  : f === 'shoulder'
+                    ? base.title
+                    : f === 'steak'
+                      ? 'Pepper & garlic ' + midName
+                      : f === 'chop' || f === 'tenderloin'
+                        ? 'Smoky Dijon ' + midName
+                        : cut.protein === 'Poultry'
+                          ? 'Smoky mustard ' + midName
+                          : 'Dijon & lemon ' + midName;
   const portionLb =
-    f === 'prime-rib'
-      ? 1
-      : f === 'jerk-turkey'
-        ? 0.4
-        : f === 'shrimp' || f === 'foil-boat'
-          ? 0.5
-          : f === 'tri-tip'
-            ? 0.45
-            : f === 'shoulder'
-              ? 0.6
-              : cut.protein === 'Poultry' && f !== 'breast'
-                ? 0.75
-                : cut.protein === 'Seafood'
-                  ? 0.375
-                  : 0.5;
+    f === 'achiote' || f === 'bbq-chicken'
+      ? 0.5
+      : f === 'prime-rib'
+        ? 1
+        : f === 'jerk-turkey'
+          ? 0.4
+          : f === 'shrimp' || f === 'foil-boat'
+            ? 0.5
+            : f === 'tri-tip'
+              ? 0.45
+              : f === 'shoulder'
+                ? 0.6
+                : cut.protein === 'Poultry' && f !== 'breast'
+                  ? 0.75
+                  : cut.protein === 'Seafood'
+                    ? 0.375
+                    : 0.5;
   const photo = '/meals/' + cut.id + '.webp';
   const photoCaption = cut.name;
   return {
@@ -1260,31 +1410,39 @@ export function buildRecipe(
     safety,
     serves: String(Math.max(1, Math.round(weightLb / portionLb))),
     wood:
-      f === 'jerk-turkey'
-        ? 'Pimento wood if you can get it · otherwise none'
-        : f === 'prime-rib'
-          ? 'Rosemary & juniper carry it · no wood needed'
-          : f === 'tri-tip'
-            ? 'Coffee & ancho carry it · no wood needed'
-            : f === 'shoulder'
-              ? 'Apple + hickory'
-              : cut.protein === 'Poultry'
-                ? 'Apple, optional'
-                : 'No smoke needed',
-    tip:
-      f === 'prime-rib'
-        ? 'Salt it the night before, keep the probe out of bone and fat seams, and give it the full rest. The sear builds the crust; the probe decides doneness.'
-        : f === 'jerk-turkey'
-          ? 'Keep the paste thin so it browns rather than steams, cook it indirect, and use the 165°F poultry endpoint. Pineapple carries sugar and will flare.'
-          : f === 'shrimp'
-            ? 'Split the chimichurri before any of it touches raw shrimp. Fifteen minutes is the marinade limit, and four to six minutes is the entire cook.'
-            : f === 'foil-boat'
-              ? 'Check the lemon-pepper label before you salt, keep the boat open rather than sealed, and probe every fillet. Thickness sets the time here, not weight.'
+      f === 'achiote'
+        ? 'The paste carries it · no wood needed'
+        : f === 'bbq-chicken'
+          ? 'Hickory, optional'
+          : f === 'jerk-turkey'
+            ? 'Pimento wood if you can get it · otherwise none'
+            : f === 'prime-rib'
+              ? 'Rosemary & juniper carry it · no wood needed'
               : f === 'tri-tip'
-                ? 'Find the grain before the rub hides it, keep the thin end away from the hottest burner, and serve the sauce cold and beside the meat.'
+                ? 'Coffee & ancho carry it · no wood needed'
                 : f === 'shoulder'
-                  ? base.tip
-                  : 'Ingredient amounts scale with total raw weight. Cooking time depends on individual thickness, airflow, and the actual heat near the food.',
+                  ? 'Apple + hickory'
+                  : cut.protein === 'Poultry'
+                    ? 'Apple, optional'
+                    : 'No smoke needed',
+    tip:
+      f === 'achiote'
+        ? 'Twenty to thirty minutes in the marinade and no longer. Achiote and honey both darken well before the centre is done, so keep a cooler edge free.'
+        : f === 'bbq-chicken'
+          ? 'Grill it clean first and sauce it last, in thin coats. Keep the serving half of the sauce away from the brush that touched raw chicken.'
+          : f === 'prime-rib'
+            ? 'Salt it the night before, keep the probe out of bone and fat seams, and give it the full rest. The sear builds the crust; the probe decides doneness.'
+            : f === 'jerk-turkey'
+              ? 'Keep the paste thin so it browns rather than steams, cook it indirect, and use the 165°F poultry endpoint. Pineapple carries sugar and will flare.'
+              : f === 'shrimp'
+                ? 'Split the chimichurri before any of it touches raw shrimp. Fifteen minutes is the marinade limit, and four to six minutes is the entire cook.'
+                : f === 'foil-boat'
+                  ? 'Check the lemon-pepper label before you salt, keep the boat open rather than sealed, and probe every fillet. Thickness sets the time here, not weight.'
+                  : f === 'tri-tip'
+                    ? 'Find the grain before the rub hides it, keep the thin end away from the hottest burner, and serve the sauce cold and beside the meat.'
+                    : f === 'shoulder'
+                      ? base.tip
+                      : 'Ingredient amounts scale with total raw weight. Cooking time depends on individual thickness, airflow, and the actual heat near the food.',
     attribution: cut.attribution,
   };
 }
@@ -1303,6 +1461,20 @@ export const zoneScience: Science = {
     'Choose the burners that fit your grill. Measure beside the food instead of treating knob position as a temperature.',
 };
 export function cookingScience(cut: Cut): Science {
+  if (cut.family === 'achiote')
+    return {
+      title: 'An acid marinade only reaches the surface',
+      body: 'Lime juice does not travel far into meat. It works on the outermost layer, where it unwinds proteins and firms them up, and that layer is the only part it ever really changes. So a longer soak does not push more flavour inward; it just keeps working on the same thin shell until the texture turns tight and slightly chalky. Salt migrates inward given hours. Acid essentially does not.',
+      takeaway:
+        'Twenty to thirty minutes buys you everything this marinade has to give. Overnight only costs you texture.',
+    };
+  if (cut.family === 'bbq-chicken')
+    return {
+      title: 'Thin coats set; one thick coat burns',
+      body: 'A barbecue sauce this sweet is mostly sugar and water. Brushed on thin, the water flashes off and leaves the sugars to caramelise into a dry, glossy layer that the next coat can grip. Brushed on thick, the outside of the layer hits burning temperature while the inside is still wet, so you get a scorched skin over a sticky, uncooked middle that slides off the meat.',
+      takeaway:
+        'Four or five thin coats over indirect heat, each given a minute to set. Save direct heat for a few seconds at the very end, if at all.',
+    };
   if (cut.family === 'prime-rib')
     return {
       title: 'Why reverse-sear a roast this size',
@@ -2264,6 +2436,134 @@ export const swapSets: SwapSet[] = [
         use: 'Leave it out',
         amount: '—',
         note: 'The chimichurri is garlic-led anyway; the flakes are the back note.',
+      },
+    ],
+  },
+  {
+    match: 'achiote',
+    label: 'Achiote paste',
+    options: [
+      {
+        use: 'Smoked paprika with a pinch of turmeric',
+        amount: 'About 2 tsp paprika per tbsp of paste',
+        note: 'Gets you most of the colour. Achiote is earthier and slightly peppery, so it will not be identical.',
+      },
+      {
+        use: 'Sazón with achiote',
+        amount: 'About 1 sachet per tbsp',
+        addsSalt: true,
+        note: 'Usually salted and often carries MSG. Cut the measured salt back accordingly.',
+      },
+      {
+        use: 'Ground annatto seed',
+        amount: 'About 1 tsp per tbsp',
+        note: 'Achiote paste is annatto plus spices and acid, so add a little extra lime and cumin with it.',
+      },
+    ],
+  },
+  {
+    match: 'lime zest',
+    label: 'Lime zest',
+    options: [
+      { use: 'Lemon or orange zest', amount: 'Same amount' },
+      {
+        use: 'Extra lime juice',
+        amount: 'About 1 tsp juice per tsp of zest',
+        note: 'Weaker, because the oils that carry most of the aroma live in the peel and not the juice.',
+      },
+      { use: 'Leave it out', amount: '—' },
+    ],
+  },
+  {
+    match: 'honey',
+    label: 'Honey',
+    options: [
+      { use: 'Agave nectar or maple syrup', amount: 'Same amount' },
+      {
+        use: 'Brown sugar',
+        amount: 'Same amount',
+        note: 'Dry rather than liquid, so the marinade will be slightly thicker.',
+      },
+      {
+        use: 'Leave it out',
+        amount: '—',
+        note: 'You lose some browning and a little stickiness, but nothing structural.',
+      },
+    ],
+  },
+  {
+    match: 'oregano',
+    label: 'Mexican oregano',
+    options: [
+      {
+        use: 'Mediterranean oregano',
+        amount: 'Same amount',
+        note: 'The common supermarket sort. More minty and less citrusy, but it does the job.',
+      },
+      {
+        use: 'Marjoram',
+        amount: 'Half again as much',
+        note: 'Milder and sweeter, so it takes a little more.',
+      },
+    ],
+  },
+  {
+    match: 'ketchup',
+    label: 'Ketchup',
+    options: [
+      {
+        use: 'Tomato passáta with a spoon of sugar and a splash of vinegar',
+        amount: 'Same amount',
+        note: 'Ketchup is already sweet and sour, so plain tomato needs both added back.',
+      },
+      {
+        use: 'Tomato paste, thinned with water',
+        amount: 'About a third as much paste',
+        note: 'Much more concentrated. Thin it to a ketchup consistency before measuring.',
+      },
+    ],
+  },
+  {
+    match: 'molasses',
+    label: 'Molasses',
+    options: [
+      {
+        use: 'Dark brown sugar',
+        amount: 'Same amount',
+        note: 'Brown sugar is sugar with molasses already in it, so this is the closest swap there is.',
+      },
+      {
+        use: 'Maple syrup or honey',
+        amount: 'Same amount',
+        note: 'Sweeter and far less bitter, so the sauce loses some of its depth.',
+      },
+      {
+        use: 'Treacle',
+        amount: 'About two thirds as much',
+        note: 'Stronger and more bitter than molasses. Easy to overdo.',
+      },
+    ],
+  },
+  {
+    match: 'worcestershire',
+    label: 'Worcestershire sauce',
+    options: [
+      {
+        use: 'Soy sauce with a squeeze of lemon',
+        amount: 'Same amount',
+        addsSalt: true,
+        note: 'Saltier than Worcestershire, so pull the measured salt back a little.',
+      },
+      {
+        use: 'Fish sauce',
+        amount: 'About half as much',
+        addsSalt: true,
+        note: 'Worcestershire is anchovy-based too, so this is closer than it sounds. Much saltier.',
+      },
+      {
+        use: 'Balsamic vinegar',
+        amount: 'Same amount',
+        note: 'The vegetarian route. Sweeter and without the savoury depth.',
       },
     ],
   },
