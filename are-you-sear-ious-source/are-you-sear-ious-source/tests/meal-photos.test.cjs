@@ -170,3 +170,36 @@ test('the standing disclaimer and its claims stay on the page', () => {
     }
   }
 });
+
+test('the offline index.html at the repo root is not stale', () => {
+  // This file is opened directly from disk with no server, and for the first
+  // several sessions nothing rebuilt it — it silently fell nine recipes
+  // behind the source before anyone noticed. `npm run build` regenerates it
+  // now, and this is what fails if someone skips that step.
+  const offline = path.resolve(root, '..', '..', 'index.html');
+  assert.ok(fs.existsSync(offline), 'the offline build must exist');
+  const html = fs.readFileSync(offline, 'utf8');
+
+  const missing = cuts.filter((c) => !html.includes(c.id)).map((c) => c.id);
+  assert.deepEqual(
+    missing,
+    [],
+    'offline index.html is stale — run `npm run build`',
+  );
+
+  // It must be self-contained: an absolute /assets/ or /meals/ path resolves
+  // to the filesystem root when opened over file://, and silently 404s.
+  assert.equal(
+    (html.match(/"\/(assets|meals)\//g) ?? []).length,
+    0,
+    'offline index.html still has absolute asset paths',
+  );
+  assert.match(html, /\.\/images\//, 'photos must be relative to the file');
+
+  // And every photo it asks for has to be sitting next to it.
+  for (const cut of cuts)
+    assert.ok(
+      fs.existsSync(path.resolve(root, '..', '..', 'images', cut.id + '.webp')),
+      `images/${cut.id}.webp is missing for the offline build`,
+    );
+});
