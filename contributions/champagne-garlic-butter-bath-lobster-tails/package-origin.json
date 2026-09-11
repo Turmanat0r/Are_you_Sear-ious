@@ -1,0 +1,23 @@
+{
+  "inputArchive": {
+    "file": "champagne-garlic-butter-bath-lobster-tails.zip",
+    "sha256": "24a1265d0f0eb1f5118e74544427cfd7fadda9cc8991ab910b0d671bed67ab36"
+  },
+  "inputHtml": {
+    "file": "index.html",
+    "sha256": "fd8aed97148a8a68653990c9fc0b92c2e32996925124b50961c6222dd1019fe9"
+  },
+  "exactPrompt": {
+    "path": "provenance/generation-prompt.txt",
+    "sha256": "ffce2a0c2d5dfa656a9ec5ee0343c123bc9587e7207f012e885996b31383ec88"
+  },
+  "correctedOn": "2026-09-09",
+  "correction": "Lobster content placed in the user's original dark recipe theme. Original CSS/fonts, ingredient quantities, count/size options, timing ranges, PNG, WebP, and prompt preserved.",
+  "clarifications": [
+    "Divide the listed salt, paprika, and chives across their uses instead of adding them twice.",
+    "Reserve clean butter before adding raw lobster; discard the used bath.",
+    "Metric equivalents and complete temperature conversion, saved preferences, reference cook mode, and printed burner plan supported."
+  ],
+  "imageAction": "No generation or editing performed; image files copied unchanged from the supplied archive.",
+  "deployment": "GitHub/Vercel-ready package only; not deployed or copied to the user's iCloud/site folder."
+}

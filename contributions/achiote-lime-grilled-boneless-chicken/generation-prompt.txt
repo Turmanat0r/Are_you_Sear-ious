@@ -1,0 +1,11 @@
+Use case: photorealistic-natural
+Asset type: recipe website hero image
+Primary request: a vibrant editorial food photograph of Mexican-inspired achiote-lime grilled boneless chicken thighs
+Scene/backdrop: dark gas grill and rustic ceramic platter, warm outdoor evening cooking atmosphere
+Subject: juicy boneless skinless chicken thighs with deep red achiote crust and grill marks, charred lime halves, pickled red onion, cilantro, avocado, and warm corn tortillas
+Style/medium: high-end natural-light food photography, realistic textures, appetizing and clean
+Composition/framing: landscape 3:2, slightly overhead three-quarter angle, centered platter, no people
+Lighting/mood: warm directional light, festive and inviting
+Color palette: achiote red, lime green, avocado green, golden tortilla, charcoal
+Constraints: recipe-specific image; no logos, labels, readable text, or watermark
+Avoid: raw-looking chicken, duplicate utensils, plastic packaging, excessive smoke

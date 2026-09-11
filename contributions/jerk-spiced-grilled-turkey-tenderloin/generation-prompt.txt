@@ -1,0 +1,10 @@
+Use case: photorealistic-natural
+Asset type: recipe website image asset
+Primary request: a warm editorial food photograph of jerk-spiced grilled turkey tenderloin with charred pineapple salsa
+Scene/backdrop: dark gas grill and rustic serving board, outdoor summer cooking atmosphere
+Subject: sliced turkey tenderloin with a deeply browned jerk-spice crust, charred pineapple chunks, red onion, scallions, lime wedges, and fresh herbs
+Style/medium: high-end natural-light food photography, realistic textures, appetizing and clean
+Composition/framing: landscape 3:2, slightly overhead three-quarter angle, centered platter, no people
+Lighting/mood: warm directional light, deep charcoal shadows, tropical color highlights
+Constraints: recipe-specific image; no logos, labels, readable text, or watermark
+Avoid: raw-looking poultry, duplicate utensils, plastic packaging, excessive smoke

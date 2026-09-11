@@ -1,0 +1,8 @@
+{
+  "recipeId": "steakhouse-beef-bison-burgers",
+  "origin": "Generated for this recipe with the built-in image generation tool.",
+  "original": {"path":"original-steakhouse-beef-bison-burgers.png","mimeType":"image/png","sha256":"5dc6e91162c113fa83528991115e8427ffeecebd003ab97aa605a4320848cab0"},
+  "webAsset": {"path":"../images/steakhouse-beef-bison-burgers.webp","mimeType":"image/webp","sha256":"7043782af28be81cb69886d1792c7f5b6549ecfc00fed0429b376932c5938a70","conversion":"Pillow 12.3.0; RGB; resized from 1536x1024 to 1120x747 with Lanczos; WebP quality 80; method 6"},
+  "promptFile":"generation-prompt.txt",
+  "claims":"No EXIF or signature validation claims are made."
+}

@@ -471,3 +471,134 @@ The remaining ladders (`title`, `finish`, `wood`, `tip`, `portionLb`) are now
 five to eight arms each and want the same treatment. Left alone deliberately:
 that is a mechanical refactor best done on its own, not underneath three new
 recipes.
+
+## Session addendum — 2026-09-11, two chicken recipes
+
+Achiote-lime and sauce-heavy BBQ, both on boneless skinless thighs. Nineteen
+cuts. Temperatures were already right on both — 165°F, stated plainly, with the
+BBQ one adding that sauce colour is not a doneness reading. Nothing to override.
+
+### Two recipes, one cut
+
+This is the first time two recipes share a cut of meat, and it breaks an
+assumption the data model never had to state: that `cut.name` identifies both
+the thing you buy *and* the entry you pick. Those are now different jobs.
+
+The picker lists `cut.name`, filtered by protein. Two entries reading "Boneless
+chicken thighs" would be literally unpickable. So `name` names the treatment —
+"Achiote-lime boneless thighs", "BBQ boneless thighs" — and `midSentenceName`,
+which already existed for "New York strip", carries what the shopping line
+should actually tell you to buy: "boneless, skinless chicken thighs", identical
+for both. A test asserts the names differ and the shopping lines match.
+
+### The image budget was measuring the wrong thing
+
+`npm test` failed on `bytes < 2_500_000` across all meal photos — 19 images now
+total 2.59 MB.
+
+That cap was wrong in principle, not just in value. Only one `<img>` is ever
+mounted, keyed by recipe id, so **a visitor downloads one photo (~136 KB), not
+the set.** The aggregate was never what anybody waited for; it is a deploy-weight
+guard, and a fixed number that every new recipe walks toward is a tripwire
+rather than a budget.
+
+It now scales: mean under 160 KB, total under `cuts.length × 175 KB`. The
+per-image 250 KB cap is untouched, because that one *is* what a visitor waits
+for, and it is the assertion that actually protects the page.
+
+### Four contributed images have now arrived at the wrong size
+
+Both chicken WebPs were 1120×747 again, same as two of the three on 2026-09-08.
+Originals verified both times — hashes matched their sidecars, C2PA manifests
+present — so the delivered files were re-derived from the verified originals
+with this project's pipeline. Four out of the last five. `CLAUDE.md` now says to
+check before copying.
+
+### Still waiting
+
+`images/` also holds photos for two recipes that do not exist yet —
+`steakhouse-beef-bison-burgers` and `champagne-garlic-butter-bath-lobster-tails`
+— with `burger-page-code.txt` and `lobster-page-code.txt` beside them. Left
+untracked and unbuilt, because they were not what was asked for.
+
+Worth noting before they land: a bison burger is **ground** beef, and ground
+meat is 160°F, not the 145°F this app uses for every whole beef cut so far. That
+is the single most important thing to get right when that one is added.
+
+## Session addendum — 2026-09-11, burgers, lobster, and a repository rescue
+
+Twenty-one cuts. Six per protein except pork. The two recipes were the small
+part of this session.
+
+### iCloud was corrupting the repository
+
+Git reported 83 files staged for deletion and no `origin` remote. The cause was
+`.git/config`, which iCloud had renamed to `.git/config 2`. Git therefore ran
+with no remote, no branch tracking and no `core.*` settings, which is what made
+the entire tracked tree look deleted. The file was intact and restoring it fixed
+everything, but that is luck rather than resilience: the next file iCloud
+decides to rename could be a loose object, and no amount of copying gets that
+back.
+
+The repository now lives at `C:\Users\Danie\repos\are-you-sear-ious`. `git fsck`
+is clean, every branch and the remote survived, and the full gate passes there.
+
+**It also settled a question this audit has carried since the first session.**
+`AUDIT.md` recorded that oxlint's type-aware backend failed to spawn with EPERM
+and named iCloud as "a plausible contributor". It was the cause. The backend runs
+on a local disk — verified by planting a floating promise in a scratch file and
+watching `no-floating-promises` catch it, then deleting it.
+
+So the constraint that shaped four sessions of workflow is gone. Branch previews
+are still the process, but now because a ruleset requires a PR, not because this
+machine was blind to half the lint rules.
+
+### 121 loose files, grouped by reading them
+
+The root had accumulated nine contribution packages' worth of debris, most of it
+iCloud-numbered: seven `README.md`, seven `SOURCES.md`, nine
+`image-provenance.json`, four `vercel.json`, four `src/main.ts`.
+
+Each file was classified by **content**, not by its number — the numbering is an
+artefact of sync order and trusting it would have mis-filed the paperwork behind
+recipes people cook from. `SOURCES (2..5).md` carried no recipe name at all and
+had to be told apart by which USDA row they cited. Seventeen files were deleted
+only after confirming each was byte-identical to a copy being kept.
+
+Everything now sits under `contributions/<recipe-id>/` with canonical names, and
+the root is 13 entries instead of thirty-odd.
+
+### The burger is the only 160°F cut in the app
+
+It arrived already correct, and it is worth saying why that matters. Ground meat
+has no protected centre: grinding takes what was on the surface and distributes
+it throughout, so the 145°F that is defensible for a whole steak is not
+defensible here. The burger sits in a Beef list where five other cuts are 145°F,
+which is exactly the arrangement in which somebody copies the wrong number.
+
+A test asserts it is the **only** cut in the app at 160°F, and that every other
+beef cut is still 145°F. Its `finish` string is asserted to contain no 145 at
+all.
+
+Two knock-on corrections came with it:
+
+- **Salt goes on at the grill, not ahead.** Every other cut here says to salt in
+  advance, and for ground meat that is actively wrong — salt dissolves myosin
+  and gives a springy, sausage texture. Its opener says so and a test pins it.
+- **SPG is salt-first in most jars**, so it gets the pre-salted treatment the
+  lemon pepper already had.
+
+The source recipe references a "steakhouse sauce" it never actually provides an
+ingredient list for. Rather than inventing one, the build list says to use your
+preferred steakhouse or peppercorn sauce.
+
+### The lobster bath never reaches the table
+
+Same split-sauce shape as the shrimp and the BBQ chicken: butter that has sat
+with raw lobster for the whole cook is not a serving sauce. A test asserts the
+steps say so, that the pan stays over an unlit burner, and that the tails are
+never turned.
+
+A lobster is also not a fish, so the salt line and ingredient header say
+"lobster" rather than inheriting the Seafood default of "fish" — the same
+correction shrimp needed.

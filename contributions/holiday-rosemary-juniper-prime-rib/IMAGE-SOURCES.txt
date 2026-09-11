@@ -1,0 +1,5 @@
+Runtime image: images/holiday-rosemary-juniper-prime-rib.webp
+Origin: generated for this recipe by the built-in image generation tool; not copied from a third-party site.
+Original: provenance/original-holiday-rosemary-juniper-prime-rib.png
+Prompt: provenance/generation-prompt.txt
+Conversion: original PNG converted to WebP with Pillow 12.3.0, RGB, quality=80, method=6, resized to 1120x747.

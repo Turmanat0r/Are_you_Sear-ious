@@ -1,0 +1,11 @@
+Use case: photorealistic-natural
+Asset type: recipe website hero image
+Primary request: a dramatic editorial food photograph of boneless grilled chicken thighs completely lacquered in glossy barbecue sauce
+Scene/backdrop: dark gas grill and rustic serving board, summer backyard cookout atmosphere
+Subject: juicy boneless chicken thighs with thick mahogany BBQ glaze, charred edges, sliced pieces, extra sauce in a small bowl, pickles and toasted buns nearby
+Style/medium: high-end natural-light food photography, realistic textures, appetizing and clean
+Composition/framing: landscape 3:2, slightly overhead three-quarter angle, centered platter, no people
+Lighting/mood: warm directional light, smoky grill glow, indulgent and celebratory
+Color palette: mahogany sauce, amber highlights, charcoal, pickle green, warm bread
+Constraints: recipe-specific image; show sauce-heavy finish; no logos, labels, readable text, or watermark
+Avoid: raw-looking chicken, dry unglazed meat, duplicate utensils, plastic packaging, excessive smoke

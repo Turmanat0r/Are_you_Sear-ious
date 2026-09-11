@@ -1,0 +1,11 @@
+Use case: photorealistic-natural
+Asset type: recipe website hero image
+Primary request: a dramatic editorial food photograph of a thick steakhouse burger made with either beef or bison, with a deep seared crust, melted smoked cheddar, charred onions, and a toasted brioche bun
+Scene/backdrop: dark gas grill and rustic serving board, backyard cookout atmosphere
+Subject: tall juicy burger, visible coarse pepper crust, glossy bun, smoked cheddar, sweet charred onions, pickles, and a small bowl of Worcestershire-pepper sauce
+Style/medium: high-end natural-light food photography, realistic textures, appetizing and clean
+Composition/framing: landscape 3:2, slightly overhead three-quarter angle, burger centered, no people
+Lighting/mood: warm directional light, rich grill glow, bold steakhouse mood
+Color palette: mahogany beef crust, golden bun, cheddar gold, dark green pickle, charcoal
+Constraints: recipe-specific image; no logos, labels, readable text, or watermark
+Avoid: raw-looking patty, impossible toppings, duplicate utensils, plastic packaging, excessive smoke

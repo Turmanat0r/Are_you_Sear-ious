@@ -27,11 +27,11 @@ const {
   spoonLabel,
 } = config;
 
-const CUTS_PER_PROTEIN = { Beef: 5, Pork: 3, Poultry: 4, Seafood: 5 };
+const CUTS_PER_PROTEIN = { Beef: 6, Pork: 3, Poultry: 6, Seafood: 6 };
 
-test('four proteins, seventeen unique cuts, and matching defaults', () => {
-  assert.equal(cuts.length, 17);
-  assert.equal(new Set(cuts.map((c) => c.id)).size, 17);
+test('four proteins, twenty-one unique cuts, and matching defaults', () => {
+  assert.equal(cuts.length, 21);
+  assert.equal(new Set(cuts.map((c) => c.id)).size, 21);
   assert.equal(
     Object.values(CUTS_PER_PROTEIN).reduce((a, b) => a + b, 0),
     cuts.length,
@@ -59,9 +59,19 @@ for (const cut of cuts) {
     const allItems = base.ingredients.flatMap((g) => g.items);
     assert.ok(allItems.length >= 3, `${cut.id} needs a real ingredient list`);
     // The templated recipes all bind their seasoning with mustard. These
-    // three deliberately have no binder: the walleye is butter in foil, the
-    // jerk turkey is a lime-and-oil paste, and the shrimp is chimichurri.
-    if (!['foil-boat', 'jerk-turkey', 'shrimp'].includes(cut.family))
+    // five deliberately have no binder at all: butter in foil, a lime-and-oil
+    // paste, chimichurri, an achiote marinade, and a dry rub under sauce.
+    if (
+      ![
+        'foil-boat',
+        'jerk-turkey',
+        'shrimp',
+        'achiote',
+        'bbq-chicken',
+        'burger',
+        'lobster',
+      ].includes(cut.family)
+    )
       assert.ok(
         allItems.some((item) => item.includes('mustard')),
         `${cut.id} should carry its mustard binder`,
@@ -634,7 +644,18 @@ test('titles keep proper nouns capitalised', () => {
 
     // Only the template families build a title from the cut name. These
     // three supply their own, so they are exempt by design.
-    if (['shoulder', 'tri-tip', 'prime-rib'].includes(cut.family)) continue;
+    if (
+      [
+        'shoulder',
+        'tri-tip',
+        'prime-rib',
+        'achiote',
+        'bbq-chicken',
+        'burger',
+        'lobster',
+      ].includes(cut.family)
+    )
+      continue;
     assert.ok(
       recipe.title.includes(expected),
       `${cut.id}: title should carry "${expected}"`,
@@ -770,4 +791,129 @@ test('the prime rib reaches 145F before serving, sear notwithstanding', () => {
   // which lands anywhere from 0.63% to 1.06% depending on the brand.
   const grams = Number(recipe.ingredients[0].items[1].match(/^([\d.]+) g/)[1]);
   assert.ok(Math.abs(grams - 4 * 453.59237 * 0.005) < 0.01, String(grams));
+});
+
+test('the two boneless-thigh recipes stay tellable apart', () => {
+  const achiote = buildRecipe('achiote-lime-grilled-boneless-chicken', 2);
+  const bbq = buildRecipe('sauce-heavy-bbq-boneless-chicken', 2);
+
+  // They are the same cut of meat, so the shopping line must name what you
+  // actually buy — identically for both.
+  const buys = 'boneless, skinless chicken thighs';
+  assert.match(achiote.ingredients[0].items[0], new RegExp(buys));
+  assert.match(bbq.ingredients[0].items[0], new RegExp(buys));
+
+  // But the picker lists cut.name, so those must differ or the dropdown
+  // shows the same entry twice with no way to choose between them.
+  assert.notEqual(achiote.cut.name, bbq.cut.name);
+  assert.notEqual(achiote.title, bbq.title);
+  assert.notEqual(achiote.photo, bbq.photo);
+  for (const r of [achiote, bbq]) {
+    assert.equal(r.protein, 'Poultry');
+    assert.deepEqual(r.internal, [165]);
+    assert.match(r.finish, /165/);
+  }
+});
+
+test('the achiote marinade is capped, and says why', () => {
+  const recipe = buildRecipe('achiote-lime-grilled-boneless-chicken', 2);
+
+  // Acid works on the surface only, so a longer soak buys texture damage
+  // rather than flavour. The cap is the point of the recipe.
+  assert.match(recipe.steps[0].cue, /20|30/);
+  assert.match(recipe.steps[0].body, /no more|no longer/i);
+  assert.match(recipe.steps[0].body, /overnight/i);
+  assert.match(cookingScience(recipe.cut).title, /acid|surface/i);
+
+  // Marinade that held raw chicken is not a sauce.
+  const steps = recipe.steps.map((s) => s.body).join(' ');
+  assert.match(steps, /not a sauce|excess run off|shake off/i);
+});
+
+test('the BBQ sauce is split before it meets raw chicken', () => {
+  const recipe = buildRecipe('sauce-heavy-bbq-boneless-chicken', 2);
+  const steps = recipe.steps.map((s) => s.body).join(' ');
+
+  // Half is a table sauce and half is a brushing sauce. If those two ever
+  // meet, the table half stops being safe, so the split is stated up front
+  // and the clean half is named again when it finally goes on.
+  assert.match(recipe.steps[0].body, /divide|split|half/i);
+  assert.match(recipe.steps[0].body, /separate brush|two brush/i);
+  assert.match(
+    steps,
+    /never met the raw-chicken brush|set aside at the start/i,
+  );
+
+  // Sauce goes on late because it is mostly sugar.
+  assert.match(steps, /150|155/, 'it is sauced only near the end');
+  assert.match(recipe.finish, /under the glaze/i);
+  assert.match(cookingScience(recipe.cut).body, /sugar/i);
+});
+
+test('the burger is the only 160F cut, and every other beef cut is 145F', () => {
+  const burger = buildRecipe('steakhouse-beef-bison-burgers', 1.5);
+  assert.deepEqual(burger.internal, [160]);
+
+  // Ground meat has no protected centre. This is the single most important
+  // number in the app to get wrong, and it sits next to five 145F beef cuts.
+  const sixties = cuts.filter(
+    (c) => buildRecipe(c.id, c.baseLb).internal[0] === 160,
+  );
+  assert.deepEqual(
+    sixties.map((c) => c.id),
+    ['steakhouse-beef-bison-burgers'],
+  );
+  for (const cut of cuts.filter(
+    (c) => c.protein === 'Beef' && c.family !== 'burger',
+  ))
+    assert.deepEqual(buildRecipe(cut.id, cut.baseLb).internal, [145], cut.id);
+
+  assert.match(burger.safety, /160/);
+  assert.match(burger.safety, /[Gg]rinding/);
+  assert.match(burger.finish, /160/);
+  assert.ok(!/145/.test(burger.finish), 'no 145F may appear in the finish');
+  const steps = burger.steps.map((x) => x.body).join(' ');
+  assert.match(steps, /160/);
+  assert.match(steps, /pink/i, 'a safe burger can still be pink');
+});
+
+test('the burger salts at the grill, never ahead', () => {
+  const recipe = buildRecipe('steakhouse-beef-bison-burgers', 1.5);
+
+  // Salting ground meat in advance dissolves myosin and gives a springy,
+  // sausage texture. Every other cut here says the opposite, so this one has
+  // to say it out loud or the habit carries over.
+  const saltLine = recipe.ingredients[0].items[1];
+  assert.match(saltLine, /at the grill, not ahead/);
+  assert.ok(!/refrigerate on a rack/i.test(recipe.steps[0].body));
+  assert.match(recipe.steps[0].body, /springy|overwork/i);
+  assert.match(recipe.steps[0].cue, /not ahead/i);
+
+  // SPG is salt-first in most jars and would double up on the measured salt.
+  const spg = recipe.ingredients
+    .flatMap((g) => g.items)
+    .find((i) => i.includes('SPG'));
+  assert.ok(spg && /label/i.test(spg), spg);
+  assert.ok(substitutionsFor(spg).options.some((o) => o.addsSalt));
+});
+
+test('the lobster bath never reaches the table', () => {
+  const recipe = buildRecipe('champagne-garlic-butter-bath-lobster-tails', 1);
+  const steps = recipe.steps.map((x) => x.body).join(' ');
+
+  assert.equal(recipe.protein, 'Seafood');
+  assert.deepEqual(recipe.internal, [145]);
+
+  // The basting butter sits with raw lobster for the whole cook, so the
+  // butter that goes to the table has to be a separate, clean portion.
+  assert.match(steps, /basting butter has been sitting with raw lobster/i);
+  assert.match(steps, /clean portion/i);
+  // And it is an unlit zone on purpose: direct flame splits the butter.
+  assert.match(steps, /unlit/i);
+  assert.match(steps, /never (get )?turned|do not get turned/i);
+  assert.match(recipe.ingredients[2].title, /never basted/i);
+
+  // A lobster is shellfish, not a fish, and the shopping line should know.
+  assert.match(recipe.ingredients[0].title, /lobster/i);
+  assert.match(recipe.ingredients[0].items[1], /total for the lobster/);
 });

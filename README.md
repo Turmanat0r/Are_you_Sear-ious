@@ -15,7 +15,7 @@ adjustment, and anything pre-salted (garlic salt, onion salt, salted butter) is
 flagged, because the dry brine is measured once at 0.5% of raw weight and a
 salted stand-in stacks on top of it.
 
-**Seventeen cuts across four proteins** — beef, pork, poultry and fish — each with
+**Twenty-one cuts across four proteins** — beef, pork, poultry and fish — each with
 its own photo, temperature targets, method and step-by-step cook mode with a
 check-in timer.
 
@@ -26,7 +26,7 @@ self-contained offline build of it.
 
 ```
 index.html                  Offline build — one 1.6 MB file, opens with no server
-images/                     16 meal photos for the offline build (no tri-tip yet)
+images/                     20 meal photos for the offline build (no tri-tip yet)
 README.txt                  End-user instructions for the offline build
 THIRD-PARTY-LICENSES.txt    Full license text for every bundled library and font
 LICENSE                     MIT — covers the application code
@@ -81,7 +81,7 @@ There is no `tailwind.config.*` — Tailwind 4 is configured from CSS in
 | --- | --- |
 | `app/page.tsx` | Main page, cook mode, print view, saved-recipe dialog |
 | `app/grill-tools.tsx` | Weight and cut controls, temperature table, burner planner |
-| `app/cook-config.ts` | The 17 cuts, ingredient scaling, per-cut recipe assembly |
+| `app/cook-config.ts` | The 21 cuts, ingredient scaling, per-cut recipe assembly |
 | `app/recipes.ts` | Base recipe data, temperature formatting and F→C conversion |
 | `app/globals.css`, `app/experience.css` | Theme tokens and application styling |
 | `components/ui/` | The 8 shadcn components the app actually uses |

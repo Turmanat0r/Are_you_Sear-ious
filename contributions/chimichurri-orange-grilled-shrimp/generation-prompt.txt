@@ -1,0 +1,10 @@
+Use case: photorealistic-natural
+Asset type: recipe website image asset
+Primary request: a warm editorial food photograph of chimichurri-orange grilled shrimp with charred citrus
+Scene/backdrop: dark gas grill and rustic serving board, outdoor summer cooking atmosphere
+Subject: large grilled shrimp with distinct sear marks, vivid green chimichurri, charred orange halves, orange zest, fresh herbs
+Style/medium: high-end natural-light food photography, realistic textures, appetizing and clean
+Composition/framing: landscape 3:2, slightly overhead three-quarter angle, centered platter, no people
+Lighting/mood: warm directional light, deep charcoal shadows, bright citrus highlights
+Constraints: recipe-specific image; no logos, labels, readable text, or watermark
+Avoid: raw translucent shrimp, duplicate utensils, plastic packaging, excessive smoke
