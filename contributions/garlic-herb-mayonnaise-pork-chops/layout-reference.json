@@ -1,0 +1,31 @@
+{
+  "reference": "User-supplied are-you-sear-ious-tri-tip-complete/index.html and its editable source",
+  "verifiedOn": "2026-09-09",
+  "policy": "These styles and font files are reused unchanged. Recipe text, ingredient data, temperatures, controls and imagery are specific to stuffed bell peppers.",
+  "files": [
+    {
+      "path": "src/globals.css",
+      "sha256": "47f15f0b38ab537a3f86874b485f4ab49e5af52079695983c5f44040dba6203d"
+    },
+    {
+      "path": "src/experience.css",
+      "sha256": "b1642ebd8cadcf61eb687aeeb0c7cfa2520779dd57acbfab874c3064173c9720"
+    },
+    {
+      "path": "src/fonts.css",
+      "sha256": "07f288b4bd9dbf8e3aa98844222801d6a6606ef114d21cb13c6fabde31bcedc7"
+    },
+    {
+      "path": "src/shadcn-variants.css",
+      "sha256": "bc7d83425702955b4cb67cb14ede9d603f9d912376d57a2d81d661094d2a782a"
+    },
+    {
+      "path": "assets/fonts/geist-latin.woff2",
+      "sha256": "9b6f5ff45b278c744b5f379a2c4ecbaf858a842b8eaf82ac8d21b699ca16c608"
+    },
+    {
+      "path": "assets/fonts/geist-mono-latin.woff2",
+      "sha256": "5f3d6ad60f29d6cb708414ec6887163d63bf197377ef5417d2483ff31ace6c3b"
+    }
+  ]
+}

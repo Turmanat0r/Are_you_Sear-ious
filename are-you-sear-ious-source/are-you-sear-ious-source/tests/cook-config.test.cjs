@@ -27,11 +27,11 @@ const {
   spoonLabel,
 } = config;
 
-const CUTS_PER_PROTEIN = { Beef: 6, Pork: 3, Poultry: 6, Seafood: 6 };
+const CUTS_PER_PROTEIN = { Beef: 6, Pork: 4, Poultry: 6, Seafood: 6 };
 
-test('four proteins, twenty-one unique cuts, and matching defaults', () => {
-  assert.equal(cuts.length, 21);
-  assert.equal(new Set(cuts.map((c) => c.id)).size, 21);
+test('four proteins, twenty-two unique cuts, and matching defaults', () => {
+  assert.equal(cuts.length, 22);
+  assert.equal(new Set(cuts.map((c) => c.id)).size, 22);
   assert.equal(
     Object.values(CUTS_PER_PROTEIN).reduce((a, b) => a + b, 0),
     cuts.length,
@@ -59,8 +59,10 @@ for (const cut of cuts) {
     const allItems = base.ingredients.flatMap((g) => g.items);
     assert.ok(allItems.length >= 3, `${cut.id} needs a real ingredient list`);
     // The templated recipes all bind their seasoning with mustard. These
-    // five deliberately have no binder at all: butter in foil, a lime-and-oil
-    // paste, chimichurri, an achiote marinade, and a dry rub under sauce.
+    // deliberately do not: butter in foil, a lime-and-oil paste, chimichurri,
+    // an achiote marinade, a dry rub under sauce, seasoning worked through
+    // ground meat, and a butter bath. The pork chops are the one case with a
+    // binder that is not mustard — the garlic-herb mayonnaise is the recipe.
     if (
       ![
         'foil-boat',
@@ -70,6 +72,7 @@ for (const cut of cuts) {
         'bbq-chicken',
         'burger',
         'lobster',
+        'mayo-chop',
       ].includes(cut.family)
     )
       assert.ok(
@@ -643,7 +646,7 @@ test('titles keep proper nouns capitalised', () => {
     );
 
     // Only the template families build a title from the cut name. These
-    // three supply their own, so they are exempt by design.
+    // supply their own, so they are exempt by design.
     if (
       [
         'shoulder',
@@ -653,6 +656,7 @@ test('titles keep proper nouns capitalised', () => {
         'bbq-chicken',
         'burger',
         'lobster',
+        'mayo-chop',
       ].includes(cut.family)
     )
       continue;

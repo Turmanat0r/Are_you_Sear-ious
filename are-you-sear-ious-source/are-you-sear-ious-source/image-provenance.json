@@ -975,6 +975,50 @@
       "actualPrompt": null,
       "promptRecordStatus": "Prompt preserved in contributions/champagne-garlic-butter-bath-lobster-tails/generation-prompt.txt",
       "recordedVisualNote": "Added 2026-09-11. Supplied WebP (0131522aefcf) was re-derived from the verified original with this project's Sharp pipeline to meet the 1200x800 requirement."
+    },
+    {
+      "id": "garlic-herb-mayonnaise-pork-chops",
+      "original": {
+        "pathInOriginalsArchive": "originals/garlic-herb-mayonnaise-pork-chops.png",
+        "sha256": "05e419ac10157ac8be0f900fb213017ec024f36d180a16119146feafc8d6c5db",
+        "bytes": 2281417,
+        "width": 1536,
+        "height": 1024,
+        "format": "png",
+        "exifBytes": 0,
+        "xmpBytes": 0,
+        "iccBytes": 0,
+        "pngChunkTypes": ["IHDR", "caBX", "IDAT", "IEND"],
+        "c2pa": {
+          "container": "caBX",
+          "payloadBytes": 23617,
+          "observedStringMarkers": [
+            "c2pa",
+            "OpenAI",
+            "trainedAlgorithmicMedia"
+          ],
+          "signatureValidation": "not performed"
+        }
+      },
+      "delivered": {
+        "pathInSourceArchive": "public/meals/garlic-herb-mayonnaise-pork-chops.webp",
+        "pathInOfflineArchive": "images/garlic-herb-mayonnaise-pork-chops.webp",
+        "sha256": "03c0e6178c5dc1a1cf2c86172fe4450976302162445754e339e1c00d4afbed2c",
+        "bytes": 94034,
+        "width": 1200,
+        "height": 800,
+        "format": "webp",
+        "exifBytes": 0,
+        "xmpBytes": 0,
+        "iccBytes": 0,
+        "riffChunkTypes": ["VP8 "],
+        "c2paChunkPresent": false
+      },
+      "exactReencodeMatchesDeliveredBytes": true,
+      "projectAndOfflineWebpBytesMatch": true,
+      "actualPrompt": null,
+      "promptRecordStatus": "Prompt preserved in contributions/garlic-herb-mayonnaise-pork-chops/generation-prompt.txt",
+      "recordedVisualNote": "Added 2026-09-11. Supplied WebP (6dc0b9134f3a) arrived at 1120x747 and was re-derived from the verified original with this project’s Sharp pipeline to meet the 1200x800 requirement."
     }
   ]
 }

@@ -1,0 +1,7 @@
+Image origin and rights notes
+
+The runtime hero image was generated for this recipe with the OpenAI built-in image generation tool. It is not sourced from a stock-photo library. The exact prompt is preserved in `provenance/generation-prompt.txt`; the original PNG is preserved in `provenance/original-garlic-herb-mayonnaise-pork-chops.png`; the optimized runtime asset is `public/images/garlic-herb-mayonnaise-pork-chops.webp`.
+
+The original was converted locally to WebP with Sharp 0.34.5 using a cover resize to 1120×747, WebP quality 80 and effort 6. Hashes and dimensions are recorded in `provenance/image-provenance.json` and `public/provenance/image-details.json`.
+
+No EXIF, C2PA, signature, authorship, exclusivity, public-domain, or transferable-rights claim is made. No separate image license is assigned.

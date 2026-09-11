@@ -1,0 +1,12 @@
+{
+  "checkedOn": "2026-09-10",
+  "origin": "Generated for this recipe with the OpenAI built-in image generation tool; exact prompt is preserved in provenance/generation-prompt.txt.",
+  "images": [
+    { "path": "provenance/original-garlic-herb-mayonnaise-pork-chops.png", "sha256": "05e419ac10157ac8be0f900fb213017ec024f36d180a16119146feafc8d6c5db", "bytes": 2281417, "format": "png", "width": 1536, "height": 1024 },
+    { "path": "images/garlic-herb-mayonnaise-pork-chops.webp", "sha256": "6dc0b9134f3a783a20f4322f72d685c53f0527b8c48d9ea1e1e12e6d7f927e5a", "bytes": 85598, "format": "webp", "width": 1120, "height": 747 }
+  ],
+  "prompt": { "path": "provenance/generation-prompt.txt", "sha256": "70011ae69b2443aec24b2dc4f6245d08229e464c8805bd7f0ee638fdc75269da", "verbatim": true },
+  "conversion": "sharp 0.34.5; cover resize from 1536x1024 to 1120x747 with Lanczos3; WebP quality 80; effort 6",
+  "verificationScope": "File identity, dimensions, format and successful decoding. No EXIF, signature/C2PA, authorship or image-license authentication.",
+  "rights": "No separate image license is assigned. No public-domain, exclusivity or transferable-rights claim."
+}

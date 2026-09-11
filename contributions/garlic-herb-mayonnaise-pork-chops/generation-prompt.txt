@@ -1,0 +1,10 @@
+Use case: photorealistic-natural
+Asset type: wide hero photograph for a dark gas-grill recipe page
+Primary request: garlic-herb mayonnaise pork chops grilling on gas grill grates
+Scene/backdrop: open black three-burner gas grill at an outdoor backyard cooking station, dark unobtrusive charcoal-toned background
+Subject: two thick bone-in pork chops with a deeply browned sear and visible grill marks, coated with a thin glossy garlic-herb mayonnaise crust; rosemary, thyme and cracked black pepper visible; chops resting on clean grill grates with a subtle indirect zone suggested by the composition
+Style/medium: photorealistic editorial food photography with natural meat texture and realistic browning
+Composition/framing: wide 3:2 horizontal composition, close three-quarter angle, pork chops concentrated toward right and center with dark negative space on left for page blending; no people
+Lighting/mood: warm late-afternoon side light, subtle grill glow, charcoal-toned surroundings
+Constraints: fully cooked appearance, no raw centers visible, no cast-iron cookware, no skillet, no Dutch oven, no side dishes, no drinks, no text, logos, packaging, brand marks, hands or watermark
+Avoid: burnt mayonnaise, excessive flames or smoke, glossy fake meat, impossible grill geometry, duplicated utensils
