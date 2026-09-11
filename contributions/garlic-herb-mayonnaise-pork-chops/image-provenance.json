@@ -1,0 +1,10 @@
+{
+  "recipeId": "garlic-herb-mayonnaise-pork-chops",
+  "createdOn": "2026-09-10",
+  "generator": "OpenAI built-in image generation tool",
+  "generatorModel": "Not exposed; no model-version claim is made",
+  "original": { "path": "original-garlic-herb-mayonnaise-pork-chops.png", "mimeType": "image/png", "sha256": "05e419ac10157ac8be0f900fb213017ec024f36d180a16119146feafc8d6c5db", "width": 1536, "height": 1024 },
+  "webAsset": { "path": "../images/garlic-herb-mayonnaise-pork-chops.webp", "mimeType": "image/webp", "sha256": "6dc0b9134f3a783a20f4322f72d685c53f0527b8c48d9ea1e1e12e6d7f927e5a", "width": 1120, "height": 747, "conversion": "sharp 0.34.5; cover resize from 1536x1024 to 1120x747; WebP quality 80; effort 6" },
+  "prompt": { "path": "generation-prompt.txt", "verbatim": true },
+  "verification": "Hashes, dimensions, file format and decoding are verified. No EXIF, C2PA, signature, authorship, exclusivity or transferable-rights claim is made."
+}

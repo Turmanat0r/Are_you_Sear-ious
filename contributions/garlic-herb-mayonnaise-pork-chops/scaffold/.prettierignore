@@ -1,0 +1,11 @@
+node_modules/
+dist/
+assets/
+licenses/
+provenance/
+public/provenance/
+package-lock.json
+src/globals.css
+src/experience.css
+src/fonts.css
+src/shadcn-variants.css

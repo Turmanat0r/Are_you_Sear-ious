@@ -59,7 +59,8 @@ const offline = html
   // private scope that module semantics would otherwise have provided.
   .replace(
     '</body>',
-    () => `  <script>(function(){"use strict";\n${inlineJs}\n})();</script>\n  </body>`,
+    () =>
+      `  <script>(function(){"use strict";\n${inlineJs}\n})();</script>\n  </body>`,
   )
   // The offline copy is opened directly, so absolute paths cannot resolve.
   .replace(/\/meals\//g, './images/')

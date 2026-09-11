@@ -39,4 +39,4 @@ requirement it was re-derived here from the verified original, and
 `are-you-sear-ious-source/.../image-provenance.json` records which ones and what
 the superseded file hashed to.
 
-Four of the last five supplied images arrived at 1120x747. Check before copying.
+Five of the last six supplied images arrived at 1120x747. Check before copying.
