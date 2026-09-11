@@ -5,7 +5,7 @@ audit record, not a replacement for signed Content Credentials.
 
 ## Origin
 
-All 19 food images used by this app were generated with an AI image model.
+All 21 food images used by this app were generated with an AI image model.
 Twelve were made during the original task, the coffee-ancho tri-tip was added
 on 2026-09-07, the lemon-pepper walleye plus the prime rib, jerk turkey and
 chimichurri shrimp on 2026-09-08, and the two boneless-thigh chicken recipes on
@@ -42,15 +42,15 @@ images. That was an omission in the earlier ZIP, corrected by this separate repo
 
 ## What was checked
 
-- All 19 original PNGs and all 19 delivered WebPs were hashed with SHA-256.
+- All 21 original PNGs and all 21 delivered WebPs were hashed with SHA-256.
 - Each PNG's chunk structure and provenance-container presence were inspected.
 - Each original was re-encoded in memory with the existing conversion settings.
-  All 19 results matched the delivered WebP files byte for byte. Four supplied
+  All 21 results matched the delivered WebP files byte for byte. Six supplied
   images have now arrived at 1120x747 rather than the required 1200x800 — two
-  on 2026-09-08 and both chicken images on 2026-09-11 — so their delivered
-  WebPs were re-derived here from the verified originals using the pipeline
-  above. `image-provenance.json` records which, and what each superseded file
-  hashed to.
+  on 2026-09-08, and the two chicken plus the burger and lobster on 2026-09-11
+  — so their delivered WebPs were re-derived here from the verified originals
+  using the pipeline above. `image-provenance.json` records which, and what
+  each superseded file hashed to.
 - The WebPs in the source project and the standalone export match byte for byte.
 - The originals in the companion archive are unchanged copies, not newly generated
   or metadata-edited replacements.
@@ -77,9 +77,9 @@ continue using the small WebPs to run the existing app.
 ## Companion archive
 
 `are-you-sear-ious-image-originals.zip` contains this report, the JSON audit and
-12 of the 19 PNGs under `originals/`; the tri-tip, walleye, prime rib, jerk
-turkey, shrimp and both chicken originals arrived separately and are not yet in
-that archive. Both were re-verified on arrival:
+12 of the 21 PNGs under `originals/`. Every original delivered since then is
+kept beside its recipe in `contributions/<recipe-id>/original.png`, untracked by
+git but present on disk. Both were re-verified on arrival:
 their supplied SHA-256 hashes matched, and re-running the conversion pipeline
 reproduced each delivered WebP byte for byte. The editable-source ZIP includes the same report
 and audit, with the production WebPs under `public/meals/`. The standalone HTML

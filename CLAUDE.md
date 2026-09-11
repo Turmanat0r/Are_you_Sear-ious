@@ -1,6 +1,6 @@
 # Are You Sear-ious
 
-A grilling app: 19 cuts across beef, pork, poultry and seafood. Pick a cut and a
+A grilling app: 21 cuts across beef, pork, poultry and seafood. Pick a cut and a
 weight, it scales the seasoning, plans your burner zones, estimates cook time
 and walks you through it. Static site, no backend, no network calls at all.
 
@@ -16,7 +16,7 @@ are-you-sear-ious-source/are-you-sear-ious-source/     <- run npm here
 
 | File | What lives in it |
 | --- | --- |
-| `app/cook-config.ts` | The 19 cuts, ingredient scaling, recipe assembly, burner heat model, substitutions. The big one. |
+| `app/cook-config.ts` | The 21 cuts, ingredient scaling, recipe assembly, burner heat model, substitutions. The big one. |
 | `app/recipes.ts` | Four base recipes, type definitions, °F→°C conversion |
 | `app/page.tsx` | Page, cook mode, print sheet, saved recipes |
 | `app/grill-tools.tsx` | Weight/cut controls, temperature table, burner planner |
@@ -33,23 +33,30 @@ Run from the source folder above.
 
 ```
 npm run dev         # plain Vite dev server
-npm test            # 51 tests, node:test
+npm test            # 56 tests, node:test
 npm run typecheck   # tsc --noEmit, strict + noUncheckedIndexedAccess
 npm run lint        # oxlint
 npm run format      # oxfmt
 npm run build       # vite build -> dist-static/
 ```
 
-## Two things that will bite you
+## Things that will bite you
 
-**1. The linter cannot fully run on this machine.** oxlint's type-aware backend
-(`tsgolint.exe`) fails to spawn with EPERM in the local sandbox. A clean local
-run does **not** mean a clean Vercel run — this has broken production before.
-So: push a branch, wait for the Vercel preview to reach `READY`, and only then
-merge. Daniel merges the PR himself; a `main` ruleset blocks direct pushes and
-he has chosen to keep it that way.
+**1. Never put this repo back in iCloud Drive.** It lived in
+`iCloudDrive/Apps/` until 2026-09-11, and iCloud renamed `.git/config` to
+`.git/config 2` mid-session — git then ran with no remote, no branch tracking
+and 83 phantom deletions. It also caused the EPERM that stopped oxlint's
+type-aware backend running for the project's first four sessions. Both problems
+disappeared on a local disk. A sync service that renames files inside `.git/`
+can corrupt an object next time, and that is not fixable by copying a file back.
 
-**2. `git push ... | tail -3 && next-command` hides push failures**, because the
+**2. Branch, preview, merge — still the workflow.** Not because the linter is
+blind locally any more (it is not, since the move), but because Daniel merges
+the PR himself and a `main` ruleset blocks direct pushes. He has chosen to keep
+it that way. Push a branch, wait for the Vercel preview to reach `READY`, then
+hand over the compare URL.
+
+**3. `git push ... | tail -3 && next-command` hides push failures**, because the
 pipeline exits with `tail`'s status. Check `git push` unpiped.
 
 ## Adding a recipe
@@ -84,9 +91,11 @@ This is the usual request. In `app/cook-config.ts` unless stated:
 ## Non-negotiables
 
 - **USDA temperatures win.** Poultry 165°F; whole beef and pork 145°F with a
-  3-minute rest; fish 145°F with **no** required rest — the 3-minute rule is
-  for whole cuts of meat, not fillets. If a source recipe finishes lower,
-  raise it and pin it with a test. The tri-tip and the walleye both do.
+  3-minute rest; fish and shellfish 145°F with **no** required rest — the
+  3-minute rule is for whole cuts of meat, not fillets. **Ground meat is
+  160°F**, which is why the burger is the one cut in the app that is not 145°F
+  or 165°F; a test asserts it is the only one. If a source recipe finishes
+  lower, raise it and pin it with a test.
 - **The disclosures stay.** AI-photo badge, safety banner, print-sheet notices,
   bottom legal note. Tests assert each by substance, not wording.
 - **No network calls, ever.** The app claims it makes none, and a test greps
@@ -95,8 +104,17 @@ This is the usual request. In `app/cook-config.ts` unless stated:
 - **Adapted recipes get visible credit**, including a no-affiliation line, in
   the app and on the print sheet — not just in `NOTICE.md`.
 
+## Also read
+
+`AGENTS.md` at the root holds delivery preferences Daniel asked to be saved:
+one standalone ZIP per recipe, complete page code rather than prose, GitHub and
+Vercel rather than Cloudflare, mustard as the default binder, documented image
+provenance, and no uploading or deploying just because a package is finished.
+
 ## Read these before proposing work
 
 - `TODO.md` — the live backlog, ordered by what bites first
 - `AUDIT.md` — full review record, including corrections to earlier findings
 - `NOTICE.md` — licensing, AI-image provenance, the Weber recipe attribution
+- `contributions/<recipe-id>/` — the delivered package behind each recipe:
+  original page code, prompts, sources and provenance JSON
