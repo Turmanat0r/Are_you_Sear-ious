@@ -1943,15 +1943,23 @@ export function cookingScience(cut: Cut): Science {
       takeaway:
         'Move to the unlit zone if the surface is ready first. Probe the center and finish at 145°F.',
     };
-  if (cut.protein === 'Poultry')
+  if (cut.protein === 'Poultry') {
+    // Only the skin-on families get the baking powder note. The breast here
+    // is boneless, and the skinless thigh, turkey and BBQ recipes carry their
+    // own science above and never reach this branch.
+    const skinOn = cut.family !== 'breast';
     return {
       title: 'Skin needs a different finish',
-      body: 'Chicken skin browns and renders better with more heat than a long, low smoking session usually provides. A brief finish over direct heat can crisp it after the interior is almost ready. Sweet sauces can scorch during that finish.',
-      takeaway:
-        cut.family === 'breast'
-          ? 'Skinless breasts do not need a skin-crisping step. Finish at 165°F and keep the sauce away from hard flame.'
-          : 'Brown the skin late and watch closely. Check each piece with a thermometer.',
+      body:
+        'Chicken skin browns and renders better with more heat than a long, low smoking session usually provides. A brief finish over direct heat can crisp it after the interior is almost ready. Sweet sauces can scorch during that finish.' +
+        (skinOn
+          ? ' If you want the skin genuinely crisp rather than merely browned, a little baking powder worked into the dry-brine salt is the one trick that reliably does it. Powder, not soda — bicarbonate of soda on its own is a raw alkali and leaves a soapy, faintly metallic taste. Baking powder buffers that same bicarbonate with acid salts, and on skin it does two things at once: it lifts the surface pH, so the browning reactions run faster and begin at a lower temperature, and the carbon dioxide it gives off blisters the skin into a finely pitted surface with far more area to crisp.'
+          : ''),
+      takeaway: skinOn
+        ? 'Brown the skin late and watch closely, and check each piece with a thermometer. For the crispest result, mix about ½ tsp of aluminum-free baking powder per pound of chicken into the measured salt and leave the pieces uncovered in the refrigerator overnight. Much more than that and you can taste it.'
+        : 'Skinless breasts do not need a skin-crisping step. Finish at 165°F and keep the sauce away from hard flame.',
     };
+  }
   return {
     title: 'A sear makes flavor, not a seal',
     body: 'Heat drives reactions between amino acids and reducing sugars at the meat’s surface. These Maillard reactions create the savory aromas and brown crust we love. A wet surface spends more energy evaporating water, which slows browning; a crust does not seal juices inside.',

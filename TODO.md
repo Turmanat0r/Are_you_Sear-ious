@@ -5,7 +5,7 @@ actually bites you first, not by how hard it is. `AUDIT.md` has the full
 review record; this is the shorter list of what is still open.
 
 Current state: lint 0 errors · strict typecheck passes (**including the
-type-aware pass, which now runs locally**) · 59 tests pass · build passes · 0
+type-aware pass, which now runs locally**) · 60 tests pass · build passes · 0
 npm advisories · client CSS 197.7 KB, of which 119.5 KB is the five
 base64-inlined font faces and 78.2 KB is actual stylesheet. Meal photos are
 3.03 MB across 23 files, but only one is ever loaded.
