@@ -7,7 +7,7 @@ This project combines four categories of material with different terms. The
 | --- | --- |
 | Application source and build output | MIT — see [`LICENSE`](LICENSE) |
 | Bundled third-party libraries and fonts | Their own licenses — see [`THIRD-PARTY-LICENSES.txt`](THIRD-PARTY-LICENSES.txt) |
-| The meal images (20 in `images/`, 21 in `public/meals/`) | AI-generated — see below |
+| The meal images (21 each in `images/` and `public/meals/`) | AI-generated — see below |
 | Recipes drawn from published sources | Credited — see below |
 
 ## Third-party software and fonts
@@ -37,16 +37,17 @@ compliance purposes, generate it from `package-lock.json` rather than from
 
 ## The meal images
 
-Every WebP meal image — 21 in `public/meals/` in the source project, and the 20
-in `images/` that the older offline build loads — was **generated with an AI
+Every WebP meal image — 21 in `public/meals/` in the source project, and the
+same 21 in `images/` that the offline build loads — was **generated with an AI
 image model**, not photographed and not obtained from a stock library. No stock
 license was purchased and no photographer attribution is owed. Full details are
 in `IMAGE-PROVENANCE.md` and `image-provenance.json` in the source archive, and
 each recipe's exact prompt is preserved in
 `contributions/<recipe-id>/generation-prompt.txt`.
 
-The counts differ because `images/` belongs to the stale offline `index.html`,
-which has not been regenerated since the tri-tip was added. See `TODO.md`.
+Both folders hold the same 21 files: `npm run build` regenerates the offline
+`index.html` and syncs `images/` from `public/meals/`, and a test fails if they
+fall out of step.
 
 Two things follow from that, and both are deliberate:
 

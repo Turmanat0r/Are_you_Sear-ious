@@ -15,25 +15,23 @@ The repository moved out of iCloud Drive to `C:\Users\Danie\repos` on
 
 ---
 
-## Blocking a public repo
+## Recently closed
 
-### 1. The offline `index.html` cannot be rebuilt
+### ~~1. The offline `index.html` cannot be rebuilt~~ — done 2026-09-11
 
-Still the most consequential item, and it got worse again. `index.html` differs
-from what this source produces — title, description, image paths (`./images/`
-vs `/meals/`), inline favicon, inlined fonts — and no script in the repo
-performs that conversion.
+The packaging step now exists: `scripts/build-offline.mjs`, run by
+`npm run build`. It inlines the stylesheet and script, rewrites `/meals/` to
+`./images/`, and syncs the photo folder. A test asserts the result names every
+cut and holds no absolute asset paths, so skipping the step fails the gate
+instead of shipping a stale file.
 
-It is also where the bloat lives: it bundles **1,767 lucide icons where the
-source build emits 26**, and embeds Cyrillic and Vietnamese font subsets the
-source never asks for. It now predates three sessions of work, so it has none of
-the burner levels, substitutions, breakpoints, salt volumes, or the tri-tip —
-and `images/` has no `coffee-ancho-tri-tip.webp` for it to load.
+Went from 12 recipes and 1.63 MB to 21 recipes and 703 KB — smaller with nine
+more recipes, because the old file bundled 1,767 lucide icons where the build
+emits 26.
 
-**Anyone opening `index.html` today gets a stale app that is missing a whole
-recipe.** Either commit the packaging step, regenerate the file, or delete it
-from the repo and publish it as a release asset. Deleting is looking like the
-honest option.
+### ~~Dependency advisories~~ — done, and staying done
+
+`npm audit` reports 0. Re-check after any dependency change.
 
 ---
 

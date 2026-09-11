@@ -26,7 +26,7 @@ self-contained offline build of it.
 
 ```
 index.html                  Offline build — one 1.6 MB file, opens with no server
-images/                     20 meal photos for the offline build (no tri-tip yet)
+images/                     All 21 meal photos, kept in step by `npm run build`
 README.txt                  End-user instructions for the offline build
 THIRD-PARTY-LICENSES.txt    Full license text for every bundled library and font
 LICENSE                     MIT — covers the application code
