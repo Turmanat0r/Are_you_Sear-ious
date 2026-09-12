@@ -13,7 +13,13 @@ export type Protein =
    * what you walk to the counter and buy, and a stuffed pepper does not
    * belong behind any of the four above even when its filling contains meat.
    */
-  | 'Vegetarian';
+  | 'Vegetarian'
+  /**
+   * A meal rather than a counter, for the same reason: a breakfast burrito
+   * is bacon, eggs and potatoes in a tortilla, and filing it behind pork
+   * shoulder and chops would hide it from anyone looking for breakfast.
+   */
+  | 'Breakfast';
 export type Unit = 'F' | 'C';
 /** A temperature range that always has at least a low bound. */
 export type Temperatures = [number, ...number[]];

@@ -1156,6 +1156,56 @@
       "actualPrompt": null,
       "promptRecordStatus": "Not supplied. Generated in ChatGPT by the project owner on 2026-09-12 and delivered as a bare PNG named 'ChatGPT Image Sep 12, 2026, 04_38_46 PM.png'. contributions/blackstone-garlic-butter-asparagus-mushrooms-peppers/proposed-generation-prompt.txt is a draft written before the image existed and is not a record of what was submitted.",
       "recordedVisualNote": "Added 2026-09-12. The first square original and the first delivered without a prompt. The OpenAI C2PA markers in its caBX container are consistent with ChatGPT image generation; the signature was not validated."
+    },
+    {
+      "id": "loaded-bacon-breakfast-burritos",
+      "original": {
+        "pathInOriginalsArchive": "originals/loaded-bacon-breakfast-burritos.png",
+        "sha256": "b6472afd8d94438c73a67c097ab73ad65c5dbee693496a52d37f7433750b53a8",
+        "bytes": 2776219,
+        "width": 1254,
+        "height": 1254,
+        "format": "png",
+        "channels": 4,
+        "exifBytes": 0,
+        "xmpBytes": 0,
+        "iccBytes": 0,
+        "pngChunkTypes": ["IHDR", "caBX", "IDAT", "IEND"],
+        "c2pa": {
+          "container": "caBX",
+          "payloadBytes": 23617,
+          "observedStringMarkers": [
+            "c2pa",
+            "OpenAI",
+            "trainedAlgorithmicMedia"
+          ],
+          "signatureValidation": "not performed"
+        }
+      },
+      "delivered": {
+        "pathInSourceArchive": "public/meals/loaded-bacon-breakfast-burritos.webp",
+        "pathInOfflineArchive": "images/loaded-bacon-breakfast-burritos.webp",
+        "sha256": "9227d8eedd4567454c492844e825fea663562329dd4c1f98a52a66642c0add25",
+        "bytes": 175390,
+        "width": 1200,
+        "height": 800,
+        "format": "webp",
+        "exifBytes": 0,
+        "xmpBytes": 0,
+        "iccBytes": 0,
+        "riffChunkTypes": ["VP8 "],
+        "c2paChunkPresent": false
+      },
+      "conversionOverride": {
+        "pipeline": "sharp(source).rotate().extract({left:0,top:230,width:1254,height:836}).flatten({background:'#1b1c19'}).resize({width:1200,height:800}).webp({quality:80,effort:6})",
+        "reason": "The original is square, with ragged cut-out edges along its top and in its corners, and every pixel is partly transparent: a mottled alpha vignette, 80-98% opaque across the food and clear at the corners. The crop starts 230 px down to stay clear of the ragged edges. Flattening onto the feature card's background removes the alpha channel, which on its own made the WebP 375 KB at quality 80; flattened, it is 175 KB with no softening or quality change.",
+        "libraryVersions": { "sharp": "0.35.4", "vips": "8.18.6", "webp": "1.6.0" }
+      },
+      "exactReencodeMatchesDeliveredBytes": true,
+      "projectAndOfflineWebpBytesMatch": true,
+      "actualPrompt": null,
+      "promptRecordStatus": "Not supplied. Generated in ChatGPT by the project owner on 2026-09-12 and delivered as a bare PNG named 'ChatGPT Image Sep 12, 2026, 05_15_23 PM.png', described in the request as a WebP.",
+      "recordedVisualNote": "Added 2026-09-12. The first original with an alpha channel. The OpenAI C2PA markers in its caBX container are consistent with ChatGPT image generation; the signature was not validated."
     }
   ]
 }

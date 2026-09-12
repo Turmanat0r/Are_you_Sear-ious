@@ -5,10 +5,10 @@ actually bites you first, not by how hard it is. `AUDIT.md` has the full
 review record; this is the shorter list of what is still open.
 
 Current state: lint 0 errors · strict typecheck passes (**including the
-type-aware pass, which now runs locally**) · 67 tests pass · build passes · 0
+type-aware pass, which now runs locally**) · 69 tests pass · build passes · 0
 npm advisories · client CSS 197.7 KB, of which 119.5 KB is the five
 base64-inlined font faces and 78.2 KB is actual stylesheet. Meal photos are
-3.51 MB across 25 files, but only one is ever loaded.
+3.69 MB across 26 files, but only one is ever loaded.
 
 The repository moved out of iCloud Drive to `C:\Users\Danie\repos` on
 2026-09-11. Do not move it back; see `CLAUDE.md`.
@@ -105,13 +105,13 @@ every query in `experience.css` matches it. What it did not cover:
 
 ### 8. The meal photos have no `srcset`
 
-**This one has got sharper.** There are now 25 photos averaging 140 KB, and a
+**This one has got sharper.** There are now 26 photos averaging 142 KB, and a
 360px phone still downloads the full 1200×800 for whichever cut it shows.
 
 Every device downloads the same 1200×800 WebP, roughly 133 KB. A 360px phone
 needs about a quarter of that. Generating 480/800/1200 variants in
 `scripts/optimize-meal-images.mjs` and adding `srcset`/`sizes` would cut the
-mobile payload substantially — the photos are 3.51 MB of the 4.3 MB deploy, so
+mobile payload substantially — the photos are 3.69 MB of the 4.4 MB deploy, so
 this is the largest remaining weight win now that the CSS is fixed. (The 1.28 MB
 figure this item used to quote was left over from the twelve-recipe build.)
 

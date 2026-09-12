@@ -8,6 +8,7 @@ import {
   Ham,
   Drumstick,
   Salad,
+  EggFried,
   Fish,
   ArrowUpRight,
   ArrowRight,
@@ -56,6 +57,7 @@ import {
   defaultCuts,
   restoreSelection,
   restoreChecked,
+  isGriddle,
   validateWeight,
   dryBrineScience,
   cookingScience,
@@ -82,6 +84,7 @@ const proteins = [
   { name: 'Poultry', icon: Drumstick, note: 'Keep it juicy' },
   { name: 'Seafood', icon: Fish, note: 'Go easy' },
   { name: 'Vegetarian', icon: Salad, note: 'Give it room' },
+  { name: 'Breakfast', icon: EggFried, note: 'Start the day hot' },
 ];
 const validProteins = proteins.map((p) => p.name);
 function readLocal<T>(key: string, fallback: T): T {
@@ -870,9 +873,7 @@ export default function Home() {
                   </strong>
                   <p>
                     {recipe.method} ·{' '}
-                    {recipe.cut.family === 'griddle-veg'
-                      ? 'read on the steel'
-                      : 'lid closed'}
+                    {isGriddle(recipe.cut) ? 'read on the steel' : 'lid closed'}
                     {recipe.cut.method === 'Reverse sear' && (
                       <>. Then sear at {temp([450, 550], unit)}.</>
                     )}
@@ -1065,11 +1066,11 @@ export default function Home() {
                         <h4>{step.title}</h4>
                         <p className="step-cue">{unitText(step.cue, unit)}</p>
                         <p>{unitText(step.body, unit)}</p>
-                        {/* The griddle vegetables salt last, which is the
-                            opposite of what the dry-brine card teaches. */}
+                        {/* Griddle recipes season at the griddle, which is
+                            the opposite of what the dry-brine card teaches. */}
                         {i === 0 &&
                           recipe.protein !== 'Seafood' &&
-                          recipe.cut.family !== 'griddle-veg' && (
+                          !isGriddle(recipe.cut) && (
                             <ScienceNote note={dryBrineScience} unit={unit} />
                           )}{' '}
                         {i === 2 && (
