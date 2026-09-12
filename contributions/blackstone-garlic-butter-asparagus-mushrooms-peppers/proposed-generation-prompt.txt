@@ -1,0 +1,15 @@
+DRAFT, WRITTEN BEFORE THE IMAGE EXISTED. The shipped image was generated in
+ChatGPT on 2026-09-12 and arrived without its prompt, so this is not a record
+of what was submitted. If the real prompt turns up, save it verbatim as
+generation-prompt.txt and delete this file.
+
+Use case: photorealistic-natural
+Asset type: wide hero photograph for a dark gas-grill recipe page
+Primary request: garlic-butter asparagus, sliced baby bella mushrooms, and red and yellow bell pepper strips being cooked on a black steel flat-top gas griddle
+Scene/backdrop: outdoor backyard cooking station at a black flat-top gas griddle, dark unobtrusive background
+Subject: bright green asparagus pieces with a few charred spots, thick-sliced mushrooms with deep golden seared faces, blistered red and yellow bell pepper strips, glossy with melted butter, flecks of minced garlic, a light dusting of smoked paprika and herbs, and a halved lemon resting at the edge of the steel
+Style/medium: photorealistic editorial food photography with natural vegetable texture and a well-seasoned black griddle surface
+Composition/framing: wide 3:2 horizontal composition, close three-quarter angle, vegetables in a single loose layer concentrated toward the right and center with some dark negative space on the left for page blending; no people
+Lighting/mood: warm late-afternoon side light, a little steam rising, rich but natural color, charcoal-toned surroundings
+Constraints: vegetables must look crisp-tender, not limp or burnt; no text, logo, brand marks, packaging, or watermark; no visible manufacturer name on the griddle
+Avoid: excessive smoke, flames on the griddle surface, piled or crowded vegetables, meat, side dishes, drinks, hands, spatulas crossing the food, plastic-looking butter

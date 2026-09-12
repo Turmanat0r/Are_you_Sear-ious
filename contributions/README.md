@@ -16,7 +16,7 @@ image, and what the original page looked like before it was ported.
   recipe-notes.md        the author's notes
   generation-prompt.txt  the exact image prompt, preserved verbatim
   image-provenance.json  hashes, dimensions and conversion details
-  original.png           the unconverted 1536x1024 original (not tracked)
+  original.png           the unconverted original, usually 1536x1024 (not tracked)
   scaffold/              the package's own build files, unused here
 ```
 
