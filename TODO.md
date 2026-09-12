@@ -5,7 +5,7 @@ actually bites you first, not by how hard it is. `AUDIT.md` has the full
 review record; this is the shorter list of what is still open.
 
 Current state: lint 0 errors · strict typecheck passes (**including the
-type-aware pass, which now runs locally**) · 65 tests pass · build passes · 0
+type-aware pass, which now runs locally**) · 67 tests pass · build passes · 0
 npm advisories · client CSS 197.7 KB, of which 119.5 KB is the five
 base64-inlined font faces and 78.2 KB is actual stylesheet. Meal photos are
 3.51 MB across 25 files, but only one is ever loaded.
@@ -61,8 +61,10 @@ good; the UI has no net under it.
 ### 5. Two `localStorage` prefixes, and a stale key name
 
 `searline-unit` and `searline-saved` still sit alongside `searious-weight-unit`,
-`searious-weights`, `searious-grill` and `searious-swaps` — a half-finished
-rename from an earlier project name. Nothing is broken.
+`searious-weights`, `searious-grill`, `searious-swaps`, `searious-selection`
+and `searious-checked` — a half-finished rename from an earlier project name.
+Nothing is broken. The last two were added on 2026-09-12 under the newer prefix
+so the eventual migration has less to move.
 
 Also: `searious-grill` stores its per-zone settings under a field still called
 `states`, which held booleans before levels existed. The migration reads both

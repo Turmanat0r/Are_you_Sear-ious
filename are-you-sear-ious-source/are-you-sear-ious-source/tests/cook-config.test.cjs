@@ -29,6 +29,9 @@ const {
   saltWarning,
   measuredPart,
   spoonLabel,
+  defaultProtein,
+  restoreSelection,
+  restoreChecked,
 } = config;
 
 const CUTS_PER_PROTEIN = {
@@ -170,6 +173,90 @@ for (const cut of cuts) {
     }
   });
 }
+
+test('the page reopens on the tab and cut you left, and survives bad storage', () => {
+  // A first visit, or storage that is missing, cleared or unreadable, lands
+  // on the defaults.
+  for (const stored of [null, undefined, 'Beef', 42, [], {}]) {
+    const selection = restoreSelection(stored);
+    assert.equal(selection.protein, defaultProtein);
+    assert.deepEqual(selection.cuts, defaultCuts);
+  }
+
+  // What was open last time comes back, including a non-default cut in a
+  // tab you were not on.
+  const left = {
+    protein: 'Vegetarian',
+    cuts: {
+      ...defaultCuts,
+      Vegetarian: 'blackstone-garlic-butter-asparagus-mushrooms-peppers',
+      Beef: 'coffee-ancho-tri-tip',
+    },
+  };
+  assert.deepEqual(restoreSelection(JSON.parse(JSON.stringify(left))), left);
+
+  // The page builds a recipe from this before anything can catch an error,
+  // so a stale or tampered value must fall back rather than reach buildRecipe.
+  const stale = restoreSelection({
+    protein: 'Fish',
+    cuts: {
+      Beef: 'pork-shoulder',
+      Pork: 'a-cut-that-was-removed',
+      Poultry: 7,
+      Seafood: 'lemon-pepper-walleye',
+    },
+  });
+  assert.equal(stale.protein, defaultProtein, "'Fish' is no longer a category");
+  assert.equal(stale.cuts.Beef, defaultCuts.Beef, 'a pork cut is not beef');
+  assert.equal(stale.cuts.Pork, defaultCuts.Pork);
+  assert.equal(stale.cuts.Poultry, defaultCuts.Poultry);
+  assert.equal(stale.cuts.Seafood, 'lemon-pepper-walleye');
+  for (const id of Object.values(stale.cuts))
+    assert.doesNotThrow(() =>
+      buildRecipe(id, cuts.find((c) => c.id === id).baseLb),
+    );
+  assert.equal(
+    cuts.find((c) => c.id === stale.cuts.Vegetarian).protein,
+    'Vegetarian',
+  );
+});
+
+test('ticked ingredients survive a reload, and nothing else is kept', () => {
+  const recipe = buildRecipe('pork-shoulder', 8);
+  const [first, second] = recipe.ingredients[0].items;
+  const ticks = {
+    [recipe.id + first]: true,
+    [recipe.id + second]: false,
+    'a-cut-that-was-removed2 lb something': true,
+    [recipe.id + 'truthy but not a tick']: 'yes',
+  };
+  assert.deepEqual(restoreChecked(JSON.parse(JSON.stringify(ticks))), {
+    [recipe.id + first]: true,
+  });
+  for (const stored of [null, undefined, 'x', 3, [true]])
+    assert.deepEqual(restoreChecked(stored), {});
+
+  // The page has to read both back before its first render and write them
+  // on change. No component tests exist yet, so check the wiring directly.
+  const page = fs.readFileSync(
+    path.resolve(__dirname, '..', 'app', 'page.tsx'),
+    'utf8',
+  );
+  assert.match(
+    page,
+    /restoreSelection\(\s*readLocal<unknown>\('searious-selection'/,
+  );
+  assert.match(
+    page,
+    /restoreChecked\(\s*readLocal<unknown>\('searious-checked'/,
+  );
+  assert.match(page, /saveLocal\('searious-selection'/);
+  assert.match(page, /saveLocal\('searious-checked'/);
+  assert.ok(
+    !/useState<Protein>\('Pork'\)/.test(page),
+    'the tab must not be hardcoded to pork shoulder again',
+  );
+});
 
 test('measurement formatting and smaller units scale correctly', () => {
   const mustard = { amount: 2, unit: 'tsp', name: 'Dijon mustard' };

@@ -54,6 +54,8 @@ import {
   cuts,
   buildRecipe,
   defaultCuts,
+  restoreSelection,
+  restoreChecked,
   validateWeight,
   dryBrineScience,
   cookingScience,
@@ -473,18 +475,28 @@ function IngredientItem({
 }
 
 export default function Home() {
-  const [protein, setProtein] = useState<Protein>('Pork');
+  // The tab, cuts and checklist are restored before the first render rather
+  // than in the mount effect below. Doing it there would paint the default
+  // tab and start downloading its photo before switching to the one you
+  // left, and a tablet that reloads mid-cook would appear to lose your ticks.
+  // The app is only ever rendered in the browser, so storage is readable now.
+  const [initialSelection] = useState(() =>
+    restoreSelection(readLocal<unknown>('searious-selection', null)),
+  );
+  const [protein, setProtein] = useState<Protein>(initialSelection.protein);
   const [unit, setUnit] = useState<Unit>('F');
   const [weightUnit, setWeightUnit] = useState<WeightUnit>('lb');
-  const [selectedCuts, setSelectedCuts] = useState<Record<Protein, string>>({
-    ...defaultCuts,
-  });
+  const [selectedCuts, setSelectedCuts] = useState<Record<Protein, string>>(
+    initialSelection.cuts,
+  );
   const [weights, setWeights] = useState<Record<string, number>>(() =>
     Object.fromEntries(cuts.map((c) => [c.id, c.baseLb])),
   );
   const [weightValid, setWeightValid] = useState(true);
   const [saved, setSaved] = useState<string[]>([]);
-  const [checked, setChecked] = useState<Record<string, boolean>>({});
+  const [checked, setChecked] = useState<Record<string, boolean>>(() =>
+    restoreChecked(readLocal<unknown>('searious-checked', {})),
+  );
   const [dialog, setDialog] = useState<'cook' | 'saved' | null>(null);
   const [ready, setReady] = useState(false);
   const burners = useBurnerPlan();
@@ -568,6 +580,13 @@ export default function Home() {
       saveLocal('searious-swaps', swaps);
     }
   }, [unit, saved, weights, weightUnit, swaps, ready]);
+  // Restored on the first render, so these can be written straight away.
+  useEffect(() => {
+    saveLocal('searious-selection', { protein, cuts: selectedCuts });
+  }, [protein, selectedCuts]);
+  useEffect(() => {
+    saveLocal('searious-checked', restoreChecked(checked));
+  }, [checked]);
   useEffect(() => {
     type Tool = {
       name: string;

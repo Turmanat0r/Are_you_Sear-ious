@@ -617,6 +617,50 @@ export const defaultCuts: Record<Protein, string> = {
   Seafood: 'lemon-salmon',
   Vegetarian: 'fire-kissed-stuffed-bell-peppers',
 };
+/** The tab a first-time visitor lands on. */
+export const defaultProtein: Protein = 'Pork';
+export type Selection = { protein: Protein; cuts: Record<Protein, string> };
+function isRecord(value: unknown): value is Record<string, unknown> {
+  return Boolean(value) && typeof value === 'object' && !Array.isArray(value);
+}
+/**
+ * Reads back the tab and the cut chosen in each category on a previous visit.
+ * Anything that no longer matches the recipe list -- a removed cut, a renamed
+ * category, a cut filed under the wrong one -- falls back to the default
+ * instead of throwing, because the page builds a recipe from this on its very
+ * first render, before anything could catch an error.
+ */
+export function restoreSelection(stored: unknown): Selection {
+  const record = isRecord(stored) ? stored : {};
+  const storedCuts = isRecord(record.cuts) ? record.cuts : {};
+  const proteins = Object.keys(defaultCuts) as Protein[];
+  const selected = { ...defaultCuts };
+  for (const protein of proteins) {
+    const id = storedCuts[protein];
+    if (cuts.some((c) => c.id === id && c.protein === protein))
+      selected[protein] = id as string;
+  }
+  return {
+    protein: proteins.find((p) => p === record.protein) ?? defaultProtein,
+    cuts: selected,
+  };
+}
+/**
+ * Reads back the ingredient checklist. Keys are the cut id followed by the
+ * item text, so only ticked items for cuts that still exist are kept; an
+ * unticked item needs no entry at all.
+ */
+export function restoreChecked(stored: unknown): Record<string, boolean> {
+  if (!isRecord(stored)) return {};
+  return Object.fromEntries(
+    Object.entries(stored)
+      .filter(
+        ([key, value]) =>
+          value === true && cuts.some((c) => key.startsWith(c.id)),
+      )
+      .map(([key]) => [key, true]),
+  );
+}
 type Measure = { amount: number; unit: string; name: string };
 type Group = { title: string; items: (Measure | string)[] };
 const m = (amount: number, unit: string, name: string): Measure => ({
