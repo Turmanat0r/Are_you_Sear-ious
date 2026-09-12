@@ -1107,6 +1107,55 @@
       "actualPrompt": null,
       "promptRecordStatus": "Prompt preserved in contributions/fire-kissed-stuffed-bell-peppers/generation-prompt.txt",
       "recordedVisualNote": "Added 2026-09-11. Supplied WebP (a7852ae56d1b) arrived at 1120x747 and was re-derived from the verified original with this project’s Sharp pipeline to meet the 1200x800 requirement. The first image here for a recipe that is not a cut of meat."
+    },
+    {
+      "id": "blackstone-garlic-butter-asparagus-mushrooms-peppers",
+      "original": {
+        "pathInOriginalsArchive": "originals/blackstone-garlic-butter-asparagus-mushrooms-peppers.png",
+        "sha256": "621f305efa7202a44ed17bb12056b6c913b5fa74c3c8e79101503dfb43abe728",
+        "bytes": 2908491,
+        "width": 1254,
+        "height": 1254,
+        "format": "png",
+        "exifBytes": 0,
+        "xmpBytes": 0,
+        "iccBytes": 0,
+        "pngChunkTypes": ["IHDR", "caBX", "IDAT", "IEND"],
+        "c2pa": {
+          "container": "caBX",
+          "payloadBytes": 23617,
+          "observedStringMarkers": [
+            "c2pa",
+            "OpenAI",
+            "trainedAlgorithmicMedia"
+          ],
+          "signatureValidation": "not performed"
+        }
+      },
+      "delivered": {
+        "pathInSourceArchive": "public/meals/blackstone-garlic-butter-asparagus-mushrooms-peppers.webp",
+        "pathInOfflineArchive": "images/blackstone-garlic-butter-asparagus-mushrooms-peppers.webp",
+        "sha256": "bf164b5716d18a4df075dfcd72d53c18f75a75a0a69e2e7331c58e436220d6c1",
+        "bytes": 225766,
+        "width": 1200,
+        "height": 800,
+        "format": "webp",
+        "exifBytes": 0,
+        "xmpBytes": 0,
+        "iccBytes": 0,
+        "riffChunkTypes": ["VP8 "],
+        "c2paChunkPresent": false
+      },
+      "conversionOverride": {
+        "pipeline": "sharp(source).rotate().extract({left:0,top:110,width:1254,height:836}).resize({width:1200,height:800}).webp({quality:80,effort:6})",
+        "reason": "The original is square. The shared pipeline only resizes, so this one crops to 3:2 first. The crop sits 110 px from the top rather than centred, which keeps the griddle's back edge in frame and brings the file from 248984 bytes to 225766, clear of the 250 KB cap.",
+        "libraryVersions": { "sharp": "0.35.4", "vips": "8.18.6", "webp": "1.6.0" }
+      },
+      "exactReencodeMatchesDeliveredBytes": true,
+      "projectAndOfflineWebpBytesMatch": true,
+      "actualPrompt": null,
+      "promptRecordStatus": "Not supplied. Generated in ChatGPT by the project owner on 2026-09-12 and delivered as a bare PNG named 'ChatGPT Image Sep 12, 2026, 04_38_46 PM.png'. contributions/blackstone-garlic-butter-asparagus-mushrooms-peppers/proposed-generation-prompt.txt is a draft written before the image existed and is not a record of what was submitted.",
+      "recordedVisualNote": "Added 2026-09-12. The first square original and the first delivered without a prompt. The OpenAI C2PA markers in its caBX container are consistent with ChatGPT image generation; the signature was not validated."
     }
   ]
 }

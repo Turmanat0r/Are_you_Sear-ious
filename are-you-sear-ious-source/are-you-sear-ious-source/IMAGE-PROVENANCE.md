@@ -5,14 +5,16 @@ audit record, not a replacement for signed Content Credentials.
 
 ## Origin
 
-All 24 food images used by this app were generated with an AI image model.
+All 25 food images used by this app were generated with an AI image model.
 Twelve were made during the original task, the coffee-ancho tri-tip was added
 on 2026-09-07, the lemon-pepper walleye plus the prime rib, jerk turkey and
 chimichurri shrimp on 2026-09-08, and the two boneless-thigh chicken recipes,
 the steakhouse burgers, the butter-bath lobster tails, the garlic-herb
 mayonnaise pork chops, the smothered beef ribs and the stuffed bell peppers
 on 2026-09-11, all using
-OpenAI's built-in `image_gen` tool. They are photorealistic illustrations, not
+OpenAI's built-in `image_gen` tool. The Blackstone garlic-butter vegetables
+were added on 2026-09-12 from an image the project owner generated in ChatGPT,
+which arrived without its prompt; its PNG carries the same OpenAI C2PA markers. They are photorealistic illustrations, not
 camera photographs of meals actually prepared. They were not downloaded from a
 stock-photo site or a recipe publisher. No stock photographer attribution or
 stock-image license was obtained. The exact underlying image-model identifier
@@ -27,7 +29,8 @@ no reconstructed prompts are presented as originals.
 
 ## Why the delivered files lack metadata
 
-All original PNGs are 1536 × 1024. Inspection found no EXIF, XMP or ICC metadata,
+Every original PNG is 1536 × 1024 except the Blackstone vegetables, which is a
+1254 × 1254 square and is cropped to 3:2 before resizing. Inspection found no EXIF, XMP or ICC metadata,
 but each PNG contains a `caBX` chunk. The C2PA specification identifies `caBX` as
 the PNG container for a C2PA Manifest Store. Each inspected payload contains
 `c2pa`, `OpenAI` and `trainedAlgorithmicMedia` string markers.
@@ -44,10 +47,10 @@ images. That was an omission in the earlier ZIP, corrected by this separate repo
 
 ## What was checked
 
-- All 24 original PNGs and all 24 delivered WebPs were hashed with SHA-256.
+- All 25 original PNGs and all 25 delivered WebPs were hashed with SHA-256.
 - Each PNG's chunk structure and provenance-container presence were inspected.
 - Each original was re-encoded in memory with the existing conversion settings.
-  All 24 results matched the delivered WebP files byte for byte. Eight supplied
+  All 25 results matched the delivered WebP files byte for byte. Eight supplied
   images have now arrived at 1120x747 rather than the required 1200x800 — two
   on 2026-09-08, and the two chicken plus the burger, the lobster, the pork
   chops and the stuffed peppers on 2026-09-11
@@ -84,7 +87,7 @@ continue using the small WebPs to run the existing app.
 ## Companion archive
 
 `are-you-sear-ious-image-originals.zip` contains this report, the JSON audit and
-12 of the 24 PNGs under `originals/`. Every original delivered since then is
+12 of the 25 PNGs under `originals/`. Every original delivered since then is
 kept beside its recipe in `contributions/<recipe-id>/original.png`, untracked by
 git but present on disk. Both were re-verified on arrival:
 their supplied SHA-256 hashes matched, and re-running the conversion pipeline

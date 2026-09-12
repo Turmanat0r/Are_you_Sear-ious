@@ -292,7 +292,11 @@ export function ProteinTemperatures({
                 <TableCell>
                   <strong>{temp(c.internal, unit)}</strong>
                   <small>
-                    {c.internal[0] > 165 ? 'Tenderness target' : 'Safe minimum'}
+                    {c.family === 'griddle-veg'
+                      ? 'No safety minimum'
+                      : c.internal[0] > 165
+                        ? 'Tenderness target'
+                        : 'Safe minimum'}
                   </small>
                 </TableCell>
                 <TableCell>{c.rest}</TableCell>

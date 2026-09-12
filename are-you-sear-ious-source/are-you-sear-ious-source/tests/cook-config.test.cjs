@@ -36,12 +36,12 @@ const CUTS_PER_PROTEIN = {
   Pork: 4,
   Poultry: 6,
   Seafood: 6,
-  Vegetarian: 1,
+  Vegetarian: 2,
 };
 
-test('five categories, twenty-four unique cuts, and matching defaults', () => {
-  assert.equal(cuts.length, 24);
-  assert.equal(new Set(cuts.map((c) => c.id)).size, 24);
+test('five categories, twenty-five unique cuts, and matching defaults', () => {
+  assert.equal(cuts.length, 25);
+  assert.equal(new Set(cuts.map((c) => c.id)).size, 25);
   assert.equal(
     Object.values(CUTS_PER_PROTEIN).reduce((a, b) => a + b, 0),
     cuts.length,
@@ -73,6 +73,7 @@ for (const cut of cuts) {
     // an achiote marinade, a dry rub under sauce, seasoning worked through
     // ground meat, and a butter bath. The pork chops are the one case with a
     // binder that is not mustard — the garlic-herb mayonnaise is the recipe.
+    // Vegetables seared in oil and finished in butter have nothing to bind.
     if (
       ![
         'foil-boat',
@@ -84,6 +85,7 @@ for (const cut of cuts) {
         'lobster',
         'mayo-chop',
         'stuffed-pepper',
+        'griddle-veg',
       ].includes(cut.family)
     )
       assert.ok(
@@ -670,6 +672,7 @@ test('titles keep proper nouns capitalised', () => {
         'mayo-chop',
         'beef-ribs',
         'stuffed-pepper',
+        'griddle-veg',
       ].includes(cut.family)
     )
       continue;
@@ -853,6 +856,76 @@ test('the stuffed peppers cover every filling with one number', () => {
   // A pepper is not meat, and the category exists so the picker can say so.
   assert.equal(recipe.protein, 'Vegetarian');
   assert.equal(defaultCuts.Vegetarian, 'fire-kissed-stuffed-bell-peppers');
+});
+
+test('the griddle vegetables salt last and claim no safety minimum', () => {
+  const recipe = buildRecipe(
+    'blackstone-garlic-butter-asparagus-mushrooms-peppers',
+    2.25,
+  );
+  assert.equal(recipe.protein, 'Vegetarian');
+  assert.equal(recipe.serves, '5', 'the source recipe serves 4–6');
+
+  // Vegetables are safe raw. The number the template needs is the FDA hot-
+  // holding figure, and the copy has to say so rather than dress it up as a
+  // USDA safety minimum that does not exist.
+  assert.deepEqual(recipe.internal, [135]);
+  assert.match(recipe.safety, /no USDA safe minimum/i);
+  assert.match(recipe.safety, /FDA Food Code/);
+  assert.match(recipe.finish, /[Tt]exture decides/);
+  assert.ok(!/rest at least 3|3-minute rest/.test(recipe.finish));
+
+  // Every other cut salts early. Salted mushrooms weep and steam, so this one
+  // measures its salt up front and holds it back, and the dry-brine card that
+  // teaches the opposite stays off its first step.
+  const [first, ...rest] = recipe.steps;
+  assert.match(first.body, /goes on at the end, not now/);
+  assert.match(recipe.ingredients[0].items[1], /at the end/);
+  // Naming a sauce on this line would make it offer that sauce's swaps.
+  assert.equal(
+    substitutionsFor(recipe.ingredients[0].items[1]).label,
+    'Kosher salt',
+  );
+  const seasoned = rest.findIndex((s) => /salt/i.test(s.body));
+  const mushrooms = rest.findIndex((s) => /mushrooms/i.test(s.title));
+  assert.ok(mushrooms >= 0 && seasoned > mushrooms, 'salt after the sear');
+  assert.match(cookingScience(recipe.cut).title, /steam/i);
+  assert.match(cookingScience(recipe.cut).body, /[Ss]alt/);
+  const page = fs.readFileSync(
+    path.resolve(__dirname, '..', 'app', 'page.tsx'),
+    'utf8',
+  );
+  assert.match(page, /recipe\.cut\.family !== 'griddle-veg' &&/);
+
+  // Garlic goes in late, lemon goes on the platter.
+  const steps = recipe.steps.map((s) => s.body).join(' ');
+  assert.match(steps, /garlic burns/i);
+  assert.match(recipe.steps.at(-1).body, /lemon/i);
+
+  // Most Worcestershire is made with anchovy. In a Vegetarian tab, say so.
+  const items = recipe.ingredients.flatMap((g) => g.items);
+  assert.ok(items.some((i) => /Worcestershire.*anchovy/.test(i)));
+
+  // The brand is in the title, so the disclaimer has to be somewhere a cook
+  // reads it, on the page and on the printed sheet.
+  assert.match(recipe.title, /Blackstone/);
+  assert.match(recipe.timingNote, /Not affiliated with or endorsed by/);
+
+  // Every ingredient after the weighed line can be swapped, and none of the
+  // shorter matches steal a line: an orange bell pepper is not citrus, and
+  // the oil line already names avocado.
+  for (const group of recipe.ingredients.slice(1))
+    for (const item of group.items)
+      assert.ok(substitutionsFor(item), `no substitution offered for: ${item}`);
+  assert.equal(
+    substitutionsFor('1 yellow or orange bell pepper, sliced').label,
+    'Bell pepper',
+  );
+  assert.equal(
+    substitutionsFor('2 tbsp avocado oil or olive oil, divided').label,
+    'Avocado or olive oil',
+  );
+  assert.equal(substitutionsFor('2 tbsp olive oil').label, 'Olive oil');
 });
 
 test('counted cuts keep the pound and kilo conversion away from a count', () => {

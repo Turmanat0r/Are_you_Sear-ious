@@ -1,0 +1,28 @@
+{
+  "recipeId": "blackstone-garlic-butter-asparagus-mushrooms-peppers",
+  "createdOn": "2026-09-12",
+  "generator": "ChatGPT (OpenAI), used by the project owner",
+  "generatorModel": "Not exposed; no model-version claim is made",
+  "original": {
+    "path": "original.png",
+    "suppliedAs": "images/ChatGPT Image Sep 12, 2026, 04_38_46 PM.png",
+    "mimeType": "image/png",
+    "width": 1254,
+    "height": 1254,
+    "sha256": "621f305efa7202a44ed17bb12056b6c913b5fa74c3c8e79101503dfb43abe728"
+  },
+  "webAsset": {
+    "path": "../../are-you-sear-ious-source/are-you-sear-ious-source/public/meals/blackstone-garlic-butter-asparagus-mushrooms-peppers.webp",
+    "mimeType": "image/webp",
+    "width": 1200,
+    "height": 800,
+    "sha256": "bf164b5716d18a4df075dfcd72d53c18f75a75a0a69e2e7331c58e436220d6c1",
+    "conversion": "sharp 0.35.4; extract 1254x836 from 110 px down the square original; resize to 1200x800; WebP quality 80; effort 6"
+  },
+  "prompt": {
+    "path": null,
+    "verbatim": false,
+    "note": "The submitted prompt was not supplied. proposed-generation-prompt.txt predates the image and is not a record of it."
+  },
+  "verification": "Hashes, dimensions, file format, decoding and byte-for-byte reproduction of the WebP are verified. The PNG carries a caBX C2PA container with c2pa, OpenAI and trainedAlgorithmicMedia markers; the signature was not validated. No EXIF, authorship, exclusivity or transferable-rights claim is made."
+}
