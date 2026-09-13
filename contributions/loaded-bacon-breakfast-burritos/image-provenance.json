@@ -1,0 +1,29 @@
+{
+  "recipeId": "loaded-bacon-breakfast-burritos",
+  "createdOn": "2026-09-12",
+  "generator": "ChatGPT (OpenAI), used by the project owner",
+  "generatorModel": "Not exposed; no model-version claim is made",
+  "original": {
+    "path": "original.png",
+    "suppliedAs": "images/ChatGPT Image Sep 12, 2026, 05_15_23 PM.png",
+    "mimeType": "image/png",
+    "width": 1254,
+    "height": 1254,
+    "channels": 4,
+    "sha256": "b6472afd8d94438c73a67c097ab73ad65c5dbee693496a52d37f7433750b53a8"
+  },
+  "webAsset": {
+    "path": "../../are-you-sear-ious-source/are-you-sear-ious-source/public/meals/loaded-bacon-breakfast-burritos.webp",
+    "mimeType": "image/webp",
+    "width": 1200,
+    "height": 800,
+    "sha256": "9227d8eedd4567454c492844e825fea663562329dd4c1f98a52a66642c0add25",
+    "conversion": "sharp 0.35.4; extract 1254x836 from 230 px down; flatten alpha onto #1b1c19; resize to 1200x800; WebP quality 80; effort 6"
+  },
+  "prompt": {
+    "path": null,
+    "verbatim": false,
+    "note": "The submitted prompt was not supplied."
+  },
+  "verification": "Hashes, dimensions, file format, decoding and byte-for-byte reproduction of the WebP are verified. The PNG carries a caBX C2PA container with c2pa, OpenAI and trainedAlgorithmicMedia markers; the signature was not validated. No EXIF, authorship, exclusivity or transferable-rights claim is made."
+}

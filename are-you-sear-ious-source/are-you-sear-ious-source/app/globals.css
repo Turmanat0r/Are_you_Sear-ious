@@ -199,7 +199,8 @@ h1 {
 }
 .protein-grid {
   display: grid;
-  grid-template-columns: repeat(4, 1fr);
+  /* Six categories: two rows of three here, three rows of two on phones. */
+  grid-template-columns: repeat(3, 1fr);
   gap: 14px;
   margin-bottom: 32px;
 }

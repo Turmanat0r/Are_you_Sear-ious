@@ -40,16 +40,24 @@ const CUTS_PER_PROTEIN = {
   Poultry: 6,
   Seafood: 6,
   Vegetarian: 2,
+  Breakfast: 1,
 };
 
-test('five categories, twenty-five unique cuts, and matching defaults', () => {
-  assert.equal(cuts.length, 25);
-  assert.equal(new Set(cuts.map((c) => c.id)).size, 25);
+test('six categories, twenty-six unique cuts, and matching defaults', () => {
+  assert.equal(cuts.length, 26);
+  assert.equal(new Set(cuts.map((c) => c.id)).size, 26);
   assert.equal(
     Object.values(CUTS_PER_PROTEIN).reduce((a, b) => a + b, 0),
     cuts.length,
   );
-  for (const protein of ['Beef', 'Pork', 'Poultry', 'Seafood', 'Vegetarian']) {
+  for (const protein of [
+    'Beef',
+    'Pork',
+    'Poultry',
+    'Seafood',
+    'Vegetarian',
+    'Breakfast',
+  ]) {
     assert.equal(
       cuts.filter((c) => c.protein === protein).length,
       CUTS_PER_PROTEIN[protein],
@@ -76,7 +84,8 @@ for (const cut of cuts) {
     // an achiote marinade, a dry rub under sauce, seasoning worked through
     // ground meat, and a butter bath. The pork chops are the one case with a
     // binder that is not mustard — the garlic-herb mayonnaise is the recipe.
-    // Vegetables seared in oil and finished in butter have nothing to bind.
+    // Vegetables seared in oil and finished in butter have nothing to bind,
+    // and neither does a burrito.
     if (
       ![
         'foil-boat',
@@ -89,6 +98,7 @@ for (const cut of cuts) {
         'mayo-chop',
         'stuffed-pepper',
         'griddle-veg',
+        'breakfast-burrito',
       ].includes(cut.family)
     )
       assert.ok(
@@ -137,6 +147,9 @@ for (const cut of cuts) {
       // Naming one brand would be wrong by about 70% for the other box.
       assert.ok(saltLine.includes('Morton'), saltLine);
       assert.ok(saltLine.includes('Diamond Crystal'), saltLine);
+      // Swaps pick the longest ingredient name in a line, so a salt line that
+      // names a sauce or a filling would offer that item's swaps instead.
+      assert.equal(substitutionsFor(saltLine).label, 'Kosher salt', saltLine);
       assert.ok(
         !/\d\.\d/.test(saltLine.split('about ')[1].split(')')[0]),
         'spoon equivalents must be fractions, not decimals: ' + saltLine,
@@ -760,6 +773,7 @@ test('titles keep proper nouns capitalised', () => {
         'beef-ribs',
         'stuffed-pepper',
         'griddle-veg',
+        'breakfast-burrito',
       ].includes(cut.family)
     )
       continue;
@@ -982,7 +996,7 @@ test('the griddle vegetables salt last and claim no safety minimum', () => {
     path.resolve(__dirname, '..', 'app', 'page.tsx'),
     'utf8',
   );
-  assert.match(page, /recipe\.cut\.family !== 'griddle-veg' &&/);
+  assert.match(page, /!isGriddle\(recipe\.cut\)/);
 
   // Garlic goes in late, lemon goes on the platter.
   const steps = recipe.steps.map((s) => s.body).join(' ');
@@ -1013,6 +1027,75 @@ test('the griddle vegetables salt last and claim no safety minimum', () => {
     'Avocado or olive oil',
   );
   assert.equal(substitutionsFor('2 tbsp olive oil').label, 'Olive oil');
+});
+
+test('the burritos cook their eggs to 160F, not to "slightly soft"', () => {
+  const recipe = buildRecipe('loaded-bacon-breakfast-burritos', 6);
+  assert.equal(recipe.protein, 'Breakfast');
+  assert.equal(defaultCuts.Breakfast, 'loaded-bacon-breakfast-burritos');
+
+  // The card said to keep the eggs soft and let the toasting finish them.
+  // USDA gives egg dishes 160F, and 90 seconds a side through a rolled
+  // tortilla does not get them there, so the eggs are the endpoint and the
+  // toast is not allowed to be.
+  assert.deepEqual(recipe.internal, [160]);
+  const eggs = recipe.steps.find((s) => /[Ee]ggs/.test(s.title));
+  assert.ok(eggs, 'the eggs need their own step');
+  assert.match(eggs.cue, /160°F/);
+  assert.match(eggs.body, /no liquid egg/i);
+  assert.match(eggs.body, /not before it/);
+  assert.match(recipe.finish, /does not finish cooking the eggs/);
+  assert.match(recipe.tip, /160°F/);
+  const text = JSON.stringify(recipe);
+  assert.ok(!/continue cooking|slightly soft/i.test(text));
+
+  // Counted by the burrito, one each, and the salt is 0.5% of the potatoes
+  // and eggs rather than of everything rolled up.
+  assert.match(recipe.sizeLabel, /^6 burritos$/);
+  assert.equal(recipe.serves, '6');
+  assert.equal(recipe.ingredients[0].title, 'Your burritos & salt');
+  assert.equal(
+    buildRecipe('fire-kissed-stuffed-bell-peppers', 4).ingredients[0].title,
+    'Your peppers & salt',
+  );
+  const saltLine = recipe.ingredients[0].items[1];
+  assert.match(saltLine, /total for the potatoes and eggs/);
+  assert.match(saltLine, /none on the bacon/);
+  assert.ok(
+    Math.abs(parseFloat(saltLine) - 6 * 0.3 * 453.59237 * 0.005) < 0.01,
+  );
+
+  // Bacon fat is the cooking fat, the dome is the potato technique, and the
+  // spicy butter is optional.
+  const steps = recipe.steps.map((s) => s.body).join(' ');
+  assert.match(steps, /bacon fat/);
+  assert.match(steps, /dome/);
+  assert.match(cookingScience(recipe.cut).body, /steam/);
+  assert.match(recipe.ingredients.at(-1).title, /optional/);
+
+  // A griddle recipe: heat read on the steel, no dry-brine card.
+  assert.equal(config.isGriddle(recipe.cut), true);
+  assert.equal(config.isGriddle(cuts.find((c) => c.id === 'pork-chop')), false);
+
+  // Egg swaps must not dodge the number, and the sausage swap must name its own.
+  const eggLine = recipe.ingredients
+    .flatMap((g) => g.items)
+    .find((i) => i.endsWith(' eggs'));
+  const eggSwaps = substitutionsFor(eggLine);
+  assert.equal(eggSwaps.label, 'Eggs');
+  assert.ok(
+    eggSwaps.options
+      .filter((o) => !/Plant-based/.test(o.use))
+      .every((o) => /160°F/.test(o.note)),
+  );
+  const sausage = substitutionsFor('1 lb bacon').options.find((o) =>
+    /sausage/.test(o.use),
+  );
+  assert.match(sausage.note, /160°F/);
+  assert.equal(
+    substitutionsFor('1 ½ cup shredded cheddar or pepper Jack').label,
+    'Cheddar or pepper Jack',
+  );
 });
 
 test('counted cuts keep the pound and kilo conversion away from a count', () => {
@@ -1125,19 +1208,25 @@ test('the BBQ sauce is split before it meets raw chicken', () => {
   assert.match(cookingScience(recipe.cut).body, /sugar/i);
 });
 
-test('the burger is the only 160F cut, and every other beef cut is 145F', () => {
+test('160F belongs only to ground meat and eggs, and every other beef cut is 145F', () => {
   const burger = buildRecipe('steakhouse-beef-bison-burgers', 1.5);
   assert.deepEqual(burger.internal, [160]);
 
   // Ground meat has no protected centre. This is the single most important
   // number in the app to get wrong, and it sits next to five 145F beef cuts.
+  // USDA gives egg dishes the same 160F for a different reason, so the
+  // breakfast burritos are the one other cut allowed it -- and each has to
+  // say which reason is its own.
   const sixties = cuts.filter(
     (c) => buildRecipe(c.id, c.baseLb).internal[0] === 160,
   );
   assert.deepEqual(
     sixties.map((c) => c.id),
-    ['steakhouse-beef-bison-burgers'],
+    ['steakhouse-beef-bison-burgers', 'loaded-bacon-breakfast-burritos'],
   );
+  const burritos = buildRecipe('loaded-bacon-breakfast-burritos', 6);
+  assert.match(burritos.safety, /[Ee]gg dishes reach 160°F/);
+  assert.ok(!/[Gg]rinding|ground/.test(burritos.safety));
   // Every other beef cut finishes at the 145F whole-cut figure, except the
   // short ribs, which are taken past it for tenderness rather than safety --
   // the same split pork shoulder already has. Their safety line still has to

@@ -1,7 +1,7 @@
 # Are You Sear-ious
 
-A grilling app: 25 cuts across beef, pork, poultry, seafood and one
-vegetarian category. Pick a cut and a
+A grilling app: 26 cuts across beef, pork, poultry, seafood, one
+vegetarian category and one breakfast category. Pick a cut and a
 weight, it scales the seasoning, plans your burner zones, estimates cook time
 and walks you through it. Static site, no backend, no network calls at all.
 
@@ -17,7 +17,7 @@ are-you-sear-ious-source/are-you-sear-ious-source/     <- run npm here
 
 | File | What lives in it |
 | --- | --- |
-| `app/cook-config.ts` | The 25 cuts, ingredient scaling, recipe assembly, burner heat model, substitutions. The big one. |
+| `app/cook-config.ts` | The 26 cuts, ingredient scaling, recipe assembly, burner heat model, substitutions. The big one. |
 | `app/recipes.ts` | Four base recipes, type definitions, °F→°C conversion |
 | `app/page.tsx` | Page, cook mode, print sheet, saved recipes |
 | `app/grill-tools.tsx` | Weight/cut controls, temperature table, burner planner |
@@ -34,7 +34,7 @@ Run from the source folder above.
 
 ```
 npm run dev         # plain Vite dev server
-npm test            # 67 tests, node:test
+npm test            # 69 tests, node:test
 npm run typecheck   # tsc --noEmit, strict + noUncheckedIndexedAccess
 npm run lint        # oxlint
 npm run format      # oxfmt
@@ -73,8 +73,10 @@ This is the usual request. In `app/cook-config.ts` unless stated:
    **`Vegetarian`**, which is not a protein at all. It exists because the
    picker is grouped by what you go to the counter and buy, and a stuffed
    pepper belongs behind none of the other four even when its filling has meat
-   in it. Adding a sixth means a `defaultCuts` entry, a tab in `page.tsx`, and
-   a change to the Web MCP tool's `protein` enum, which is a published contract.
+   in it. **`Breakfast`** is the sixth, added for the same reason: a breakfast
+   burrito is a meal, not a counter. Adding a seventh means a `defaultCuts`
+   entry, a tab in `page.tsx` (the grid is sized for six), and a change to the
+   Web MCP tool's `protein` enum, which is a published contract.
    If two recipes share a cut, `name` is what tells them apart in the picker
    and `midSentenceName` is what the shopping line says you should buy.
 
@@ -104,8 +106,9 @@ This is the usual request. In `app/cook-config.ts` unless stated:
 - **USDA temperatures win.** Poultry 165°F; whole beef and pork 145°F with a
   3-minute rest; fish and shellfish 145°F with **no** required rest — the
   3-minute rule is for whole cuts of meat, not fillets. **Ground meat is
-  160°F**, which is why the burger is the one cut in the app that is not 145°F
-  or 165°F; a test asserts it is the only one. If a source recipe finishes
+  160°F**, and so are **egg dishes**, which is why the burger and the breakfast
+  burritos are the only cuts in the app at 160°F; a test names exactly those
+  two and makes each state its own reason. If a source recipe finishes
   lower, raise it and pin it with a test.
 - **The disclosures stay.** AI-photo badge, safety banner, print-sheet notices,
   bottom legal note. Tests assert each by substance, not wording.
