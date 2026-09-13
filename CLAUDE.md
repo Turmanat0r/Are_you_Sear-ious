@@ -23,6 +23,7 @@ are-you-sear-ious-source/are-you-sear-ious-source/     <- run npm here
 | `app/grill-tools.tsx` | Weight/cut controls, temperature table, burner planner |
 | `app/experience.css` | Almost all styling, including the responsive layer at the bottom |
 | `public/meals/<cut-id>.webp` | One photo per cut, exactly 1200×800, under 250 KB |
+| `branding/` | The two logo masters. `node scripts/make-icons.mjs` turns them into `public/icons/`, which the page and `public/manifest.webmanifest` use |
 
 `index.html` and `images/` at the repo root are a **stale offline build**. They
 predate several sessions and are missing recipes. Don't treat them as
@@ -34,7 +35,7 @@ Run from the source folder above.
 
 ```
 npm run dev         # plain Vite dev server
-npm test            # 69 tests, node:test
+npm test            # 70 tests, node:test
 npm run typecheck   # tsc --noEmit, strict + noUncheckedIndexedAccess
 npm run lint        # oxlint
 npm run format      # oxfmt

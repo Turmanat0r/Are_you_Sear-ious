@@ -1,6 +1,6 @@
 # Notices and attribution
 
-This project combines four categories of material with different terms. The
+This project combines five categories of material with different terms. The
 `LICENSE` file (MIT) covers the **first category only**.
 
 | Material | Terms |
@@ -8,6 +8,7 @@ This project combines four categories of material with different terms. The
 | Application source and build output | MIT — see [`LICENSE`](LICENSE) |
 | Bundled third-party libraries and fonts | Their own licenses — see [`THIRD-PARTY-LICENSES.txt`](THIRD-PARTY-LICENSES.txt) |
 | The meal images (26 each in `images/` and `public/meals/`) | AI-generated — see below |
+| The logo and app icons (`branding/`, `public/icons/`) | Supplied by the project owner — see below |
 | Recipes drawn from published sources | Credited — see below |
 
 ## Third-party software and fonts
@@ -70,6 +71,14 @@ If you want the disclosure to travel with the files, either re-run the optimizer
 with metadata retention enabled or keep this notice alongside any redistribution.
 The original PNGs with their manifests intact are preserved in the companion
 `are-you-sear-ious-image-originals` archive.
+
+## The logo and app icons
+
+The Are You Sear-ious logo was supplied by the project owner on 2026-09-12 as
+two WebP files, now kept in `branding/`. Every file in `public/icons/` is
+generated from them by `scripts/make-icons.mjs`. Unlike the meal images, the
+logo files carry no C2PA or other provenance metadata, and no claim is made
+here about how the logo was made. It is not covered by the MIT license.
 
 ## Recipes drawn from published sources
 

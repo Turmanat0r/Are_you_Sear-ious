@@ -46,6 +46,55 @@ test('every meal has a distinct, small, decodable WebP image', async () => {
   );
 });
 
+test('the site and app icons exist at the sizes the page and manifest claim', async () => {
+  const html = fs.readFileSync(
+    path.join(root, 'standalone', 'index.html'),
+    'utf8',
+  );
+  const manifest = JSON.parse(
+    fs.readFileSync(path.join(root, 'public', 'manifest.webmanifest'), 'utf8'),
+  );
+  // \s+ throughout: the formatter wraps long <link> tags over several lines.
+  assert.match(html, /<link\s+rel="manifest"\s+href="\/manifest\.webmanifest"/);
+  assert.equal(manifest.start_url, '/');
+  assert.equal(manifest.display, 'standalone');
+
+  // Every icon the page or the manifest names, with the size it claims.
+  const declared = [
+    ...[
+      ...html.matchAll(
+        /<link\s+rel="icon"[^>]*sizes="(\d+)x\1"[^>]*href="([^"]+)"/g,
+      ),
+    ].map((m) => [m[2], Number(m[1])]),
+    [html.match(/<link\s+rel="apple-touch-icon"\s+href="([^"]+)"/)[1], 180],
+    ...manifest.icons.map((icon) => [
+      icon.src,
+      Number(icon.sizes.split('x')[0]),
+    ]),
+  ];
+  assert.ok(declared.length >= 5, 'favicon, touch icon and manifest icons');
+  for (const [src, size] of declared) {
+    const file = path.join(root, 'public', src);
+    assert.ok(fs.existsSync(file), `${src} is declared but missing`);
+    const metadata = await sharp(file).metadata();
+    assert.equal(metadata.format, 'png', src);
+    assert.equal(metadata.width, size, `${src} width`);
+    assert.equal(metadata.height, size, `${src} height`);
+  }
+  // Android crops maskable icons to a circle, so one has to be marked as
+  // safe for that, and "any" icons must still exist for everything else.
+  const purposes = manifest.icons.map((icon) => icon.purpose);
+  assert.ok(purposes.includes('maskable'));
+  assert.ok(purposes.includes('any'));
+
+  // Generated from masters, which must stay in the repository.
+  for (const master of [
+    'are-you-sear-ious-192x192.webp',
+    'are-you-sear-ious-512x512.webp',
+  ])
+    assert.ok(fs.existsSync(path.join(root, 'branding', master)), master);
+});
+
 test('old large category PNGs are not shipped', () => {
   for (const filename of [
     'beef.png',
@@ -197,10 +246,14 @@ test('the offline index.html at the repo root is not stale', () => {
   // It must be self-contained: an absolute /assets/ or /meals/ path resolves
   // to the filesystem root when opened over file://, and silently 404s.
   assert.equal(
-    (html.match(/"\/(assets|meals)\//g) ?? []).length,
+    (html.match(/"\/(assets|meals|icons)\//g) ?? []).length,
     0,
     'offline index.html still has absolute asset paths',
   );
+  // The favicon rides inside the file; the install-only links cannot work
+  // from file:// and must not point at paths that do not exist there.
+  assert.match(html, /<link\s+rel="icon"[^>]*href="data:image\/png;base64,/);
+  assert.ok(!/rel="manifest"|rel="apple-touch-icon"/.test(html));
   assert.match(html, /\.\/images\//, 'photos must be relative to the file');
 
   // And every photo it asks for has to be sitting next to it.

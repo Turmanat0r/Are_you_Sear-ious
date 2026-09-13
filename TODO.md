@@ -5,7 +5,7 @@ actually bites you first, not by how hard it is. `AUDIT.md` has the full
 review record; this is the shorter list of what is still open.
 
 Current state: lint 0 errors · strict typecheck passes (**including the
-type-aware pass, which now runs locally**) · 69 tests pass · build passes · 0
+type-aware pass, which now runs locally**) · 70 tests pass · build passes · 0
 npm advisories · client CSS 197.7 KB, of which 119.5 KB is the five
 base64-inlined font faces and 78.2 KB is actual stylesheet. Meal photos are
 3.69 MB across 26 files, but only one is ever loaded.
@@ -140,12 +140,15 @@ mid-cook and a finished timer is silent. For an app whose entire premise is
 standing at a grill with your phone on the side table, this is the most valuable
 missing feature on the list.
 
-### 12. Metadata for sharing and installing
+### 12. Metadata for sharing and installing — mostly done
 
-`themeColor` and `viewport-fit` are now set. Still missing: Open Graph and
-Twitter card tags, a canonical URL, `apple-touch-icon`, and a web manifest.
-Without them the app cannot be installed to a home screen and shares as a bare
-link.
+Done on 2026-09-12: the logo favicon, `apple-touch-icon`, a web manifest with
+192/512 and maskable icons, and `apple-mobile-web-app-title`. Chrome reports no
+manifest or installability errors. Open Graph, Twitter card and canonical tags
+were already in `standalone/index.html`; this item had not caught up.
+
+Still open: `og:image` is the relative `/meals/pepper-ribeye.webp`. Most link
+previewers want an absolute URL, so shares may still show no image.
 
 ### 13. Dark-only, but it says otherwise
 
