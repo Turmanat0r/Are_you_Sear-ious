@@ -65,7 +65,23 @@ const offline = html
   // The offline copy is opened directly, so absolute paths cannot resolve.
   .replace(/\/meals\//g, './images/')
   // A canonical link pointing at the live site is wrong for a local file.
-  .replace(/\s*<link rel="canonical"[^>]*>/, '');
+  .replace(/\s*<link rel="canonical"[^>]*>/, '')
+  // The favicon travels inside the file. The larger icons and the manifest
+  // are only for installing the site as an app, which a file:// page cannot
+  // be, so their links go rather than pointing at paths that do not exist.
+  .replace(
+    /href="\/icons\/favicon-32\.png"/,
+    () =>
+      `href="data:image/png;base64,${fs
+        .readFileSync(path.join(dist, 'icons', 'favicon-32.png'))
+        .toString('base64')}"`,
+  )
+  // \s+ rather than a space: the formatter wraps long <link> tags.
+  .replace(
+    /\s*<link\s+rel="(?:icon|apple-touch-icon)"[^>]*\/icons\/[^>]*>/g,
+    '',
+  )
+  .replace(/\s*<link\s+rel="manifest"[^>]*>/, '');
 
 fs.writeFileSync(path.join(repo, 'index.html'), offline);
 
